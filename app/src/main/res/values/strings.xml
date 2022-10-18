@@ -11,5 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="input_email">Masukkan Email</string>
     <string name="input_password">Masukkan Password</string>
+    <string name="input_name">Masukkan Nama</string>
     <string name="login">Login</string>
+    <string name="register">Daftar</string>
 </resources>
