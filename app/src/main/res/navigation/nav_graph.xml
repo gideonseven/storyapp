@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/login_fragment">
 
     <fragment
-        android:id="@+id/LoginFragment"
+        android:id="@+id/login_fragment"
         android:name="com.don.storyapp.LoginFragment"
         android:label="@string/login_fragment_label"
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/register_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/register_fragment"
         android:name="com.don.storyapp.RegisterFragment"
         android:label="@string/register_fragment_label"
         tools:layout="@layout/fragment_register">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/LoginFragment" />
+            android:id="@+id/action_RegisterFragment_to_LoginFragment"
+            app:destination="@id/login_fragment" />
     </fragment>
 </navigation>
