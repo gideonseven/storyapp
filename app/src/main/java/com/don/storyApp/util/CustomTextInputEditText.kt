@@ -1,4 +1,4 @@
-package com.don.storyapp.util
+package com.don.storyApp.util
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,7 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
-import com.don.storyapp.R
+import com.don.storyApp.R
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -84,15 +84,9 @@ class CustomTextInputEditText : TextInputEditText, OnTouchListener {
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
         if (compoundDrawables[2] != null) {
             val clearButtonStart: Float
-            val clearButtonEnd: Float
             var isClearButtonClicked = false
 
-            if (layoutDirection == View.LAYOUT_DIRECTION_RTL) {
-                clearButtonEnd = (clearButtonImage.intrinsicWidth + paddingStart).toFloat()
-                when {
-                    event.x < clearButtonEnd -> isClearButtonClicked = true
-                }
-            } else {
+            if (layoutDirection != View.LAYOUT_DIRECTION_RTL) {
                 clearButtonStart = (width - paddingEnd - clearButtonImage.intrinsicWidth).toFloat()
                 when {
                     event.x > clearButtonStart -> isClearButtonClicked = true

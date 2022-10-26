@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.don.storyapp">
+    package="com.don.storyApp">
 
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Storyapp"
+        android:theme="@style/Theme.StoryApp"
+        android:name="com.don.storyApp.StoryApplication"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.don.storyApp.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Storyapp.NoActionBar"
+            android:theme="@style/Theme.StoryApp.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
