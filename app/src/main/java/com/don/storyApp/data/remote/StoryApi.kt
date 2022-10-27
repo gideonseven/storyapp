@@ -18,7 +18,7 @@ interface StoryApi {
     suspend fun doLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ): Resource<LoginResponse>
+    ): LoginResponse
 
     @FormUrlEncoded
     @POST("register")

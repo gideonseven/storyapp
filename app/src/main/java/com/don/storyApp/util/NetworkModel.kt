@@ -1,7 +1,6 @@
 package com.don.storyApp.util
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
 /**
  * Created by gideon on 21 October 2022
@@ -14,8 +13,7 @@ interface BaseNetworkModel {
     val message: String?
 }
 
-@JsonClass(generateAdapter = true)
 data class SimpleNetworkModel(
-    @Json(name = "message") override val message: String? = null,
-    @Json (name = "error") override val error: Boolean? = null
+    @field:SerializedName("message") override val message: String? = null,
+    @field:SerializedName( "error") override val error: Boolean? = null
 ) : BaseNetworkModel

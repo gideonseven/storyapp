@@ -2,13 +2,13 @@ package com.don.storyApp.data.remote.dto
 
 import com.don.storyApp.domain.model.LoginResult
 import com.don.storyApp.util.BaseNetworkModel
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class LoginResponse(
-	@Json(name="loginResult")
-	val loginResult: LoginResult? = null,
-	override val error: Boolean?,
-	override val message: String?
-): BaseNetworkModel
+    @field:SerializedName("loginResult")
+    val loginResult: LoginResult? = null,
+    @field:SerializedName("error")
+    override val error: Boolean?,
+    @field:SerializedName("message")
+    override val message: String?
+) : BaseNetworkModel

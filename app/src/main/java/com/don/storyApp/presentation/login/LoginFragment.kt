@@ -51,6 +51,9 @@ class LoginFragment : Fragment(){
                     Timber.e(" ==== edLoginPassword ${Validation.isValidPassword(loginBinding.tilPassword)}")
                 }
             }
+            loginBinding.btnLogin.setOnClickListener {
+                viewModel.launchData()
+            }
         }
     }
 

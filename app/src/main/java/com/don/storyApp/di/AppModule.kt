@@ -1,14 +1,14 @@
 package com.don.storyApp.di
 
+import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.StoryApi.Companion.BASE_URL
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -22,13 +22,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder()
-        .addLast(KotlinJsonAdapterFactory())
+    fun provideGson(): Gson = Gson()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder().baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
     @Provides
     @Singleton
-    fun provideRetrofit(moshi: Moshi): Retrofit = Retrofit.Builder().baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
+    fun provideStoryApi(retrofit: Retrofit): StoryApi = retrofit.create(StoryApi::class.java)
 }

@@ -1,6 +1,6 @@
 package com.don.storyApp.domain.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 /**
  * Created by gideon on 21 October 2022
@@ -10,12 +10,12 @@ import com.squareup.moshi.Json
 
 data class LoginResult(
 
- @Json(name="name")
+ @field:SerializedName("name")
  val name: String? = null,
 
- @Json(name="userId")
+ @field:SerializedName("userId")
  val userId: String? = null,
 
- @Json(name="token")
+ @field:SerializedName("token")
  val token: String? = null
 )
