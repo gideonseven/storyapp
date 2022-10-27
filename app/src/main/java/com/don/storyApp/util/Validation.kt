@@ -1,6 +1,7 @@
 package com.don.storyApp.util
 
 import android.util.Patterns
+import com.don.storyApp.R
 import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
 
@@ -18,11 +19,11 @@ object Validation {
         til.apply {
             val text = this.editText?.text.toString()
             if (text.isEmpty()) {
-                error = "Tidak Boleh Kosong"
+                error = this.context.getString(R.string.error_cannot_empty)
                 setErrorIconDrawable(0)
                 isValid = false
             } else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
-                error = "Format Email Tidak Valid"
+                error = this.context.getString(R.string.error_email_not_valid)
                 setErrorIconDrawable(0)
                 isValid = false
             } else {
@@ -41,15 +42,15 @@ object Validation {
         til.apply {
             val text = this.editText?.text.toString()
             if (text.isEmpty()) {
-                til.error = "Tidak Boleh Kosong"
+                error = this.context.getString(R.string.error_cannot_empty)
                 setErrorIconDrawable(0)
                 isValid = false
             } else if (text.length < 6) {
-                til.error = "Minimum 6 Karakter"
+                error = this.context.getString(R.string.error_minimum_6_char)
                 setErrorIconDrawable(0)
                 isValid = false
             } else {
-                til.error = null
+                error = null
                 isValid = true
             }
             Timber.e("=== isValidPassword text $text")
@@ -63,11 +64,11 @@ object Validation {
         til.apply {
             val text = this.editText?.text.toString()
             if (text.isEmpty()) {
-                til.error = "Tidak Boleh Kosong"
+                error = this.context.getString(R.string.error_cannot_empty)
                 setErrorIconDrawable(0)
                 isValid = false
             } else if (text.length < 4) {
-                til.error = "Minimum 4 Karakter"
+                error = this.context.getString(R.string.error_minimum_4_char)
                 setErrorIconDrawable(0)
                 isValid = false
             } else {

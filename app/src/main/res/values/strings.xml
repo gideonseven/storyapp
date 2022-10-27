@@ -14,4 +14,9 @@
     <string name="input_name">Masukkan Nama</string>
     <string name="login">Login</string>
     <string name="register">Daftar</string>
+
+    <string name="error_cannot_empty">Tidak Boleh Kosong</string>
+    <string name="error_email_not_valid">Format Email Tidak Valid</string>
+    <string name="error_minimum_6_char">Minimum 6 Karakter</string>
+    <string name="error_minimum_4_char">Minimum 4 Karakter</string>
 </resources>
