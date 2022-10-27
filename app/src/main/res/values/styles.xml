@@ -25,12 +25,28 @@
 
     <style name="Theme.StoryApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="DefaultButton" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/md_grey_500</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/TextContent.BM.Bold</item>
+        <item name="android:minWidth">@dimen/_200dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_56dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/selector_text_white</item>
+        <item name="cornerRadius">@dimen/_8dp</item>
+
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">@dimen/_18sp</item>
+        <item name="iconTint">@color/selector_text_white</item>
+        <item name="iconPadding">@dimen/_8dp</item>
+
+        <item name="android:insetLeft">@dimen/_0dp</item>
+        <item name="android:insetRight">@dimen/_0dp</item>
+        <item name="android:insetTop">@dimen/_0dp</item>
+        <item name="android:insetBottom">@dimen/_0dp</item>
+    </style>
+
+    <style name="Button.Primary" parent="Button">
+        <item name="backgroundTint">@color/selector_button_primary</item>
     </style>
 
 

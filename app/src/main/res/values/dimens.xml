@@ -2,10 +2,14 @@
 
 
 <!--    MARGIN-->
+    <dimen name="_0dp">0dp</dimen>
     <dimen name="_8dp">8dp</dimen>
     <dimen name="_16dp">16dp</dimen>
     <dimen name="_32dp">32dp</dimen>
+    <dimen name="_44dp">44dp</dimen>
+    <dimen name="_48dp">48dp</dimen>
     <dimen name="_56dp">56dp</dimen>
+    <dimen name="_200dp">200dp</dimen>
 
 
 <!--    TEXT SIZE -->
