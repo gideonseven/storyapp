@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentLoginBinding
 import com.don.storyApp.util.Validation
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -51,7 +54,12 @@ class LoginFragment : Fragment() {
                 }
             }
             loginBinding.btnLogin.setOnClickListener {
-                viewModel.submitLogin()
+                viewModel.submitLogin(errorMessage = {
+                    Snackbar.make(loginBinding.root, it, Snackbar.LENGTH_SHORT).apply {
+                        setTextColor(ContextCompat.getColor(this.context, R.color.md_white_1000))
+                        show()
+                    }
+                })
             }
         }
     }

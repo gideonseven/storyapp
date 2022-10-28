@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="com.don.storyApp.util.TextType" />
-
         <import type="com.don.storyApp.util.StateType" />
 
         <import type="android.view.View" />
@@ -26,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{vm.stateType == StateType.CONTENT ? View.VISIBLE : View.GONE}">
+            android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title"
@@ -98,6 +95,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
+            android:id="@+id/view_loading"
             layout="@layout/view_state_loading"
             android:visibility="@{vm.stateType == StateType.LOADING ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"

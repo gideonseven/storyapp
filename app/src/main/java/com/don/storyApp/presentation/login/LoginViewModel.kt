@@ -37,16 +37,14 @@ class LoginViewModel @Inject constructor(
         mIsButtonEnabled.value = true
     }
 
-    fun submitLogin() {
+    fun submitLogin(errorMessage : (String) -> Unit) {
         viewModelScope.launch {
             repository.doLogin("abcdeflf@hotmail.com", "aaaaaaaa").collect {
                 when (it) {
                     is Resource.Success -> {
                         Timber.e("== RESPONSE Success")
                         Timber.e(
-                            "== RESPONSE ${
-                                it.data
-                            }"
+                            "== RESPONSE ${it.data}"
                         )
                         stateType.value = StateType.CONTENT
                     }
@@ -62,6 +60,7 @@ class LoginViewModel @Inject constructor(
                             }"
                         )
                         stateType.value = StateType.ERROR
+                        errorMessage(it.message.orEmpty())
                     }
                 }
             }
