@@ -2,6 +2,7 @@ package com.don.storyApp.domain.repository
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.data.storage.AppPreferences
 import com.don.storyApp.util.Resource
 import com.google.gson.Gson
 import com.skydoves.sandwich.messageOrNull
@@ -19,10 +20,11 @@ import javax.inject.Inject
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-class LoginRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val apiService: StoryApi,
-    private val gson: Gson
-) : ILoginRepository {
+    private val gson: Gson,
+    private val preferences: AppPreferences
+) : IAuthRepository {
     override suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>> {
         return flow {
             var resource: Resource<LoginResponse> = Resource.Loading()
@@ -31,6 +33,7 @@ class LoginRepositoryImpl @Inject constructor(
             response.onSuccess {
                 Timber.e("=== SUC")
                 resource = Resource.Success(data = this.data)
+                saveToken(this.data.loginResult?.token.orEmpty())
             }.onError {
                 Timber.e("=== ERR")
                 val errorResp =
@@ -42,5 +45,21 @@ class LoginRepositoryImpl @Inject constructor(
             }
             emit(resource)
         }
+    }
+
+    override suspend fun doRegister(
+        username: String,
+        email: String,
+        password: String
+    ): Flow<Resource<LoginResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun doLogOut() {
+        preferences.clear()
+    }
+
+    override fun saveToken(token: String) {
+        preferences.accessToken = token
     }
 }

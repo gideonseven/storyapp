@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-interface ILoginRepository {
+interface IAuthRepository {
     suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>>
+    suspend fun doRegister(username: String, email: String, password: String): Flow<Resource<LoginResponse>>
+    fun doLogOut()
+    fun saveToken(token: String)
 }

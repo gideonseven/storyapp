@@ -1,8 +1,9 @@
 package com.don.storyApp.di
 
 import com.don.storyApp.data.remote.StoryApi
-import com.don.storyApp.domain.repository.ILoginRepository
-import com.don.storyApp.domain.repository.LoginRepositoryImpl
+import com.don.storyApp.data.storage.AppPreferences
+import com.don.storyApp.domain.repository.IAuthRepository
+import com.don.storyApp.domain.repository.AuthRepositoryImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -23,7 +24,7 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideLoginRepository(api: StoryApi, gson: Gson): ILoginRepository {
-        return LoginRepositoryImpl(api, gson)
+    fun provideAuthRepository(api: StoryApi, gson: Gson, appPreferences: AppPreferences): IAuthRepository {
+        return AuthRepositoryImpl(api, gson, appPreferences)
     }
 }

@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.domain.repository.ILoginRepository
+import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.domain.repository.IAuthRepository
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: ILoginRepository
+    private val repository: IAuthRepository
 ) : ViewModel() {
     var email: MutableLiveData<String> = MutableLiveData("")
     var password: MutableLiveData<String> = MutableLiveData("")
@@ -37,7 +38,10 @@ class LoginViewModel @Inject constructor(
         mIsButtonEnabled.value = true
     }
 
-    fun submitLogin(errorMessage : (String) -> Unit) {
+    fun submitLogin(
+        errorMessage : (String) -> Unit,
+        onSuccess: (LoginResponse) -> Unit
+    ) {
         viewModelScope.launch {
             repository.doLogin("abcdeflf@hotmail.com", "aaaaaaaa").collect {
                 when (it) {
@@ -47,6 +51,7 @@ class LoginViewModel @Inject constructor(
                             "== RESPONSE ${it.data}"
                         )
                         stateType.value = StateType.CONTENT
+                        it.data?.let(onSuccess)
                     }
                     is Resource.Loading -> {
                         Timber.e("== RESPONSE Loading")

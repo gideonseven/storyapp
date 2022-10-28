@@ -2,6 +2,7 @@ package com.don.storyApp.di
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.StoryApi.Companion.BASE_URL
+import com.don.storyApp.domain.model.AppBuildConfig
 import com.google.gson.Gson
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
@@ -22,6 +23,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideAppBuildConfig(): AppBuildConfig = AppBuildConfig()
 
     @Provides
     @Singleton

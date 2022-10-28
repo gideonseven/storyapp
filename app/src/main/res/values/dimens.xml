@@ -5,6 +5,8 @@
     <dimen name="_0dp">0dp</dimen>
     <dimen name="_8dp">8dp</dimen>
     <dimen name="_16dp">16dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
     <dimen name="_32dp">32dp</dimen>
     <dimen name="_44dp">44dp</dimen>
     <dimen name="_48dp">48dp</dimen>

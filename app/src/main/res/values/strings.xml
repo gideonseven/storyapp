@@ -21,4 +21,6 @@
     <string name="error_minimum_6_char">Minimum 6 Karakter</string>
     <string name="error_minimum_4_char">Minimum 4 Karakter</string>
     <string name="text_state_retry">Coba Lagi</string>
+    <string name="do_not_have_account">Belum punya akun?</string>
+    <string name="register_now">Daftar Sekarang!</string>
 </resources>

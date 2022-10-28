@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.don.storyApp.util.StateType" />
 
         <import type="android.view.View" />
@@ -20,79 +21,109 @@
         android:orientation="vertical"
         tools:context=".presentation.login.LoginFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextContent.H2"
-                app:layout_constraintBottom_toTopOf="@+id/til_email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Halaman Login" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_email"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_8dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
 
-                <com.don.storyApp.util.CustomTextInputEditText
-                    android:id="@+id/ed_login_email"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_email"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/input_email"
-                    android:inputType="textEmailAddress"
-                    android:text="@={vm.email}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginBottom="@dimen/_8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/til_password"
+                    app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16dp"
-                android:layout_marginTop="@dimen/_8dp"
-                android:hint="@string/input_password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline"
-                app:passwordToggleEnabled="true">
+                    <com.don.storyApp.util.CustomTextInputEditText
+                        android:id="@+id/ed_login_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/input_email"
+                        android:inputType="textEmailAddress"
+                        android:text="@={vm.email}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.don.storyApp.util.CustomTextInputEditText
-                    android:id="@+id/ed_login_password"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_password"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textPassword"
-                    android:text="@={vm.password}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginBottom="@dimen/_8dp"
+                    android:hint="@string/input_password"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
+                    app:passwordToggleEnabled="true">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
+                    <com.don.storyApp.util.CustomTextInputEditText
+                        android:id="@+id/ed_login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPassword"
+                        android:text="@={vm.password}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login"
-                style="@style/Button.Primary"
-                android:layout_marginHorizontal="@dimen/_16dp"
-                android:layout_marginTop="@dimen/_32dp"
-                android:enabled="@{vm.isButtonEnabled}"
-                android:text="@string/login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_password" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_login"
+                    style="@style/Button.Primary"
+                    android:layout_marginHorizontal="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:enabled="@{vm.isButtonEnabled}"
+                    android:text="@string/login"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_no_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:text="@string/do_not_have_account"
+                    android:textAppearance="@style/TextContent.BS.Bold"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_vertical"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:paddingHorizontal="@dimen/_8dp"
+                    android:paddingVertical="@dimen/_8dp"
+                    android:text="@string/register_now"
+                    android:textColor="@color/md_teal_400"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_vertical"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_no_account" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
         <include
             android:id="@+id/view_loading"

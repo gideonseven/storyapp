@@ -1,8 +1,10 @@
 package com.don.storyApp
 
 import android.app.Application
+import com.don.storyApp.domain.model.AppBuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by gideon on 21 October 2022
@@ -11,8 +13,16 @@ import timber.log.Timber
  */
 @HiltAndroidApp
 class StoryApplication : Application() {
+
+    @Inject
+    lateinit var appBuildConfig: AppBuildConfig
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+
+        appBuildConfig.apply {
+            prefName = BuildConfig.PREFERENCES_NAME
+        }
     }
 }
