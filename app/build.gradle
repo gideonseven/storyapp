@@ -73,6 +73,9 @@ dependencies {
     // sandwich
     implementation "com.github.skydoves:sandwich:1.3.2"
 
+    // lottie
+    implementation "com.airbnb.android:lottie:4.1.0"
+
 
 }
 repositories {

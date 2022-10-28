@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.don.storyApp.domain.repository.ILoginRepository
 import com.don.storyApp.util.Resource
+import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -29,6 +30,8 @@ class LoginViewModel @Inject constructor(
     private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
     val isButtonEnabled = mIsButtonEnabled as LiveData<Boolean>
 
+    val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+
     fun checkForm() {
 //        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
         mIsButtonEnabled.value = true
@@ -36,7 +39,6 @@ class LoginViewModel @Inject constructor(
 
     fun submitLogin() {
         viewModelScope.launch {
-//            val resource = repository.doLogin(email.value.orEmpty(), password.value.orEmpty())
             repository.doLogin("abcdeflf@hotmail.com", "aaaaaaaa").collect {
                 when (it) {
                     is Resource.Success -> {
@@ -46,9 +48,11 @@ class LoginViewModel @Inject constructor(
                                 it.data
                             }"
                         )
+                        stateType.value = StateType.CONTENT
                     }
                     is Resource.Loading -> {
                         Timber.e("== RESPONSE Loading")
+                        stateType.value = StateType.LOADING
                     }
                     is Resource.Error -> {
                         Timber.e("== RESPONSE Error")
@@ -57,10 +61,10 @@ class LoginViewModel @Inject constructor(
                                 it.message
                             }"
                         )
+                        stateType.value = StateType.ERROR
                     }
                 }
             }
-
         }
     }
 }

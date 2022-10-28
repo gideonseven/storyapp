@@ -20,4 +20,5 @@
     <string name="error_email_not_valid">Format Email Tidak Valid</string>
     <string name="error_minimum_6_char">Minimum 6 Karakter</string>
     <string name="error_minimum_4_char">Minimum 4 Karakter</string>
+    <string name="text_state_retry">Coba Lagi</string>
 </resources>
