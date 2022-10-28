@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.data.remote.dto.LoginResponse
 import com.don.storyApp.domain.repository.IAuthRepository
 import com.don.storyApp.util.Constant
 import com.don.storyApp.util.Resource
@@ -38,15 +37,14 @@ class RegisterViewModel @Inject constructor(
     val mIsValidPassword: MutableLiveData<Boolean> = MutableLiveData(false)
     private val isValidPassword = mIsValidPassword as LiveData<Boolean>
 
-    //    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
-    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
     val isButtonEnabled = mIsButtonEnabled as LiveData<Boolean>
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
     fun checkForm() {
-//        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
-        mIsButtonEnabled.value = true
+        mIsButtonEnabled.value =
+            isValidName.value == true && isValidEmail.value == true && isValidPassword.value == true
     }
 
     fun submitRegister(
@@ -54,7 +52,11 @@ class RegisterViewModel @Inject constructor(
         onSuccess: (SimpleNetworkModel) -> Unit
     ) {
         viewModelScope.launch {
-            repository.doRegister("user", "abcdeflf@hotmail.com", "aaaaaaaa").collect {
+            repository.doRegister(
+                name.value.orEmpty(),
+                email.value.orEmpty(),
+                password.value.orEmpty()
+            ).collect {
                 when (it) {
                     is Resource.Success -> {
                         Timber.e("== RESPONSE Success")

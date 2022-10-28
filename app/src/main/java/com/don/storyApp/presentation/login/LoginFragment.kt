@@ -1,10 +1,12 @@
 package com.don.storyApp.presentation.login
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +15,6 @@ import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentLoginBinding
 import com.don.storyApp.util.Validation
 import com.don.storyApp.util.showSnackBar
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -23,6 +24,11 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
 
     private val viewModel by viewModels<LoginViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +76,29 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          // Handle action bar item clicks here. The action bar will
+          // automatically handle clicks on the Home/Up button, so long
+          // as you specify a parent activity in AndroidManifest.xml.
+          return when (item.itemId) {
+              R.id.action_settings -> {
+                  Timber.e("=== action_settings ")
+                  true
+              }
+              R.id.action_change_language -> {
+                  startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                  true
+              }
+              R.id.action_log_out -> {
+                  Timber.e("=== action_log_out ")
+                  true
+              }
+              else -> super.onOptionsItemSelected(item)
+          }
+      }
 
     override fun onDestroyView() {
         super.onDestroyView()

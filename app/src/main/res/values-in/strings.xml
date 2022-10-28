@@ -1,24 +1,21 @@
 <resources>
     <string name="app_name">storyapp</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_language">Language</string>
-    <string name="action_log_out">Log Out</string>
-    <string name="language">Language</string>
-
+    <string name="action_settings">Pengaturan</string>
+    <string name="action_log_out">Keluar</string>
     <!-- Strings used for fragments for navigation -->
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Selanjutnya</string>
+    <string name="previous">Kembali</string>
 
     <string name="title">Story App</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_second_fragment">Halo Fragment kedua. Arg: %1$s</string>
     <string name="input_email">Masukkan Email</string>
     <string name="input_password">Masukkan Password</string>
     <string name="input_name">Masukkan Nama</string>
     <string name="login">Login</string>
     <string name="register">Daftar</string>
-    <string name="text_blank" translatable="false" />
+    <string name="text_blank"/>
 
     <string name="error_cannot_empty">Tidak Boleh Kosong</string>
     <string name="error_email_not_valid">Format Email Tidak Valid</string>
@@ -27,4 +24,6 @@
     <string name="text_state_retry">Coba Lagi</string>
     <string name="do_not_have_account">Belum punya akun?</string>
     <string name="register_now">Daftar Sekarang!</string>
+    <string name="language">Bahasa</string>
+    <string name="action_language">Bahasa</string>
 </resources>
