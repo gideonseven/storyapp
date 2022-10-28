@@ -71,6 +71,10 @@ class LoginFragment : Fragment() {
                     }
                 )
             }
+
+            loginBinding.tvRegister.setOnClickListener {
+
+            }
         }
     }
 
