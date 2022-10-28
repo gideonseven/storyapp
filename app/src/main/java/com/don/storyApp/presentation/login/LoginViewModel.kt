@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.repository.IAuthRepository
+import com.don.storyApp.util.Constant
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val repository: IAuthRepository
 ) : ViewModel() {
-    var email: MutableLiveData<String> = MutableLiveData("")
-    var password: MutableLiveData<String> = MutableLiveData("")
+    var email: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
 
     val mIsValidEmail: MutableLiveData<Boolean> = MutableLiveData(false)
     private val isValidEmail = mIsValidEmail as LiveData<Boolean>
@@ -39,8 +40,8 @@ class LoginViewModel @Inject constructor(
     }
 
     fun submitLogin(
-        errorMessage : (String) -> Unit,
-        onSuccess: (LoginResponse) -> Unit
+        errorMessage: (String) -> Unit,
+        onSuccess: (StoryResponse) -> Unit
     ) {
         viewModelScope.launch {
             repository.doLogin("abcdeflf@hotmail.com", "aaaaaaaa").collect {

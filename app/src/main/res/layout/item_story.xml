@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.don.storyApp.R" />
+
+        <variable
+            name="story"
+            type="com.don.storyApp.domain.model.Story" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_8dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:background="@color/md_teal_50"
+        app:cardCornerRadius="@dimen/_8dp"
+        app:cardElevation="@dimen/_0dp"
+        app:cardUseCompatPadding="false"
+        app:strokeColor="@color/md_teal_50"
+        app:strokeWidth="@dimen/_2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/Layout.Match">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintDimensionRatio="3:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_placeholder_square" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                style="@style/TextContent.BS"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:background="@color/md_teal_200"
+                android:padding="@dimen/_4dp"
+                android:textColor="@color/md_white_1000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_amount_current"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="13 Juli 2022" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_title_study"
+                style="@style/TextContent.BM.Bold"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:ellipsize="end"
+
+                android:maxLines="1"
+                android:textColor="@color/md_teal_900"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_image"
+                tools:text="Nama User" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_amount_current"
+                style="@style/TextContent.BXS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_4dp"
+                android:ellipsize="end"
+
+                android:maxLines="2"
+                android:textColor="@color/md_teal_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_study"
+                tools:text="Detail dari Story nya Detail dari Story nya Detail dari Story nya" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_vendor"
+                style="@style/TextContent.BXS"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginVertical="@dimen/_16dp"
+                android:drawableStart="@drawable/ic_location"
+                android:gravity="center_vertical"
+                android:textColor="@color/md_grey_700"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_amount_current"
+                tools:text="151515115.15151 515151551" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

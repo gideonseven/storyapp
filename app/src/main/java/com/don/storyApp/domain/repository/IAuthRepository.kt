@@ -1,6 +1,6 @@
 package com.don.storyApp.domain.repository
 
-import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +12,13 @@ import kotlinx.coroutines.flow.Flow
  * https://www.cicil.co.id/
  */
 interface IAuthRepository {
-    suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>>
-    suspend fun doRegister(username: String, email: String, password: String): Flow<Resource<SimpleNetworkModel>>
+    suspend fun doLogin(email: String, password: String): Flow<Resource<StoryResponse>>
+    suspend fun doRegister(
+        username: String,
+        email: String,
+        password: String
+    ): Flow<Resource<SimpleNetworkModel>>
+
     fun doLogOut()
     fun saveToken(token: String)
 }

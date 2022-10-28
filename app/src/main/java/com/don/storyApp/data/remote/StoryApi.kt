@@ -1,6 +1,6 @@
 package com.don.storyApp.data.remote
 
-import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.skydoves.sandwich.ApiResponse
@@ -21,7 +21,7 @@ interface StoryApi {
     suspend fun doLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ): ApiResponse<LoginResponse>
+    ): ApiResponse<StoryResponse>
 
     @FormUrlEncoded
     @POST("register")
@@ -36,21 +36,21 @@ interface StoryApi {
     suspend fun doAddStory(
         @Field("description") symbol: String,
         @Field("photo") photoFile: ResponseBody
-    ): Resource<LoginResponse>
+    ): Resource<StoryResponse>
 
     @FormUrlEncoded
     @POST("description")
     suspend fun getStories(
         @Field("description") symbol: String,
         @Field("photo") photoFile: ResponseBody
-    ): Resource<LoginResponse>
+    ): Resource<StoryResponse>
 
     @FormUrlEncoded
     @POST("description")
     suspend fun getStory(
         @Field("description") symbol: String,
         @Field("photo") photoFile: ResponseBody
-    ): Resource<LoginResponse>
+    ): Resource<StoryResponse>
 
     companion object {
         const val BASE_URL = "https://story-api.dicoding.dev/v1/"

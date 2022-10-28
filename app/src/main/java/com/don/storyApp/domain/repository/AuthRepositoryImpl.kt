@@ -1,7 +1,7 @@
 package com.don.storyApp.domain.repository
 
 import com.don.storyApp.data.remote.StoryApi
-import com.don.storyApp.data.remote.dto.LoginResponse
+import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.data.storage.AppPreferences
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
@@ -26,9 +26,9 @@ class AuthRepositoryImpl @Inject constructor(
     private val gson: Gson,
     private val preferences: AppPreferences
 ) : IAuthRepository {
-    override suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>> {
+    override suspend fun doLogin(email: String, password: String): Flow<Resource<StoryResponse>> {
         return flow {
-            var resource: Resource<LoginResponse> = Resource.Loading()
+            var resource: Resource<StoryResponse> = Resource.Loading()
             emit(resource)
             val response = apiService.doLogin(email, password)
             response.onSuccess {
@@ -38,7 +38,7 @@ class AuthRepositoryImpl @Inject constructor(
             }.onError {
                 Timber.e("=== ERR")
                 val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), LoginResponse::class.java)
+                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
                 resource = Resource.Error(message = errorResp.message.orEmpty())
             }.onException {
                 Timber.e("=== EXXX")
@@ -56,14 +56,14 @@ class AuthRepositoryImpl @Inject constructor(
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
-            val response = apiService.doRegister(username,email, password)
+            val response = apiService.doRegister(username, email, password)
             response.onSuccess {
                 Timber.e("=== SUC")
                 resource = Resource.Success(data = this.data)
             }.onError {
                 Timber.e("=== ERR")
                 val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), LoginResponse::class.java)
+                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
                 resource = Resource.Error(message = errorResp.message.orEmpty())
             }.onException {
                 Timber.e("=== EXXX")

@@ -15,7 +15,7 @@
     <string name="input_name">Input Name</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="text_blank"/>
+    <string name="text_blank" />
 
     <string name="error_cannot_empty">Cannot be Empty</string>
     <string name="error_email_not_valid">Email is not Valid</string>

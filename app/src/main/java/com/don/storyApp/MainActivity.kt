@@ -1,8 +1,6 @@
 package com.don.storyApp
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController

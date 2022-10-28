@@ -80,25 +80,25 @@ class LoginFragment : Fragment() {
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-          // Handle action bar item clicks here. The action bar will
-          // automatically handle clicks on the Home/Up button, so long
-          // as you specify a parent activity in AndroidManifest.xml.
-          return when (item.itemId) {
-              R.id.action_settings -> {
-                  Timber.e("=== action_settings ")
-                  true
-              }
-              R.id.action_change_language -> {
-                  startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-                  true
-              }
-              R.id.action_log_out -> {
-                  Timber.e("=== action_log_out ")
-                  true
-              }
-              else -> super.onOptionsItemSelected(item)
-          }
-      }
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                Timber.e("=== action_settings ")
+                true
+            }
+            R.id.action_change_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                true
+            }
+            R.id.action_log_out -> {
+                Timber.e("=== action_log_out ")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
