@@ -11,5 +11,5 @@ import kotlinx.coroutines.flow.Flow
  * https://www.cicil.co.id/
  */
 interface ILoginRepository {
-   suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>>
+    suspend fun doLogin(email: String, password: String): Flow<Resource<LoginResponse>>
 }

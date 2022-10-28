@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(){
+class LoginFragment : Fragment() {
 
     private var binding: FragmentLoginBinding? = null
 
@@ -28,7 +28,6 @@ class LoginFragment : Fragment(){
         binding?.apply {
             lifecycleOwner = this@LoginFragment
             vm = viewModel
-            fg = this@LoginFragment
         }
         return binding?.root
     }
@@ -38,21 +37,21 @@ class LoginFragment : Fragment(){
 
         binding?.let { loginBinding ->
             loginBinding.edLoginEmail.doAfterTextChanged {
-                with(viewModel){
+                with(viewModel) {
                     mIsValidEmail.value = Validation.isValidEmail(loginBinding.tilEmail)
                     viewModel.checkForm()
                     Timber.e(" ==== edLoginEmail ${Validation.isValidEmail(loginBinding.tilEmail)}")
                 }
             }
             loginBinding.edLoginPassword.doAfterTextChanged {
-                with(viewModel){
+                with(viewModel) {
                     mIsValidPassword.value = Validation.isValidPassword(loginBinding.tilPassword)
                     viewModel.checkForm()
                     Timber.e(" ==== edLoginPassword ${Validation.isValidPassword(loginBinding.tilPassword)}")
                 }
             }
             loginBinding.btnLogin.setOnClickListener {
-                viewModel.launchData()
+                viewModel.submitLogin()
             }
         }
     }

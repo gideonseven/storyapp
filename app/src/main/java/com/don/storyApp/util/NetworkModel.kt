@@ -15,5 +15,5 @@ interface BaseNetworkModel {
 
 data class SimpleNetworkModel(
     @field:SerializedName("message") override val message: String? = null,
-    @field:SerializedName( "error") override val error: Boolean? = null
+    @field:SerializedName("error") override val error: Boolean? = null
 ) : BaseNetworkModel

@@ -10,10 +10,6 @@
         <variable
             name="vm"
             type="com.don.storyApp.presentation.login.LoginViewModel" />
-
-        <variable
-            name="fg"
-            type="com.don.storyApp.presentation.login.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

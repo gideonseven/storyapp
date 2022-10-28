@@ -3,8 +3,11 @@ package com.don.storyApp.data.remote
 import com.don.storyApp.data.remote.dto.LoginResponse
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
+import com.skydoves.sandwich.ApiResponse
 import okhttp3.ResponseBody
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 
 /**
@@ -18,7 +21,7 @@ interface StoryApi {
     suspend fun doLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ): LoginResponse
+    ): ApiResponse<LoginResponse>
 
     @FormUrlEncoded
     @POST("register")

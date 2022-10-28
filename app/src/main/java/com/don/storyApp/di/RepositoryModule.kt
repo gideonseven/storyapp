@@ -3,6 +3,7 @@ package com.don.storyApp.di
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.repository.ILoginRepository
 import com.don.storyApp.domain.repository.LoginRepositoryImpl
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +19,11 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RepositoryModule {
+object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideLoginRepository(api: StoryApi): ILoginRepository {
-        return LoginRepositoryImpl(api)
+    fun provideLoginRepository(api: StoryApi, gson: Gson): ILoginRepository {
+        return LoginRepositoryImpl(api, gson)
     }
 }

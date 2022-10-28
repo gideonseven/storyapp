@@ -32,7 +32,11 @@ class CustomTextInputEditText : TextInputEditText, OnTouchListener {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
@@ -70,10 +74,20 @@ class CustomTextInputEditText : TextInputEditText, OnTouchListener {
     }
 
     //Mengkonfigurasi button
-    private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
+    private fun setButtonDrawables(
+        startOfTheText: Drawable? = null,
+        topOfTheText: Drawable? = null,
+        endOfTheText: Drawable? = null,
+        bottomOfTheText: Drawable? = null
+    ) {
         // Sets the Drawables (if any) to appear to the left of,
         // above, to the right of, and below the text.
-        setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
+        setCompoundDrawablesWithIntrinsicBounds(
+            startOfTheText,
+            topOfTheText,
+            endOfTheText,
+            bottomOfTheText
+        )
     }
 
     // Menghilangkan clear button
@@ -95,12 +109,14 @@ class CustomTextInputEditText : TextInputEditText, OnTouchListener {
             if (isClearButtonClicked) {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        clearButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_close) as Drawable
+                        clearButtonImage =
+                            ContextCompat.getDrawable(context, R.drawable.ic_close) as Drawable
                         showClearButton()
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
-                        clearButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_close) as Drawable
+                        clearButtonImage =
+                            ContextCompat.getDrawable(context, R.drawable.ic_close) as Drawable
                         when {
                             text != null -> text?.clear()
                         }

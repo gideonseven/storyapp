@@ -7,15 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.don.storyApp.domain.repository.ILoginRepository
 import com.don.storyApp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-   private val repository: ILoginRepository
+    private val repository: ILoginRepository
 ) : ViewModel() {
     var email: MutableLiveData<String> = MutableLiveData("")
     var password: MutableLiveData<String> = MutableLiveData("")
@@ -26,32 +25,42 @@ class LoginViewModel @Inject constructor(
     val mIsValidPassword: MutableLiveData<Boolean> = MutableLiveData(false)
     private val isValidPassword = mIsValidPassword as LiveData<Boolean>
 
-    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    //    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
     val isButtonEnabled = mIsButtonEnabled as LiveData<Boolean>
 
     fun checkForm() {
-       mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
-    }
-    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
-        throwable.printStackTrace()
+//        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
+        mIsButtonEnabled.value = true
     }
 
-    fun submitLogin(){
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-            repository.doLogin(email.value.orEmpty(), password.value.orEmpty())
-                .collect{ resource ->
-                    when(resource ){
-                        is Resource.Success -> {
-
-                        }
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Error -> {
-
-                        }
+    fun submitLogin() {
+        viewModelScope.launch {
+//            val resource = repository.doLogin(email.value.orEmpty(), password.value.orEmpty())
+            repository.doLogin("abcdeflf@hotmail.com", "aaaaaaaa").collect {
+                when (it) {
+                    is Resource.Success -> {
+                        Timber.e("== RESPONSE Success")
+                        Timber.e(
+                            "== RESPONSE ${
+                                it.data
+                            }"
+                        )
+                    }
+                    is Resource.Loading -> {
+                        Timber.e("== RESPONSE Loading")
+                    }
+                    is Resource.Error -> {
+                        Timber.e("== RESPONSE Error")
+                        Timber.e(
+                            "== RESPONSE ${
+                                it.message
+                            }"
+                        )
                     }
                 }
+            }
+
         }
     }
 }
