@@ -8,9 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentLoginBinding
 import com.don.storyApp.util.Validation
+import com.don.storyApp.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -56,15 +58,7 @@ class LoginFragment : Fragment() {
             loginBinding.btnLogin.setOnClickListener {
                 viewModel.submitLogin(
                     errorMessage = {
-                        Snackbar.make(loginBinding.root, it, Snackbar.LENGTH_SHORT).apply {
-                            setTextColor(
-                                ContextCompat.getColor(
-                                    this.context,
-                                    R.color.md_white_1000
-                                )
-                            )
-                            show()
-                        }
+                        showSnackBar(loginBinding.root, it)
                     },
                     onSuccess = {
                     }
@@ -72,7 +66,7 @@ class LoginFragment : Fragment() {
             }
 
             loginBinding.tvRegister.setOnClickListener {
-
+                findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
             }
         }
     }

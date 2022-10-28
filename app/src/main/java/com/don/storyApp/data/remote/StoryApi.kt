@@ -29,7 +29,7 @@ interface StoryApi {
         @Field("email") email: String,
         @Field("name") name: String,
         @Field("password") password: String,
-    ): Resource<SimpleNetworkModel>
+    ): ApiResponse<SimpleNetworkModel>
 
     @FormUrlEncoded
     @POST("description")

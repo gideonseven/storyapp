@@ -13,6 +13,8 @@
 
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:destination="@id/register_fragment" />
     </fragment>
     <fragment

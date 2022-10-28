@@ -35,13 +35,13 @@
                 android:layout_marginBottom="@dimen/_8dp"
                 app:layout_constraintBottom_toTopOf="@+id/til_password"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:hint="@string/input_email"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_login_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/input_email"
                     android:inputType="textEmailAddress"
                     android:text="@={vm.email}" />
             </com.google.android.material.textfield.TextInputLayout>
