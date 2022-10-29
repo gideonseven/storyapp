@@ -61,7 +61,7 @@ class StoriesViewModel @Inject constructor(
         }
     }
 
-    fun logout(){
+    fun logout() {
         authRepository.doLogOut()
     }
 }

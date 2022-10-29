@@ -41,11 +41,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_0dp"
                 android:adjustViewBounds="true"
+                android:transitionName="transName"
+                app:imageSrcFromUrl="@{story.photoUrl}"
                 app:layout_constraintDimensionRatio="2:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imageSrcFromUrl="@{story.photoUrl}"
                 tools:src="@drawable/ic_placeholder_square" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -55,11 +56,11 @@
                 android:layout_marginTop="@dimen/_8dp"
                 android:background="@color/md_teal_200"
                 android:padding="@dimen/_4dp"
+                android:text="@{helper.formatStringFromRFC3339Format(story.createdAt, dateFormat.NORMAL_DATE_FORMAT)}"
                 android:textColor="@color/md_white_1000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_amount_current"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{helper.formatStringFromRFC3339Format(story.createdAt, dateFormat.NORMAL_DATE_FORMAT)}"
                 tools:text="13 Juli 2022" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -85,8 +86,8 @@
                 android:layout_marginHorizontal="@dimen/_8dp"
                 android:layout_marginTop="@dimen/_4dp"
                 android:ellipsize="end"
-                android:text="@{story.description}"
                 android:maxLines="2"
+                android:text="@{story.description}"
                 android:textColor="@color/md_teal_500"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_study"

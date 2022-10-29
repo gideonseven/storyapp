@@ -2,6 +2,7 @@ package com.don.storyApp.presentation.stories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.don.storyApp.R
 import com.don.storyApp.databinding.ItemStoryBinding
@@ -16,7 +17,7 @@ import com.don.storyApp.util.DateHelper
  * https://www.cicil.co.id/
  */
 class StoriesAdapter constructor(
-    val onClick: (Story) -> Unit
+    val onClick: (Story, AppCompatImageView) -> Unit
 ) :
     RecyclerView.Adapter<StoriesAdapter.ItemViewHolder>() {
 
@@ -51,7 +52,7 @@ class StoriesAdapter constructor(
                 helper = DateHelper()
                 dateFormat = Constant()
                 cvContainer.setOnClickListener {
-                    onClick(item)
+                    onClick(item, binding.ivImage)
                 }
             }
         }

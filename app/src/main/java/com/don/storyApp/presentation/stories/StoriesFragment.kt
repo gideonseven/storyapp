@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentStoriesBinding
@@ -34,12 +35,21 @@ class StoriesFragment : Fragment() {
 
     private val storiesAdapter: StoriesAdapter by lazy {
         StoriesAdapter(
-            onClick = { story ->
+            onClick = { story, iv ->
                 Toast.makeText(requireContext(), story.name, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(
+                /*findNavController().navigate(
                     R.id.action_StoriesFragment_to_DetailFragment,
                     bundleOf(
                         Extras.KEY_STORY to story
+                    )
+                )*/
+
+                findNavController().navigate(
+                    resId = R.id.action_StoriesFragment_to_DetailFragment,
+                    args = bundleOf(Extras.KEY_STORY to story),
+                    navOptions = null,
+                    navigatorExtras = FragmentNavigatorExtras(
+                        iv to "transName"
                     )
                 )
             }

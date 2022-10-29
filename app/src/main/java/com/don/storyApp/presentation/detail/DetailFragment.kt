@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentDetailBinding
 import com.don.storyApp.util.Constant
@@ -33,7 +34,11 @@ class DetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        context?.let {
+            sharedElementEnterTransition =
+                TransitionInflater.from(it).inflateTransition(android.R.transition.slide_top)
+            setHasOptionsMenu(true)
+        }
     }
 
     override fun onCreateView(

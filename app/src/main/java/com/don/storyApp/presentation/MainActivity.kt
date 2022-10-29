@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
             when (it.id) {
                 R.id.login_fragment -> {
-                    addStory.isVisible =(false)
-                    logOut.isVisible =(false)
+                    addStory.isVisible = (false)
+                    logOut.isVisible = (false)
                     Timber.e("==== login_fragment")
                 }
                 R.id.register_fragment -> {

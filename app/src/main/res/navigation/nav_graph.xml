@@ -38,9 +38,7 @@
 
         <action
             android:id="@+id/action_StoriesFragment_to_DetailFragment"
-            app:destination="@id/detail_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left">
+            app:destination="@id/detail_fragment">
             <argument
                 android:name="key_story"
                 app:argType="com.don.storyApp.domain.model.Story" />
@@ -69,7 +67,7 @@
         android:id="@+id/action_General_to_AddStoryFragment"
         app:destination="@id/add_story_fragment"
         app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"/>
+        app:exitAnim="@anim/slide_out_left" />
 
     <action
         android:id="@+id/action_general_to_nav_graph"

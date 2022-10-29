@@ -97,10 +97,10 @@
                 style="@style/Button.Primary"
                 android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_32dp"
+                android:enabled="@{vm.isButtonEnabled}"
                 android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:enabled="@{vm.isButtonEnabled}"
                 app:layout_constraintTop_toBottomOf="@+id/til_password" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
