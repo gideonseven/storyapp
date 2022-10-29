@@ -1,6 +1,8 @@
 package com.don.storyApp.domain.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
 /**
@@ -8,6 +10,7 @@ import com.google.gson.annotations.SerializedName
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
+@Parcelize
 data class Story(
 
     @field:SerializedName("photoUrl")
@@ -30,4 +33,4 @@ data class Story(
 
     @field:SerializedName("lat")
     val lat: Double? = null
-)
+): Parcelable

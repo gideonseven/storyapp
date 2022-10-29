@@ -13,28 +13,47 @@
 
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/register_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:destination="@id/register_fragment" />
+            app:exitAnim="@anim/slide_out_left" />
 
         <action
             android:id="@+id/action_LoginFragment_to_StoriesFragment"
+            app:destination="@id/stories_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:destination="@id/stories_fragment" />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
         android:id="@+id/register_fragment"
         android:name="com.don.storyApp.presentation.register.RegisterFragment"
         android:label="@string/register_fragment_label"
-        tools:layout="@layout/fragment_register">
-    </fragment>
+        tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/stories_fragment"
         android:name="com.don.storyApp.presentation.stories.StoriesFragment"
         android:label="@string/stories_fragment_label"
         tools:layout="@layout/fragment_stories">
+
+        <action
+            android:id="@+id/action_StoriesFragment_to_DetailFragment"
+            app:destination="@id/detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
+            <argument
+                android:name="key_story"
+                app:argType="com.don.storyApp.domain.model.Story" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="com.don.storyApp.presentation.detail.DetailFragment"
+        android:label="@string/detail_fragment_label"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="key_story"
+            app:argType="com.don.storyApp.domain.model.Story" />
     </fragment>
 </navigation>

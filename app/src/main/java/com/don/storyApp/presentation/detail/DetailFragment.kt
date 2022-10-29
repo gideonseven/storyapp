@@ -1,4 +1,4 @@
-package com.don.storyApp.presentation.stories
+package com.don.storyApp.presentation.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.don.storyApp.R
-import com.don.storyApp.databinding.FragmentStoriesBinding
-import com.don.storyApp.util.Extras
+import com.don.storyApp.databinding.FragmentDetailBinding
+import com.don.storyApp.util.Constant
+import com.don.storyApp.util.DateHelper
+import com.don.storyApp.util.logValue
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -24,26 +24,13 @@ import timber.log.Timber
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
+
 @AndroidEntryPoint
-class StoriesFragment : Fragment() {
+class DetailFragment : Fragment(){
 
-    private var binding: FragmentStoriesBinding? = null
+    private var binding: FragmentDetailBinding? = null
 
-    private val viewModel by viewModels<StoriesViewModel>()
-
-    private val storiesAdapter: StoriesAdapter by lazy {
-        StoriesAdapter(
-            onClick = { story ->
-                Toast.makeText(requireContext(), story.name, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(
-                    R.id.action_StoriesFragment_to_DetailFragment,
-                    bundleOf(
-                        Extras.KEY_STORY to story
-                    )
-                )
-            }
-        )
-    }
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,24 +41,15 @@ class StoriesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStoriesBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
 
         binding?.apply {
-            lifecycleOwner = this@StoriesFragment
-            vm = viewModel
-            adapter = storiesAdapter
+            lifecycleOwner = this@DetailFragment
+            story = args.keyStory
+            helper = DateHelper()
+            constant = Constant()
         }
         return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        getStories()
-
-        binding?.viewError?.errorRetry?.setOnClickListener {
-            getStories()
-        }
     }
 
     @Deprecated("Deprecated in Java")
@@ -99,20 +77,5 @@ class StoriesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    private fun getStories() {
-        viewModel.getStories(
-            errorMessage = {
-                Timber.e("==== errorMessage $it")
-                binding?.let { vBinding ->
-                    vBinding.viewError.errorTitle.text = it
-                }
-            },
-            onSuccess = {
-                storiesAdapter.submitList(it)
-                Timber.e("==== LIST STORY $it")
-            }
-        )
     }
 }

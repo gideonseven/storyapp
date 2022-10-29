@@ -2,12 +2,12 @@
     <string name="app_name">storyapp</string>
     <string name="action_settings">Pengaturan</string>
     <string name="action_log_out">Keluar</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
+    <string name="stories_fragment_label">Stories Fragment</string>
+    <string name="detail_fragment_label">Detil Fragment</string>
     <string name="next">Selanjutnya</string>
     <string name="previous">Kembali</string>
-
     <string name="title">Story App</string>
     <string name="hello_second_fragment">Halo Fragment kedua. Arg: %1$s</string>
     <string name="input_email">Masukkan Email</string>
@@ -16,7 +16,6 @@
     <string name="login">Login</string>
     <string name="register">Daftar</string>
     <string name="text_blank" />
-
     <string name="error_cannot_empty">Tidak Boleh Kosong</string>
     <string name="error_email_not_valid">Format Email Tidak Valid</string>
     <string name="error_minimum_6_char">Minimum 6 Karakter</string>
@@ -26,4 +25,8 @@
     <string name="register_now">Daftar Sekarang!</string>
     <string name="language">Bahasa</string>
     <string name="action_language">Bahasa</string>
+    <string name="user_name">Nama User : %s</string>
+    <string name="story_description">Deskripsi : %s</string>
+    <string name="date_taken">Tanggal Dibuat : %s</string>
+    <string name="location">Lokasi : %s</string>
 </resources>

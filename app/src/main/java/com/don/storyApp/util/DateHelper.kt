@@ -12,11 +12,11 @@ import java.util.*
  */
 class DateHelper {
 
-    fun formatStringFromRFC3339Format(resourceDate: String, outputFormat: String?): String? {
+    fun formatStringFromRFC3339Format(resourceDate: String?, outputFormat: String?): String? {
         val outputFormatter = SimpleDateFormat(outputFormat, Locale.getDefault())
         var result: String? = null
         try {
-            val date: Date = parseRFC3339Date(resourceDate)
+            val date: Date = parseRFC3339Date(resourceDate ?: Constant.TEXT_BLANK)
             outputFormatter.timeZone = TimeZone.getDefault()
             result = outputFormatter.format(date)
         } catch (e: ParseException) {

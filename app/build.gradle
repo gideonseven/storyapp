@@ -3,8 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
 }
-apply plugin: 'kotlin-android'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keyProp = new Properties()
@@ -52,7 +53,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
 
-
     // androidx constraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
@@ -85,10 +85,9 @@ dependencies {
     // lottie
     implementation "com.airbnb.android:lottie:4.1.0"
 
+    // glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
-
-
 }
 repositories {
     mavenCentral()

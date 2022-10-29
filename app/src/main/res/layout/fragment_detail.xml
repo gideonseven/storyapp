@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.don.storyApp.R" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="story"
+            type="com.don.storyApp.domain.model.Story" />
+
+        <variable
+            name="helper"
+            type="com.don.storyApp.util.DateHelper" />
+
+        <variable
+            name="constant"
+            type="com.don.storyApp.util.Constant" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/Layout.Match">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:adjustViewBounds="true"
+            app:imageSrcFromUrl="@{story.photoUrl}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_placeholder_square" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title_study"
+            style="@style/TextContent.BM.Bold"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{@string/user_name(story.name)}"
+            android:textColor="@color/md_teal_900"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_image"
+            tools:text="Nama User" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_amount_current"
+            style="@style/TextContent.BXS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{@string/story_description(story.description)}"
+            android:textColor="@color/md_teal_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_study"
+            tools:text="Detail dari Story nya Detail dari Story nya Detail dari Story nya" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_date"
+            style="@style/TextContent.BS"
+            android:layout_marginHorizontal="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:background="@color/md_teal_200"
+            android:padding="@dimen/_4dp"
+            android:text="@{@string/date_taken(helper.formatStringFromRFC3339Format(story.createdAt, constant.NORMAL_DATE_FORMAT))}"
+            android:textColor="@color/md_white_1000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount_current"
+            tools:text="13 Juli 2022" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vendor"
+            style="@style/TextContent.BXS"
+            android:layout_marginStart="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:drawableStart="@drawable/ic_location"
+            android:gravity="center_vertical"
+            android:text="@{@string/location(story.lat +`/`+ story.lon)}"
+            android:textColor="@color/md_grey_700"
+            android:visibility="@{story.lat != null || story.lon != null ?  View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            tools:text="151515115.15151 515151551" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
