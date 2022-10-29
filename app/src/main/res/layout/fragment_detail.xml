@@ -87,7 +87,7 @@
             android:layout_marginTop="@dimen/_8dp"
             android:drawableStart="@drawable/ic_location"
             android:gravity="center_vertical"
-            android:text="@{@string/location(story.lat +`/`+ story.lon)}"
+            android:text="@{@string/location(story.lat + ` - ` + story.lon)}"
             android:textColor="@color/md_grey_700"
             android:visibility="@{story.lat != null || story.lon != null ?  View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"

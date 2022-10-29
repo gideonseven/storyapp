@@ -12,11 +12,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentAddStoryBinding
 import com.don.storyApp.presentation.CameraActivity
 import com.don.storyApp.util.Validation
 import com.don.storyApp.util.rotateBitmap
+import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -60,11 +62,11 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             buttonAdd.setOnClickListener {
                 viewModel.addStory(
                     errorMessage = {
-                        Toast.makeText(activity, "errorMessage $it", Toast.LENGTH_LONG).show()
-
+                        showSnackBar(this@apply.root, it)
                     },
                     onSuccess = {
                         Toast.makeText(activity, "onSuccess ${it.message}", Toast.LENGTH_LONG).show()
+                        findNavController().popBackStack()
                     })
             }
             tvTakeImage.setOnClickListener {

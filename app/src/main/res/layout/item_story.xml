@@ -7,6 +7,8 @@
 
         <import type="com.don.storyApp.R" />
 
+        <import type="android.view.View" />
+
         <variable
             name="story"
             type="com.don.storyApp.domain.model.Story" />
@@ -18,7 +20,6 @@
         <variable
             name="dateFormat"
             type="com.don.storyApp.util.Constant" />
-
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -34,7 +35,9 @@
         app:strokeColor="@color/md_teal_50"
         app:strokeWidth="@dimen/_2dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout style="@style/Layout.Match">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Layout.Match"
+            android:paddingBottom="@dimen/_8dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_image"
@@ -100,12 +103,13 @@
                 android:layout_marginVertical="@dimen/_16dp"
                 android:drawableStart="@drawable/ic_location"
                 android:gravity="center_vertical"
+                android:text="@{story.lat + ` - ` + story.lon}"
                 android:textColor="@color/md_grey_700"
+                android:visibility="@{story.lat == null || story.lon == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_amount_current"
                 tools:text="151515115.15151 515151551" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
