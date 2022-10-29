@@ -35,12 +35,12 @@ interface StoryApi {
         @Header("Authorization") authorization: String
     ): ApiResponse<StoryResponse>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("stories")
     suspend fun doAddStory(
         @Header("Authorization") authorization: String,
-        @Field("photo") file: File,
-        @Field("description") description: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody,
     ): ApiResponse<SimpleNetworkModel>
 
     companion object {

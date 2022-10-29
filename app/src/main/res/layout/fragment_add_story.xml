@@ -48,7 +48,8 @@
                 android:lines="3"
                 android:maxLength="100"
                 android:maxLines="3"
-                android:minLines="3" />
+                android:minLines="3"
+                android:text="@={vm.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView

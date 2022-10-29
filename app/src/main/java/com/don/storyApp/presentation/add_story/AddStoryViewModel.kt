@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
-import com.don.storyApp.util.Constant
-import com.don.storyApp.util.Resource
-import com.don.storyApp.util.SimpleNetworkModel
-import com.don.storyApp.util.StateType
+import com.don.storyApp.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -45,7 +42,7 @@ class AddStoryViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             myFile?.let {
-                repository.addStory(description.value.orEmpty(), it).collect { resource ->
+                repository.addStory(description.value.orEmpty(), reduceFileImage(it)).collect { resource ->
                     when (resource) {
                         is Resource.Success -> {
                             Timber.e("== RESPONSE Success")

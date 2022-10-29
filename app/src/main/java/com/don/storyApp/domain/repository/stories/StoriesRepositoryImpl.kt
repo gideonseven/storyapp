@@ -13,6 +13,11 @@ import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -50,10 +55,18 @@ class StoriesRepositoryImpl @Inject constructor(
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
+
+            val desc = description.toRequestBody("text/plain".toMediaType())
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
             val response = apiService.doAddStory(
                 authorization = "Bearer ${preferences.accessToken.orEmpty()}",
-                description =description,
-                file = file
+                description =desc,
+                file = imageMultipart
             )
             response.onSuccess {
                 resource = Resource.Success(data = this.data)
