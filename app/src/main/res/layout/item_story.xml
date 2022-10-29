@@ -37,6 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageSrcFromUrl="@{story.photoUrl}"
                 tools:src="@drawable/ic_placeholder_square" />
 
             <androidx.appcompat.widget.AppCompatTextView
