@@ -1,4 +1,4 @@
-package com.don.storyApp
+package com.don.storyApp.presentation
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.don.storyApp.R
 import com.don.storyApp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
