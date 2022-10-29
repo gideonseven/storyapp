@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.don.storyApp.R
 import com.don.storyApp.databinding.ItemStoryBinding
 import com.don.storyApp.domain.model.Story
+import com.don.storyApp.util.Constant
+import com.don.storyApp.util.DateHelper
 
 
 /**
@@ -18,7 +20,7 @@ class StoriesAdapter constructor(
 ) :
     RecyclerView.Adapter<StoriesAdapter.ItemViewHolder>() {
 
-    var listStories : List<Story> = listOf()
+    private var listStories : List<Story> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -44,9 +46,13 @@ class StoriesAdapter constructor(
     inner class ItemViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Story) {
-            binding.story = item
-            binding.cvContainer.setOnClickListener{
-                onClick(item)
+            with(binding){
+                story = item
+                helper = DateHelper()
+                dateFormat = Constant()
+                cvContainer.setOnClickListener{
+                    onClick(item)
+                }
             }
         }
     }

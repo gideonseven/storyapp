@@ -8,6 +8,9 @@ package com.don.storyApp.util
  */
 class Constant {
     companion object {
-        val TEXT_BLANK = ""
+        const val TEXT_BLANK = ""
     }
+
+    val NORMAL_DATE_FORMAT = "dd MMMM yyyy"
+
 }
