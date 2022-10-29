@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentDetailBinding
@@ -46,6 +47,7 @@ class DetailFragment : Fragment() {
             story = args.keyStory
             helper = DateHelper()
             constant = Constant()
+            executePendingBindings()
         }
         return binding?.root
     }
@@ -58,6 +60,10 @@ class DetailFragment : Fragment() {
         return when (item.itemId) {
             R.id.action_change_language -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                true
+            }
+            R.id.action_add_story -> {
+                findNavController().navigate(R.id.action_General_to_AddStoryFragment)
                 true
             }
             R.id.action_log_out -> {

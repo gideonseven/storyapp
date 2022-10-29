@@ -25,7 +25,7 @@
     <string name="register_now">Register Now!</string>
     <string name="language">Language</string>
     <string name="action_language">Language</string>
-    <string name="user_name">Nama User : %s</string>
+    <string name="user_name">User Name : %s</string>
     <string name="date_taken">Date Taken : %s</string>
     <string name="location">Location: %s</string>
     <string name="story_description">Description : %s</string>

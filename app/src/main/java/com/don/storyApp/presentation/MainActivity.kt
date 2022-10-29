@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.login_fragment -> {
                     addStory.isVisible =(false)
                     logOut.isVisible =(false)
-
                     Timber.e("==== login_fragment")
                 }
                 R.id.register_fragment -> {
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                         actionBar.setDisplayHomeAsUpEnabled(false)
                         actionBar.setHomeButtonEnabled(false);
                     }
-
                     Timber.e("==== stories_fragment")
                 }
                 R.id.detail_fragment -> {
