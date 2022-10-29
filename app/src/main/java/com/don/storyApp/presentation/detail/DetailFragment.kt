@@ -36,7 +36,7 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         context?.let {
             sharedElementEnterTransition =
-                TransitionInflater.from(it).inflateTransition(android.R.transition.slide_top)
+                TransitionInflater.from(it).inflateTransition(android.R.transition.explode)
             setHasOptionsMenu(true)
         }
     }
