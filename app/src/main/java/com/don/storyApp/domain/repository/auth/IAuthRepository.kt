@@ -1,4 +1,4 @@
-package com.don.storyApp.domain.repository
+package com.don.storyApp.domain.repository.auth
 
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.util.Resource
@@ -21,4 +21,5 @@ interface IAuthRepository {
 
     fun doLogOut()
     fun saveToken(token: String)
+    fun hasAccessToken(): Boolean
 }

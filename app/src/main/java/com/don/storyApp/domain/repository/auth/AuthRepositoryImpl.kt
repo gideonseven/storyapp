@@ -1,4 +1,4 @@
-package com.don.storyApp.domain.repository
+package com.don.storyApp.domain.repository.auth
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
@@ -80,4 +80,6 @@ class AuthRepositoryImpl @Inject constructor(
     override fun saveToken(token: String) {
         preferences.accessToken = token
     }
+
+    override fun hasAccessToken() = preferences.accessToken?.isNotEmpty() ?: false
 }

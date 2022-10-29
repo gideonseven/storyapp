@@ -5,9 +5,7 @@ import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.ResponseBody
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 /**
@@ -31,23 +29,14 @@ interface StoryApi {
         @Field("password") password: String,
     ): ApiResponse<SimpleNetworkModel>
 
+    @GET("stories")
+    suspend fun getStories(
+        @Header("Authorization") authorization: String
+    ): ApiResponse<StoryResponse>
+
     @FormUrlEncoded
     @POST("description")
     suspend fun doAddStory(
-        @Field("description") symbol: String,
-        @Field("photo") photoFile: ResponseBody
-    ): Resource<StoryResponse>
-
-    @FormUrlEncoded
-    @POST("description")
-    suspend fun getStories(
-        @Field("description") symbol: String,
-        @Field("photo") photoFile: ResponseBody
-    ): Resource<StoryResponse>
-
-    @FormUrlEncoded
-    @POST("description")
-    suspend fun getStory(
         @Field("description") symbol: String,
         @Field("photo") photoFile: ResponseBody
     ): Resource<StoryResponse>

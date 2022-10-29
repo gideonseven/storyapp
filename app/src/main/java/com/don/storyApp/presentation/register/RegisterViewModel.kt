@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.domain.repository.IAuthRepository
+import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.util.Constant
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel

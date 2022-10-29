@@ -2,8 +2,10 @@ package com.don.storyApp.di
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.storage.AppPreferences
-import com.don.storyApp.domain.repository.AuthRepositoryImpl
-import com.don.storyApp.domain.repository.IAuthRepository
+import com.don.storyApp.domain.repository.auth.AuthRepositoryImpl
+import com.don.storyApp.domain.repository.auth.IAuthRepository
+import com.don.storyApp.domain.repository.stories.IStoriesRepository
+import com.don.storyApp.domain.repository.stories.StoriesRepositoryImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -30,5 +32,15 @@ object RepositoryModule {
         appPreferences: AppPreferences
     ): IAuthRepository {
         return AuthRepositoryImpl(api, gson, appPreferences)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStoriesRepository(
+        api: StoryApi,
+        gson: Gson,
+        appPreferences: AppPreferences
+    ): IStoriesRepository {
+        return StoriesRepositoryImpl(api, gson, appPreferences)
     }
 }

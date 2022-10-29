@@ -1,16 +1,17 @@
 package com.don.storyApp.presentation.stories
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.don.storyApp.databinding.FragmentRegisterBinding
-import com.don.storyApp.presentation.register.RegisterViewModel
-import com.don.storyApp.util.Validation
-import com.don.storyApp.util.showSnackBar
+import com.don.storyApp.R
+import com.don.storyApp.databinding.FragmentStoriesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -23,19 +24,33 @@ import timber.log.Timber
 @AndroidEntryPoint
 class StoriesFragment : Fragment() {
 
-    private var binding: FragmentRegisterBinding? = null
+    private var binding: FragmentStoriesBinding? = null
 
-    private val viewModel by viewModels<RegisterViewModel>()
+    private val viewModel by viewModels<StoriesViewModel>()
+
+    private val storiesAdapter: StoriesAdapter by lazy {
+        StoriesAdapter(
+            onClick = { story ->
+                Toast.makeText(requireContext(), story.name, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        binding = FragmentStoriesBinding.inflate(inflater, container, false)
 
         binding?.apply {
             lifecycleOwner = this@StoriesFragment
             vm = viewModel
+            adapter = storiesAdapter
         }
         return binding?.root
     }
@@ -43,43 +58,52 @@ class StoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let { registerBinding ->
-            registerBinding.edRegisterName.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidName.value = Validation.isValidName(registerBinding.tilName)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edName ${Validation.isValidName(registerBinding.tilName)}")
-                }
+        getStories()
+
+        binding?.viewError?.errorRetry?.setOnClickListener {
+            getStories()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                Timber.e("=== action_settings ")
+                true
             }
-            registerBinding.edRegisterPassword.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidPassword.value = Validation.isValidPassword(registerBinding.tilPassword)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginPassword ${Validation.isValidPassword(registerBinding.tilPassword)}")
-                }
+            R.id.action_change_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                true
             }
-            registerBinding.edRegisterEmail.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidEmail.value = Validation.isValidEmail(registerBinding.tilEmail)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginEmail ${Validation.isValidEmail(registerBinding.tilEmail)}")
-                }
+            R.id.action_log_out -> {
+                Timber.e("=== action_log_out ")
+                true
             }
-            registerBinding.btnRegister.setOnClickListener {
-                viewModel.submitRegister(
-                    errorMessage = {
-                        showSnackBar(registerBinding.root, it)
-                    },
-                    onSuccess = {
-                        showSnackBar(registerBinding.root, it.message.orEmpty())
-                    }
-                )
-            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun getStories(){
+        viewModel.getStories(
+            errorMessage = {
+                Timber.e("==== errorMessage $it")
+                binding?.let { vBinding ->
+                   vBinding.viewError.errorTitle.text = it
+                }
+            },
+            onSuccess = {
+                storiesAdapter.submitList(it)
+                Timber.e("==== LIST STORY $it")
+            }
+        )
     }
 }

@@ -46,6 +46,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(viewModel.hasAccessToken()){
+            findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
+        }
+
         binding?.let { loginBinding ->
             loginBinding.edLoginEmail.doAfterTextChanged {
                 with(viewModel) {
@@ -67,6 +71,7 @@ class LoginFragment : Fragment() {
                         showSnackBar(loginBinding.root, it)
                     },
                     onSuccess = {
+                        findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
                     }
                 )
             }
