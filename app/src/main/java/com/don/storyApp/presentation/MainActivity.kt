@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -43,34 +42,27 @@ class MainActivity : AppCompatActivity() {
         findNavController(R.id.nav_host_fragment).currentDestination?.let {
             val logOut = menu.findItem(R.id.action_log_out)
             val addStory = menu.findItem(R.id.action_add_story)
-            val changeLanguage = menu.findItem(R.id.action_change_language)
 
             when (it.id) {
                 R.id.login_fragment -> {
-                    addStory.isVisible = (false)
-                    logOut.isVisible = (false)
-                    Timber.e("==== login_fragment")
+                    logOut.isVisible = false
+                    addStory.isVisible = false
                 }
                 R.id.register_fragment -> {
-                    addStory.isVisible = false
                     logOut.isVisible = false
-                    Timber.e("==== register_fragment")
+                    addStory.isVisible = false
                 }
                 R.id.stories_fragment -> {
                     supportActionBar?.let { actionBar ->
                         actionBar.setDisplayHomeAsUpEnabled(false)
-                        actionBar.setHomeButtonEnabled(false);
+                        actionBar.setHomeButtonEnabled(false)
                     }
-                    Timber.e("==== stories_fragment")
                 }
                 R.id.detail_fragment -> {
-                    Timber.e("==== detail_fragment")
-
+                    menu.clear()
                 }
                 R.id.add_story_fragment -> {
-                    addStory.isVisible = false
-                    Timber.e("==== add_story_fragment")
-
+                    menu.clear()
                 }
                 else -> {
                     // do nothing

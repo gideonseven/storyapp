@@ -1,22 +1,16 @@
 package com.don.storyApp.presentation.detail
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentDetailBinding
 import com.don.storyApp.util.Constant
 import com.don.storyApp.util.DateHelper
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 /**
@@ -37,7 +31,6 @@ class DetailFragment : Fragment() {
         context?.let {
             sharedElementEnterTransition =
                 TransitionInflater.from(it).inflateTransition(android.R.transition.explode)
-            setHasOptionsMenu(true)
         }
     }
 
@@ -55,28 +48,6 @@ class DetailFragment : Fragment() {
             executePendingBindings()
         }
         return binding?.root
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_change_language -> {
-                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-                true
-            }
-            R.id.action_add_story -> {
-                findNavController().navigate(R.id.action_General_to_AddStoryFragment)
-                true
-            }
-            R.id.action_log_out -> {
-                Timber.e("=== action_log_out ")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onDestroyView() {

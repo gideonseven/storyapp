@@ -37,13 +37,6 @@ class StoriesFragment : Fragment() {
         StoriesAdapter(
             onClick = { story, iv ->
                 Toast.makeText(requireContext(), story.name, Toast.LENGTH_SHORT).show()
-                /*findNavController().navigate(
-                    R.id.action_StoriesFragment_to_DetailFragment,
-                    bundleOf(
-                        Extras.KEY_STORY to story
-                    )
-                )*/
-
                 findNavController().navigate(
                     resId = R.id.action_StoriesFragment_to_DetailFragment,
                     args = bundleOf(Extras.KEY_STORY to story),

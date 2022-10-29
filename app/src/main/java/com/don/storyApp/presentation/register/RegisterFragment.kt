@@ -85,10 +85,6 @@ class RegisterFragment : Fragment() {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                 true
             }
-            R.id.action_log_out -> {
-                Timber.e("=== action_log_out ")
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
