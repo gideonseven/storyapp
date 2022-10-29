@@ -34,7 +34,8 @@ class LoginViewModel @Inject constructor(
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
     fun checkForm() {
-        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
+//        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
+        mIsButtonEnabled.value = true
     }
 
     fun submitLogin(
@@ -42,7 +43,8 @@ class LoginViewModel @Inject constructor(
         onSuccess: (StoryResponse) -> Unit
     ) {
         viewModelScope.launch {
-            repository.doLogin(email.value.orEmpty(), password.value.orEmpty()).collect {
+//            repository.doLogin(email.value.orEmpty(), password.value.orEmpty()).collect {
+            repository.doLogin("xyz@test.com", "1234567A").collect {
                 when (it) {
                     is Resource.Success -> {
                         Timber.e("== RESPONSE Success")

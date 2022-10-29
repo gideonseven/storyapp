@@ -80,10 +80,6 @@ class StoriesFragment : Fragment() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> {
-                Timber.e("=== action_settings ")
-                true
-            }
             R.id.action_change_language -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                 true
@@ -94,6 +90,8 @@ class StoriesFragment : Fragment() {
             }
             R.id.action_log_out -> {
                 Timber.e("=== action_log_out ")
+                viewModel.logout()
+                findNavController().navigate(R.id.action_general_to_nav_graph)
                 true
             }
             else -> super.onOptionsItemSelected(item)
