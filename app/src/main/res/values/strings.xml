@@ -2,12 +2,14 @@
     <string name="app_name">storyapp</string>
     <string name="action_settings">Settings</string>
     <string name="action_language">Language</string>
+    <string name="action_add_story">Tambah Cerita</string>
     <string name="action_log_out">Log Out</string>
     <string name="language">Language</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
     <string name="stories_fragment_label">Stories Fragment</string>
     <string name="detail_fragment_label">Detil Fragment</string>
+    <string name="add_story_fragment_label">Add Story Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="title">Story App</string>
@@ -15,6 +17,7 @@
     <string name="input_email">Masukkan Email</string>
     <string name="input_password">Masukkan Password</string>
     <string name="input_name">Masukkan Nama</string>
+    <string name="input_description">Masukkan Deskripsi</string>
     <string name="login">Login</string>
     <string name="register">Daftar</string>
     <string name="text_blank" translatable="false" />

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.don.storyApp.R" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="story"
+            type="com.don.storyApp.domain.model.Story" />
+
+        <variable
+            name="helper"
+            type="com.don.storyApp.util.DateHelper" />
+
+        <variable
+            name="constant"
+            type="com.don.storyApp.util.Constant" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Layout.Match"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16dp"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:hint="@string/input_description"
+            app:counterEnabled="true"
+            app:counterMaxLength="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.don.storyApp.util.CustomTextInputEditText
+                android:lines="3"
+                android:minLines="3"
+                android:maxLines="3"
+                android:maxLength="100"
+                android:id="@+id/ed_login_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

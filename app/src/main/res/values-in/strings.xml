@@ -29,4 +29,7 @@
     <string name="story_description">Deskripsi : %s</string>
     <string name="date_taken">Tanggal Dibuat : %s</string>
     <string name="location">Lokasi : %s</string>
+    <string name="input_description">Masukkan Deskripsi</string>
+    <string name="add_story_fragment_label">Tambah Cerita Fragment</string>
+    <string name="action_add_story">Tambah Cerita</string>
 </resources>

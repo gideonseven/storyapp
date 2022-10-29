@@ -88,6 +88,10 @@ class StoriesFragment : Fragment() {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                 true
             }
+            R.id.action_add_story -> {
+                findNavController().navigate(R.id.action_General_to_AddStoryFragment)
+                true
+            }
             R.id.action_log_out -> {
                 Timber.e("=== action_log_out ")
                 true

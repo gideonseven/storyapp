@@ -29,4 +29,7 @@
     <string name="date_taken">Date Taken : %s</string>
     <string name="location">Location: %s</string>
     <string name="story_description">Description : %s</string>
+    <string name="input_description">Input Description</string>
+    <string name="add_story_fragment_label">Add Story Fragment</string>
+    <string name="action_add_story">Add Story</string>
 </resources>
