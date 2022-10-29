@@ -32,4 +32,8 @@
     <string name="story_description">Description : %s</string>
     <string name="date_taken">Date Taken : %s</string>
     <string name="location">Location: %s</string>
+    <string name="take_image">Take Image</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
 </resources>

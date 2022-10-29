@@ -32,4 +32,8 @@
     <string name="input_description">Input Description</string>
     <string name="add_story_fragment_label">Add Story Fragment</string>
     <string name="action_add_story">Add Story</string>
+    <string name="take_image">Take Image</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
 </resources>

@@ -5,6 +5,7 @@ import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.data.storage.AppPreferences
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Resource
+import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
 import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
@@ -12,6 +13,7 @@ import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.io.File
 import javax.inject.Inject
 
 
@@ -33,6 +35,28 @@ class StoriesRepositoryImpl @Inject constructor(
             val response = apiService.getStories("Bearer ${preferences.accessToken.orEmpty()}")
             response.onSuccess {
                 resource = Resource.Success(data = this.data.listStory.orEmpty())
+            }.onError {
+                val errorResp =
+                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
+                resource = Resource.Error(message = errorResp.message.orEmpty())
+            }.onException {
+                resource = Resource.Error(message = this.exception.message.orEmpty())
+            }
+            emit(resource)
+        }
+    }
+
+    override suspend fun addStory(description: String, file: File): Flow<Resource<SimpleNetworkModel>> {
+        return flow {
+            var resource: Resource<SimpleNetworkModel> = Resource.Loading()
+            emit(resource)
+            val response = apiService.doAddStory(
+                authorization = "Bearer ${preferences.accessToken.orEmpty()}",
+                description =description,
+                file = file
+            )
+            response.onSuccess {
+                resource = Resource.Success(data = this.data)
             }.onError {
                 val errorResp =
                     gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)

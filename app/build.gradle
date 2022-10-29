@@ -57,8 +57,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // androidx navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     // androidx livedata
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
@@ -88,6 +88,16 @@ dependencies {
     // glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    //camera x
+    def camerax_version = "1.1.0"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-view:${camerax_version}"
+
+    // easy permission
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
 }
 repositories {
     mavenCentral()

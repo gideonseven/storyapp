@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.repository.auth.IAuthRepository
+import com.don.storyApp.domain.repository.stories.IStoriesRepository
 import com.don.storyApp.util.Constant
 import com.don.storyApp.util.Resource
+import com.don.storyApp.util.SimpleNetworkModel
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 
 
@@ -22,59 +24,56 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddStoryViewModel @Inject constructor(
-    private val repository: IAuthRepository
+    private val repository: IStoriesRepository,
+    private val authRepos: IAuthRepository
 ) : ViewModel() {
-    var email: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
-    var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    var description: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
 
-    val mIsValidEmail: MutableLiveData<Boolean> = MutableLiveData(false)
-    private val isValidEmail = mIsValidEmail as LiveData<Boolean>
+    val mIsValidDescription: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isValidDescription = mIsValidDescription as LiveData<Boolean>
 
-    val mIsValidPassword: MutableLiveData<Boolean> = MutableLiveData(false)
-    private val isValidPassword = mIsValidPassword as LiveData<Boolean>
-
-    private val mIsButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isButtonEnabled = mIsButtonEnabled as LiveData<Boolean>
+    val mIsValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isValidImage = mIsValidImage as LiveData<Boolean>
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
-    fun checkForm() {
-        mIsButtonEnabled.value = isValidEmail.value == true && isValidPassword.value == true
-    }
+    var myFile: File? = null
 
-    fun submitLogin(
+    fun addStory(
         errorMessage: (String) -> Unit,
-        onSuccess: (StoryResponse) -> Unit
+        onSuccess: (SimpleNetworkModel) -> Unit
     ) {
         viewModelScope.launch {
-            repository.doLogin(email.value.orEmpty(), password.value.orEmpty()).collect {
-                when (it) {
-                    is Resource.Success -> {
-                        Timber.e("== RESPONSE Success")
-                        Timber.e(
-                            "== RESPONSE ${it.data}"
-                        )
-                        stateType.value = StateType.CONTENT
-                        it.data?.let(onSuccess)
-                    }
-                    is Resource.Loading -> {
-                        Timber.e("== RESPONSE Loading")
-                        stateType.value = StateType.LOADING
-                    }
-                    is Resource.Error -> {
-                        Timber.e("== RESPONSE Error")
-                        Timber.e(
-                            "== RESPONSE ${
-                                it.message
-                            }"
-                        )
-                        stateType.value = StateType.ERROR
-                        errorMessage(it.message.orEmpty())
+            myFile?.let {
+                repository.addStory(description.value.orEmpty(), it).collect { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            Timber.e("== RESPONSE Success")
+                            Timber.e(
+                                "== RESPONSE ${resource.data}"
+                            )
+                            stateType.value = StateType.CONTENT
+                            resource.data?.let(onSuccess)
+                        }
+                        is Resource.Loading -> {
+                            Timber.e("== RESPONSE Loading")
+                            stateType.value = StateType.LOADING
+                        }
+                        is Resource.Error -> {
+                            Timber.e("== RESPONSE Error")
+                            Timber.e(
+                                "== RESPONSE ${
+                                    resource.message
+                                }"
+                            )
+                            stateType.value = StateType.ERROR
+                            errorMessage(resource.message.orEmpty())
+                        }
                     }
                 }
             }
         }
     }
 
-    fun hasAccessToken() = repository.hasAccessToken()
+    fun hasAccessToken() = authRepos.hasAccessToken()
 }

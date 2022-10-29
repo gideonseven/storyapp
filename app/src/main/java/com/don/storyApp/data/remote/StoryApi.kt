@@ -1,11 +1,12 @@
 package com.don.storyApp.data.remote
 
 import com.don.storyApp.data.remote.dto.StoryResponse
-import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.skydoves.sandwich.ApiResponse
-import okhttp3.ResponseBody
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
+import java.io.File
 
 
 /**
@@ -35,11 +36,12 @@ interface StoryApi {
     ): ApiResponse<StoryResponse>
 
     @FormUrlEncoded
-    @POST("description")
+    @POST("stories")
     suspend fun doAddStory(
-        @Field("description") symbol: String,
-        @Field("photo") photoFile: ResponseBody
-    ): Resource<StoryResponse>
+        @Header("Authorization") authorization: String,
+        @Field("photo") file: File,
+        @Field("description") description: String,
+    ): ApiResponse<SimpleNetworkModel>
 
     companion object {
         const val BASE_URL = "https://story-api.dicoding.dev/v1/"
