@@ -1,7 +1,6 @@
 package com.don.storyApp.util
 
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.don.storyApp.R

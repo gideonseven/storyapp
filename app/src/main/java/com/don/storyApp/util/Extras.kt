@@ -8,6 +8,6 @@ package com.don.storyApp.util
  */
 class Extras {
     companion object {
-       const val KEY_STORY = "key_story"
+        const val KEY_STORY = "key_story"
     }
 }

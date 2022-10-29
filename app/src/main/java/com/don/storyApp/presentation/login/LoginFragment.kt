@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(viewModel.hasAccessToken()){
+        if (viewModel.hasAccessToken()) {
             findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
         }
 

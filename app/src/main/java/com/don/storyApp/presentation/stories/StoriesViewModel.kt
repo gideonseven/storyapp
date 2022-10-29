@@ -3,12 +3,9 @@ package com.don.storyApp.presentation.stories
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
-import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
 import com.don.storyApp.util.Resource
-import com.don.storyApp.util.SimpleNetworkModel
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

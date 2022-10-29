@@ -20,7 +20,7 @@ class StoriesAdapter constructor(
 ) :
     RecyclerView.Adapter<StoriesAdapter.ItemViewHolder>() {
 
-    private var listStories : List<Story> = listOf()
+    private var listStories: List<Story> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -37,7 +37,7 @@ class StoriesAdapter constructor(
 
     override fun getItemCount() = listStories.size
 
-    fun submitList(stories: List<Story>){
+    fun submitList(stories: List<Story>) {
         listStories = listOf()
         listStories = stories
         notifyItemRangeChanged(0, stories.count())
@@ -46,11 +46,11 @@ class StoriesAdapter constructor(
     inner class ItemViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Story) {
-            with(binding){
+            with(binding) {
                 story = item
                 helper = DateHelper()
                 dateFormat = Constant()
-                cvContainer.setOnClickListener{
+                cvContainer.setOnClickListener {
                     onClick(item)
                 }
             }

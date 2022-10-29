@@ -33,4 +33,4 @@ data class Story(
 
     @field:SerializedName("lat")
     val lat: Double? = null
-): Parcelable
+) : Parcelable
