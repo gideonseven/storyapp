@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            android:id="@+id/action_login_fragment_to_register_fragment"
             app:destination="@id/register_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
 
         <action
-            android:id="@+id/action_LoginFragment_to_StoriesFragment"
+            android:id="@+id/action_login_fragment_to_stories_fragment"
             app:destination="@id/stories_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_stories">
 
         <action
-            android:id="@+id/action_StoriesFragment_to_DetailFragment"
+            android:id="@+id/action_stories_fragment_to_detail_fragment"
             app:destination="@id/detail_fragment">
             <argument
                 android:name="key_story"
@@ -64,7 +64,7 @@
     </fragment>
 
     <action
-        android:id="@+id/action_General_to_AddStoryFragment"
+        android:id="@+id/action_general_to_add_story_fragment"
         app:destination="@id/add_story_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left" />

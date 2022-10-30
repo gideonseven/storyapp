@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (viewModel.hasAccessToken()) {
-            findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
+            findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
         }
 
 
@@ -67,13 +67,13 @@ class LoginFragment : Fragment() {
                         showSnackBar(loginBinding.root, it)
                     },
                     onSuccess = {
-                        findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
+                        findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
                     }
                 )
             }
 
             loginBinding.tvRegister.setOnClickListener {
-                findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
+                findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
             }
         }
     }

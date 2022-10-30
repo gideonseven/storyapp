@@ -35,7 +35,7 @@ class StoriesFragment : Fragment() {
         StoriesAdapter(
             onClick = { story, iv ->
                 findNavController().navigate(
-                    resId = R.id.action_StoriesFragment_to_DetailFragment,
+                    resId = R.id.action_stories_fragment_to_detail_fragment,
                     args = bundleOf(Extras.KEY_STORY to story),
                     navOptions = null,
                     navigatorExtras = FragmentNavigatorExtras(
@@ -95,7 +95,7 @@ class StoriesFragment : Fragment() {
                 true
             }
             R.id.action_add_story -> {
-                findNavController().navigate(R.id.action_General_to_AddStoryFragment)
+                findNavController().navigate(R.id.action_general_to_add_story_fragment)
                 true
             }
             R.id.action_log_out -> {

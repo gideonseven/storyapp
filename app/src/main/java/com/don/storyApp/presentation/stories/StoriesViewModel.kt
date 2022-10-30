@@ -10,7 +10,6 @@ import com.don.storyApp.util.Resource
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -35,24 +34,13 @@ class StoriesViewModel @Inject constructor(
             repository.getStories().collect {
                 when (it) {
                     is Resource.Success -> {
-                        Timber.e("== RESPONSE Success")
-                        Timber.e(
-                            "== RESPONSE ${it.data}"
-                        )
                         stateType.value = StateType.CONTENT
                         it.data?.let(onSuccess)
                     }
                     is Resource.Loading -> {
-                        Timber.e("== RESPONSE Loading")
                         stateType.value = StateType.LOADING
                     }
                     is Resource.Error -> {
-                        Timber.e("== RESPONSE Error")
-                        Timber.e(
-                            "== RESPONSE ${
-                                it.message
-                            }"
-                        )
                         stateType.value = StateType.ERROR
                         errorMessage(it.message.orEmpty())
                     }
