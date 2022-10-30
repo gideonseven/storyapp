@@ -69,7 +69,11 @@ class StoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getStories()
+        if (viewModel.hasAuthCode()) {
+            getStories()
+        } else {
+            findNavController().navigate(R.id.action_general_to_nav_graph)
+        }
 
         binding?.viewError?.errorRetry?.setOnClickListener {
             getStories()

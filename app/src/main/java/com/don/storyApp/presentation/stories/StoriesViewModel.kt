@@ -52,4 +52,6 @@ class StoriesViewModel @Inject constructor(
     fun logout() {
         authRepository.doLogOut()
     }
+
+    fun hasAuthCode() = authRepository.hasAccessToken()
 }
