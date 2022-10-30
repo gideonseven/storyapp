@@ -4,17 +4,31 @@
     package="com.don.storyApp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="com.don.storyApp.StoryApplication"
+        android:name=".StoryApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.StoryApp"
         tools:targetApi="31">
+        <receiver
+            android:name=".StoryAppWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/story_app_widget_info" />
+        </receiver>
+
         <activity
-            android:name="com.don.storyApp.presentation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.StoryApp.NoActionBar"
             android:windowSoftInputMode="adjustResize">
@@ -24,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.CameraActivity"
             android:exported="false" />
