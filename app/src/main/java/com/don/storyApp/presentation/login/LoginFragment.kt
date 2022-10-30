@@ -16,7 +16,6 @@ import com.don.storyApp.databinding.FragmentLoginBinding
 import com.don.storyApp.util.Validation
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -50,23 +49,16 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_LoginFragment_to_StoriesFragment)
         }
 
-        // todo dont forget to delete this
-        viewModel.checkForm()
-
 
         binding?.let { loginBinding ->
             loginBinding.edLoginEmail.doAfterTextChanged {
                 with(viewModel) {
                     mIsValidEmail.value = Validation.isValidEmail(loginBinding.tilEmail)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginEmail ${Validation.isValidEmail(loginBinding.tilEmail)}")
                 }
             }
             loginBinding.edLoginPassword.doAfterTextChanged {
                 with(viewModel) {
                     mIsValidPassword.value = Validation.isValidPassword(loginBinding.tilPassword)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginPassword ${Validation.isValidPassword(loginBinding.tilPassword)}")
                 }
             }
             loginBinding.btnLogin.setOnClickListener {

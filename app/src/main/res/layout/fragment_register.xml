@@ -97,7 +97,7 @@
                 style="@style/Button.Primary"
                 android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_32dp"
-                android:enabled="@{vm.isButtonEnabled}"
+                android:enabled="@{vm.isValidName == true &amp;&amp; vm.isValidEmail == true &amp;&amp; vm.isValidPassword == true}"
                 android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

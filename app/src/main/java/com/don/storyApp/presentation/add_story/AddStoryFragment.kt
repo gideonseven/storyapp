@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -22,7 +21,6 @@ import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import timber.log.Timber
 import java.io.File
 
 
@@ -62,11 +60,10 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             buttonAdd.setOnClickListener {
                 viewModel.addStory(
                     errorMessage = {
-                        showSnackBar(this@apply.root, it)
+                        showSnackBar(this.root, it)
                     },
                     onSuccess = {
-                        Toast.makeText(activity, "onSuccess ${it.message}", Toast.LENGTH_LONG)
-                            .show()
+                        showSnackBar(this.root, it.message.orEmpty())
                         findNavController().popBackStack()
                     })
             }
@@ -102,7 +99,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private fun cameraTask() {
         if (EasyPermissions.hasPermissions(requireContext(), Manifest.permission.CAMERA)) {
             // Have permission, do the thing!
-            Toast.makeText(activity, "TODO: SMS things", Toast.LENGTH_LONG).show()
             startCameraX()
         } else {
             // Request one permission
@@ -129,7 +125,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             viewModel.mIsValidImage.value = myFile.exists()
 
-            Timber.e("=== IS IMAGE VALID ${viewModel.mIsValidImage.value}")
             viewModel.myFile = myFile
             binding?.iv?.setImageBitmap(result)
         }

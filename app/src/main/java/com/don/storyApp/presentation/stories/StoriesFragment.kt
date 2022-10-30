@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentStoriesBinding
 import com.don.storyApp.util.Extras
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 /**
@@ -36,7 +34,6 @@ class StoriesFragment : Fragment() {
     private val storiesAdapter: StoriesAdapter by lazy {
         StoriesAdapter(
             onClick = { story, iv ->
-                Toast.makeText(requireContext(), story.name, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(
                     resId = R.id.action_StoriesFragment_to_DetailFragment,
                     args = bundleOf(Extras.KEY_STORY to story),
@@ -102,7 +99,6 @@ class StoriesFragment : Fragment() {
                 true
             }
             R.id.action_log_out -> {
-                Timber.e("=== action_log_out ")
                 viewModel.logout()
                 findNavController().navigate(R.id.action_general_to_nav_graph)
                 true
@@ -119,14 +115,12 @@ class StoriesFragment : Fragment() {
     private fun getStories() {
         viewModel.getStories(
             errorMessage = {
-                Timber.e("==== errorMessage $it")
                 binding?.let { vBinding ->
                     vBinding.viewError.errorTitle.text = it
                 }
             },
             onSuccess = {
                 storiesAdapter.submitList(it)
-                Timber.e("==== LIST STORY $it")
             }
         )
     }

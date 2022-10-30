@@ -15,7 +15,6 @@ import com.don.storyApp.databinding.FragmentRegisterBinding
 import com.don.storyApp.util.Validation
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -44,22 +43,16 @@ class RegisterFragment : Fragment() {
             registerBinding.edRegisterName.doAfterTextChanged {
                 with(viewModel) {
                     mIsValidName.value = Validation.isValidName(registerBinding.tilName)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edName ${Validation.isValidName(registerBinding.tilName)}")
                 }
             }
             registerBinding.edRegisterPassword.doAfterTextChanged {
                 with(viewModel) {
                     mIsValidPassword.value = Validation.isValidPassword(registerBinding.tilPassword)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginPassword ${Validation.isValidPassword(registerBinding.tilPassword)}")
                 }
             }
             registerBinding.edRegisterEmail.doAfterTextChanged {
                 with(viewModel) {
                     mIsValidEmail.value = Validation.isValidEmail(registerBinding.tilEmail)
-                    viewModel.checkForm()
-                    Timber.e(" ==== edLoginEmail ${Validation.isValidEmail(registerBinding.tilEmail)}")
                 }
             }
             registerBinding.btnRegister.setOnClickListener {
