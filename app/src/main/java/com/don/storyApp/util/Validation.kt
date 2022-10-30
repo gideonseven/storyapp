@@ -3,7 +3,6 @@ package com.don.storyApp.util
 import android.util.Patterns
 import com.don.storyApp.R
 import com.google.android.material.textfield.TextInputLayout
-import timber.log.Timber
 
 
 /**
@@ -30,8 +29,6 @@ object Validation {
                 error = null
                 isValid = true
             }
-            Timber.e("=== isValidEmail text $text")
-            Timber.e("=== isValidEmail $isValid")
         }
         return isValid
     }
@@ -53,8 +50,6 @@ object Validation {
                 error = null
                 isValid = true
             }
-            Timber.e("=== isValidPassword text $text")
-            Timber.e("=== isValidPassword $isValid")
         }
         return isValid
     }
@@ -75,8 +70,6 @@ object Validation {
                 til.error = null
                 isValid = true
             }
-            Timber.e("=== isValidPassword text $text")
-            Timber.e("=== isValidPassword $isValid")
         }
         return isValid
     }
