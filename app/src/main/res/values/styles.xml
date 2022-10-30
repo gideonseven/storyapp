@@ -111,14 +111,4 @@
     <style name="TextContent.BXS.Bold">
         <item name="fontFamily">@font/font_mon_bold</item>
     </style>
-
-    <style name="Widget.Storyapp.AppWidget.Container" parent="android:Widget">
-        <item name="android:id">@android:id/background</item>
-        <item name="android:background">?android:attr/colorBackground</item>
-    </style>
-
-    <style name="Widget.Storyapp.AppWidget.InnerView" parent="android:Widget">
-        <item name="android:background">?android:attr/colorBackground</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
 </resources>

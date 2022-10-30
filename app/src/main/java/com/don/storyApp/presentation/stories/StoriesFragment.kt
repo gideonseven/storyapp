@@ -122,8 +122,8 @@ class StoriesFragment : Fragment() {
             },
             onSuccess = {
                 storiesAdapter.submitList(it)
-                if(it.isEmpty()){
-                    binding?.root?.let {  container ->
+                if (it.isEmpty()) {
+                    binding?.root?.let { container ->
                         showSnackBar(container, getString(R.string.empty_list))
                     }
                 }
