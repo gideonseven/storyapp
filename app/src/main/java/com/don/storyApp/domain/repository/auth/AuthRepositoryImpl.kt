@@ -52,7 +52,11 @@ class AuthRepositoryImpl @Inject constructor(
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
-            val response = apiService.doRegister(username, email, password)
+            val response = apiService.doRegister(
+                email = email,
+                name = username,
+                password = password
+            )
             response.onSuccess {
                 resource = Resource.Success(data = this.data)
             }.onError {

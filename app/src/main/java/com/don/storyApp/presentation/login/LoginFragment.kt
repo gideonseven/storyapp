@@ -49,7 +49,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
         }
 
-
         binding?.let { loginBinding ->
             loginBinding.edLoginEmail.doAfterTextChanged {
                 with(viewModel) {

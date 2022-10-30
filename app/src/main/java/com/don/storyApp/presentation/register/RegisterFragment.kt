@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentRegisterBinding
 import com.don.storyApp.util.Validation
@@ -22,6 +23,11 @@ class RegisterFragment : Fragment() {
     private var binding: FragmentRegisterBinding? = null
 
     private val viewModel by viewModels<RegisterViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +68,7 @@ class RegisterFragment : Fragment() {
                     },
                     onSuccess = {
                         showSnackBar(registerBinding.root, it.message.orEmpty())
+                        findNavController().popBackStack()
                     }
                 )
             }
