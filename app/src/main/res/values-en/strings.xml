@@ -1,21 +1,15 @@
 <resources>
     <string name="app_name">storyapp</string>
-    <string name="action_settings">Settings</string>
     <string name="action_log_out">Log Out</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
     <string name="stories_fragment_label">Stories Fragment</string>
     <string name="detail_fragment_label">Detail Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="title">Story App</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="input_email">Input Email</string>
     <string name="input_password">Input Password</string>
     <string name="input_name">Input Name</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="text_blank" />
     <string name="error_cannot_empty">Cannot be Empty</string>
     <string name="error_email_not_valid">Email is not Valid</string>
     <string name="error_minimum_6_char">Minimum 6 Characters</string>
@@ -23,7 +17,6 @@
     <string name="text_state_retry">Try Again</string>
     <string name="do_not_have_account">Do not have account yet?</string>
     <string name="register_now">Register Now!</string>
-    <string name="language">Language</string>
     <string name="action_language">Language</string>
     <string name="user_name">User Name : %s</string>
     <string name="date_taken">Date Taken : %s</string>
@@ -33,11 +26,6 @@
     <string name="add_story_fragment_label">Add Story Fragment</string>
     <string name="action_add_story">Add Story</string>
     <string name="take_image">Take Image</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
     <string name="empty_list">List is Empty</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an app widget description</string>
 </resources>
