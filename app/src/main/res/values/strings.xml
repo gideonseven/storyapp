@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">storyapp</string>
+    <string name="app_name">storyApp</string>
     <string name="action_language">Language</string>
     <string name="action_add_story">Add Story</string>
     <string name="action_log_out">Log Out</string>

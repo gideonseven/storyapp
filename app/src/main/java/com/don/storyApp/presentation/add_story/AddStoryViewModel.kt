@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
 import com.don.storyApp.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +19,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddStoryViewModel @Inject constructor(
-    private val repository: IStoriesRepository,
-    private val authRepos: IAuthRepository
+    private val repository: IStoriesRepository
 ) : ViewModel() {
     var description: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
 
@@ -60,6 +58,4 @@ class AddStoryViewModel @Inject constructor(
             }
         }
     }
-
-    fun hasAccessToken() = authRepos.hasAccessToken()
 }

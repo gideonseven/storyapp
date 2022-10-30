@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">storyapp</string>
+    <string name="app_name">storyApp</string>
     <string name="action_log_out">Log Out</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
