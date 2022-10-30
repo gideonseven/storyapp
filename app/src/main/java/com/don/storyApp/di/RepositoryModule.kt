@@ -1,7 +1,7 @@
 package com.don.storyApp.di
 
-import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.local.AppPreferences
+import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.repository.auth.AuthRepositoryImpl
 import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository

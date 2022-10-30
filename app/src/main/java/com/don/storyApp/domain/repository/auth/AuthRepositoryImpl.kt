@@ -1,8 +1,8 @@
 package com.don.storyApp.domain.repository.auth
 
+import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
-import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
