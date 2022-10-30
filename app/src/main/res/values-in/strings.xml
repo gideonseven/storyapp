@@ -36,4 +36,5 @@
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="rationale_camera">Aplikasi ini membutuhkan akses camera.</string>
+    <string name="empty_list">Data Kosong</string>
 </resources>

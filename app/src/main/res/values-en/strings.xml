@@ -36,4 +36,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+    <string name="empty_list">List is Empty</string>
 </resources>
