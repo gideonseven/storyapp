@@ -6,7 +6,6 @@ import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
-import java.io.File
 
 
 /**

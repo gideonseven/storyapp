@@ -51,7 +51,10 @@ class StoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addStory(description: String, file: File): Flow<Resource<SimpleNetworkModel>> {
+    override suspend fun addStory(
+        description: String,
+        file: File
+    ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
@@ -65,7 +68,7 @@ class StoriesRepositoryImpl @Inject constructor(
             )
             val response = apiService.doAddStory(
                 authorization = "Bearer ${preferences.accessToken.orEmpty()}",
-                description =desc,
+                description = desc,
                 file = imageMultipart
             )
             response.onSuccess {

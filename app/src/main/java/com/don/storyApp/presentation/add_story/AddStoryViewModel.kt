@@ -42,32 +42,33 @@ class AddStoryViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             myFile?.let {
-                repository.addStory(description.value.orEmpty(), reduceFileImage(it)).collect { resource ->
-                    when (resource) {
-                        is Resource.Success -> {
-                            Timber.e("== RESPONSE Success")
-                            Timber.e(
-                                "== RESPONSE ${resource.data}"
-                            )
-                            stateType.value = StateType.CONTENT
-                            resource.data?.let(onSuccess)
-                        }
-                        is Resource.Loading -> {
-                            Timber.e("== RESPONSE Loading")
-                            stateType.value = StateType.LOADING
-                        }
-                        is Resource.Error -> {
-                            Timber.e("== RESPONSE Error")
-                            Timber.e(
-                                "== RESPONSE ${
-                                    resource.message
-                                }"
-                            )
-                            stateType.value = StateType.ERROR
-                            errorMessage(resource.message.orEmpty())
+                repository.addStory(description.value.orEmpty(), reduceFileImage(it))
+                    .collect { resource ->
+                        when (resource) {
+                            is Resource.Success -> {
+                                Timber.e("== RESPONSE Success")
+                                Timber.e(
+                                    "== RESPONSE ${resource.data}"
+                                )
+                                stateType.value = StateType.CONTENT
+                                resource.data?.let(onSuccess)
+                            }
+                            is Resource.Loading -> {
+                                Timber.e("== RESPONSE Loading")
+                                stateType.value = StateType.LOADING
+                            }
+                            is Resource.Error -> {
+                                Timber.e("== RESPONSE Error")
+                                Timber.e(
+                                    "== RESPONSE ${
+                                        resource.message
+                                    }"
+                                )
+                                stateType.value = StateType.ERROR
+                                errorMessage(resource.message.orEmpty())
+                            }
                         }
                     }
-                }
             }
         }
     }

@@ -65,7 +65,8 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                         showSnackBar(this@apply.root, it)
                     },
                     onSuccess = {
-                        Toast.makeText(activity, "onSuccess ${it.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "onSuccess ${it.message}", Toast.LENGTH_LONG)
+                            .show()
                         findNavController().popBackStack()
                     })
             }

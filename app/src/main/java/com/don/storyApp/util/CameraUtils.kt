@@ -1,11 +1,9 @@
 package com.don.storyApp.util
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.os.Environment
 import com.don.storyApp.R
 import java.io.ByteArrayOutputStream
 import java.io.File
