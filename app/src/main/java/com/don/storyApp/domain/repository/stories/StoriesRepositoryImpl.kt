@@ -2,7 +2,7 @@ package com.don.storyApp.domain.repository.stories
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
-import com.don.storyApp.data.storage.AppPreferences
+import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel

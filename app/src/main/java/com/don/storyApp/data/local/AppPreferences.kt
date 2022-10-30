@@ -1,4 +1,4 @@
-package com.don.storyApp.data.storage
+package com.don.storyApp.data.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit

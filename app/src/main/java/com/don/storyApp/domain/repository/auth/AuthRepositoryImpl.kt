@@ -2,7 +2,7 @@ package com.don.storyApp.domain.repository.auth
 
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
-import com.don.storyApp.data.storage.AppPreferences
+import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
@@ -12,7 +12,6 @@ import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -32,16 +31,13 @@ class AuthRepositoryImpl @Inject constructor(
             emit(resource)
             val response = apiService.doLogin(email, password)
             response.onSuccess {
-                Timber.e("=== SUC")
                 resource = Resource.Success(data = this.data)
                 saveToken(this.data.loginResult?.token.orEmpty())
             }.onError {
-                Timber.e("=== ERR")
                 val errorResp =
                     gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
                 resource = Resource.Error(message = errorResp.message.orEmpty())
             }.onException {
-                Timber.e("=== EXXX")
                 resource = Resource.Error(message = this.exception.message.orEmpty())
             }
             emit(resource)
@@ -58,15 +54,12 @@ class AuthRepositoryImpl @Inject constructor(
             emit(resource)
             val response = apiService.doRegister(username, email, password)
             response.onSuccess {
-                Timber.e("=== SUC")
                 resource = Resource.Success(data = this.data)
             }.onError {
-                Timber.e("=== ERR")
                 val errorResp =
                     gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
                 resource = Resource.Error(message = errorResp.message.orEmpty())
             }.onException {
-                Timber.e("=== EXXX")
                 resource = Resource.Error(message = this.exception.message.orEmpty())
             }
             emit(resource)

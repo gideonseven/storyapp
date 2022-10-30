@@ -12,15 +12,6 @@ import com.google.android.material.snackbar.Snackbar
  * https://www.cicil.co.id/
  */
 
-
-fun View.hide() {
-    this.visibility = View.GONE
-}
-
-fun View.show() {
-    this.visibility = View.VISIBLE
-}
-
 fun showSnackBar(view: View, message: String) {
     Snackbar.make(view, message, Snackbar.LENGTH_SHORT).apply {
         setTextColor(

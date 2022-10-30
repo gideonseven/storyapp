@@ -1,7 +1,7 @@
 package com.don.storyApp.di
 
 import android.content.Context
-import com.don.storyApp.data.storage.AppPreferences
+import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.domain.model.AppBuildConfig
 import dagger.Module
 import dagger.Provides
