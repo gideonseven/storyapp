@@ -28,4 +28,8 @@
     <string name="take_image">Take Image</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
     <string name="empty_list">List is Empty</string>
+
+    <string name="appwidget_text">STAR WARS BANNER</string>
+    <string name="empty_text">NO DATA</string>
+    <string name="add_widget">Add widget</string>
 </resources>

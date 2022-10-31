@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <declare-styleable name="MultiStateView">
-        <attr name="loadingView" format="reference" />
-        <attr name="emptyView" format="reference" />
-        <attr name="errorView" format="reference" />
-        <attr name="animateViewChanges" format="boolean" />
-    </declare-styleable>
     <declare-styleable name="AppWidgetAttrs">
-        <attr name="appWidgetPadding" format="dimension" />
-        <attr name="appWidgetInnerRadius" format="dimension" />
-        <attr name="appWidgetRadius" format="dimension" />
+        <attr name="appWidgetBackgroundColor" format="color" />
+        <attr name="appWidgetTextColor" format="color" />
     </declare-styleable>
 </resources>
