@@ -3,12 +3,17 @@ package com.don.storyApp.presentation.widget
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
 import com.don.storyApp.R
-import java.util.ArrayList
+import com.don.storyApp.data.local.AppPreferences
+import com.don.storyApp.domain.model.Story
+import com.don.storyApp.util.getBitmap
+import com.don.storyApp.util.getBitmapFromUrl
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import timber.log.Timber
 
 
 /**
@@ -19,18 +24,18 @@ import java.util.ArrayList
 internal class StackRemoteViewsFactory(private val mContext: Context) : RemoteViewsService.RemoteViewsFactory {
 
     private val mWidgetItems = ArrayList<Bitmap>()
-
+    private val pref = AppPreferences(sharedPreferences = mContext.getSharedPreferences("story_app_pref_file",  Context.MODE_PRIVATE))
+    private var list = arrayListOf<Story>()
     override fun onCreate() {
-
+        list= Gson().fromJson(pref.listStory, object : TypeToken<ArrayList<Story>>() {}.type)
     }
 
     override fun onDataSetChanged() {
         //Ini berfungsi untuk melakukan refresh saat terjadi perubahan.
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.darth_vader))
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.star_wars_logo))
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.storm_trooper))
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.starwars))
-        mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.falcon))
+        for (story in list){
+            mWidgetItems.add(getBitmapFromUrl(mContext, story.photoUrl.orEmpty()))
+            Timber.e("=== URL PHOTO ${story.photoUrl}")
+        }
     }
 
     override fun onDestroy() {

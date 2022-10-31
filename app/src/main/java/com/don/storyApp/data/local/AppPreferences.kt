@@ -45,6 +45,7 @@ class AppPreferences(val sharedPreferences: SharedPreferences) {
 
     companion object {
         private const val AUTH_KEY = "auth_key"
+        private const val LIST_STORY = "list_story"
     }
 
     fun setValue(key: String, value: Any?) {
@@ -59,5 +60,9 @@ class AppPreferences(val sharedPreferences: SharedPreferences) {
     var accessToken: String?
         get() = getValue(AUTH_KEY, Constant.TEXT_BLANK)
         set(value) = setValue(AUTH_KEY, value)
+
+    var listStory: String?
+        get() = getValue(LIST_STORY, Constant.TEXT_BLANK)
+        set(value) = setValue(LIST_STORY, value)
 
 }

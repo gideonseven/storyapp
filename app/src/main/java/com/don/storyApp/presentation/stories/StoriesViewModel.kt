@@ -54,4 +54,8 @@ class StoriesViewModel @Inject constructor(
     }
 
     fun hasAuthCode() = authRepository.hasAccessToken()
+
+    fun saveStories(list: List<Story>){
+        repository.saveStory(list)
+    }
 }

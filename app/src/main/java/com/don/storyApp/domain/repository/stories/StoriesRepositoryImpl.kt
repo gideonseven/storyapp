@@ -83,4 +83,9 @@ class StoriesRepositoryImpl @Inject constructor(
             emit(resource)
         }
     }
+
+    override fun saveStory(listStory: List<Story>) {
+        val stringListStory = gson.toJson(listStory).toString()
+        preferences.listStory = stringListStory
+    }
 }

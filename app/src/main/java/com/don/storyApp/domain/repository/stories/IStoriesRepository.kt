@@ -15,4 +15,5 @@ import java.io.File
 interface IStoriesRepository {
     suspend fun getStories(): Flow<Resource<List<Story>>>
     suspend fun addStory(description: String, file: File): Flow<Resource<SimpleNetworkModel>>
+    fun saveStory(listStory: List<Story>)
 }

@@ -10,6 +10,9 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.don.storyApp.R
+import com.don.storyApp.data.local.AppPreferences
+import timber.log.Timber
+import javax.inject.Singleton
 
 
 /**
@@ -23,10 +26,9 @@ class ImagesBannerWidget : AppWidgetProvider() {
 
         private const val TOAST_ACTION = "com.dicoding.picodiploma.TOAST_ACTION"
         const val EXTRA_ITEM = "com.dicoding.picodiploma.EXTRA_ITEM"
-
         /*
-        Update widget berdasarkan id widget-nya di home screen
-         */
+            Update widget berdasarkan id widget-nya di home screen
+             */
         private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val intent = Intent(context, StackWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -48,8 +50,11 @@ class ImagesBannerWidget : AppWidgetProvider() {
             views.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
+//            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.stack_view);
+
         }
     }
+
 
     /*
     Update widget
