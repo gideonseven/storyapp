@@ -75,7 +75,16 @@ class StoriesFragment : Fragment() {
             findNavController().navigate(R.id.action_general_to_nav_graph)
         }
 
-        binding?.rv?.adapter = storiesAdapter
+        val concatAdapter = storiesAdapter.withLoadStateHeaderAndFooter(
+            header = LoadingStateAdapter {
+
+            },
+            footer = LoadingStateAdapter {
+
+            }
+        )
+
+        binding?.rv?.adapter = concatAdapter
 
         binding?.viewError?.errorRetry?.setOnClickListener {
             getStories()

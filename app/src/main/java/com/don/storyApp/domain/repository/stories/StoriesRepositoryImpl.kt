@@ -73,8 +73,7 @@ class StoriesRepositoryImpl @Inject constructor(
     override suspend fun getPagingStories(): Flow<PagingData<Story>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5,
-                maxSize = 100
+                pageSize = 3
             ),
             pagingSourceFactory = {
                 StoryPagingSource(
