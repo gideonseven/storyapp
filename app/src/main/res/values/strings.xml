@@ -32,4 +32,5 @@
     <string name="appwidget_text">STAR WARS BANNER</string>
     <string name="empty_text">NO DATA</string>
     <string name="add_widget">Add widget</string>
+    <string name="retry">Coba Lagi</string>
 </resources>
