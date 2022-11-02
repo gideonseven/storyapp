@@ -31,7 +31,10 @@ interface StoryApi {
 
     @GET("stories")
     suspend fun getStories(
-        @Header("Authorization") authorization: String
+        @Header("Authorization") authorization: String,
+        @Query("page") currentPage: Int,
+        @Query("size") perPage: Int,
+        @Query("location") location: Int = 1
     ): ApiResponse<StoryResponse>
 
     @Multipart

@@ -37,7 +37,11 @@ class StoriesRepositoryImpl @Inject constructor(
         return flow {
             var resource: Resource<List<Story>> = Resource.Loading()
             emit(resource)
-            val response = apiService.getStories("Bearer ${preferences.accessToken.orEmpty()}")
+            val response = apiService.getStories(
+                authorization = "Bearer ${preferences.accessToken.orEmpty()}",
+                currentPage = 1,
+                perPage = 5,
+            )
             response.onSuccess {
                 resource = Resource.Success(data = this.data.listStory.orEmpty())
             }.onError {
