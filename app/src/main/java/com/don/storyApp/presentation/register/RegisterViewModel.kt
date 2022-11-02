@@ -1,6 +1,5 @@
 package com.don.storyApp.presentation.register
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,17 +25,8 @@ class RegisterViewModel @Inject constructor(
     var name: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
     var email: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
     var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
-
-    val mIsValidName: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidName = mIsValidName as LiveData<Boolean>
-
-    val mIsValidEmail: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidEmail = mIsValidEmail as LiveData<Boolean>
-
-    val mIsValidPassword: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidPassword = mIsValidPassword as LiveData<Boolean>
-
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    var isButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun submitRegister(
         errorMessage: (String) -> Unit,

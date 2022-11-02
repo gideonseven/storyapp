@@ -7,6 +7,8 @@
 
         <import type="com.don.storyApp.util.StateType" />
 
+        <import type="com.don.storyApp.util.ValidationType" />
+
         <import type="android.view.View" />
 
         <variable
@@ -27,16 +29,17 @@
             android:layout_gravity="center"
             android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.don.storyApp.util.CustomTextInputLayout
                 android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_8dp"
+                android:layout_marginBottom="@dimen/_16dp"
                 android:hint="@string/input_email"
                 app:layout_constraintBottom_toTopOf="@+id/til_password"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:validationType="@{ValidationType.EMAIL}">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_login_email"
@@ -44,9 +47,9 @@
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
                     android:text="@={vm.email}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.don.storyApp.util.CustomTextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.don.storyApp.util.CustomTextInputLayout
                 android:id="@+id/til_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,7 +59,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:validationType="@{ValidationType.PASSWORD}">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_login_password"
@@ -64,14 +68,14 @@
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:text="@={vm.password}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.don.storyApp.util.CustomTextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
                 style="@style/Button.Primary"
                 android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_16dp"
-                android:enabled="@{vm.isValidEmail == true &amp;&amp; vm.isValidPassword == true}"
+                android:enabled="@{vm.isButtonEnabled()}"
                 android:text="@string/login"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

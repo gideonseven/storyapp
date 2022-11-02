@@ -32,7 +32,8 @@
             android:exported="false" />
 
 
-        <receiver android:name=".presentation.widget.ImagesBannerWidget"
+        <receiver
+            android:name=".presentation.widget.ImagesBannerWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

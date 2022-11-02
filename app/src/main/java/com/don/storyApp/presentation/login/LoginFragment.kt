@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentLoginBinding
-import com.don.storyApp.util.Validation
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,21 +48,17 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
         }
 
-        binding?.let { loginBinding ->
-            loginBinding.edLoginEmail.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidEmail.value = Validation.isValidEmail(loginBinding.tilEmail)
-                }
+        binding?.apply {
+            tilEmail.editText?.doAfterTextChanged {
+                doCheckValidation()
             }
-            loginBinding.edLoginPassword.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidPassword.value = Validation.isValidPassword(loginBinding.tilPassword)
-                }
+            tilPassword.editText?.doAfterTextChanged {
+                doCheckValidation()
             }
-            loginBinding.btnLogin.setOnClickListener {
+            btnLogin.setOnClickListener {
                 viewModel.submitLogin(
                     errorMessage = {
-                        showSnackBar(loginBinding.root, it)
+                        showSnackBar(root, it)
                     },
                     onSuccess = {
                         findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
@@ -71,7 +66,7 @@ class LoginFragment : Fragment() {
                 )
             }
 
-            loginBinding.tvRegister.setOnClickListener {
+            tvRegister.setOnClickListener {
                 findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
             }
         }
@@ -95,5 +90,10 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun doCheckValidation() {
+        viewModel.isButtonEnabled.value =
+            binding?.tilEmail?.isFormValid() == true && binding?.tilPassword?.isFormValid() == true
     }
 }

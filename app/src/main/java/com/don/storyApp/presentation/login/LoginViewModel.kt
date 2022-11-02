@@ -1,6 +1,5 @@
 package com.don.storyApp.presentation.login
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,13 +19,7 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
     var email: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
     var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
-
-    val mIsValidEmail: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidEmail = mIsValidEmail as LiveData<Boolean>
-
-    val mIsValidPassword: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidPassword = mIsValidPassword as LiveData<Boolean>
-
+    var isButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
     fun submitLogin(
