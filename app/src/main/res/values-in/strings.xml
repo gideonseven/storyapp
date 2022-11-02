@@ -28,4 +28,8 @@
     <string name="take_image">Ambil Gambar</string>
     <string name="rationale_camera">Aplikasi ini membutuhkan akses camera.</string>
     <string name="empty_list">Data Kosong</string>
+    <string name="open_gallery">Buka Gallery</string>
+    <string name="appwidget_text">STORY BANNER</string>
+    <string name="empty_text">NO DATA</string>
+    <string name="add_widget">Tambah Widget</string>
 </resources>
