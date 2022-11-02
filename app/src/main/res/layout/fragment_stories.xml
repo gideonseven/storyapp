@@ -14,9 +14,13 @@
             name="vm"
             type="com.don.storyApp.presentation.stories.StoriesViewModel" />
 
+<!--        <variable
+            name="adapter"
+            type="com.don.storyApp.presentation.stories.StoriesAdapter" />-->
+
         <variable
             name="adapter"
-            type="com.don.storyApp.presentation.stories.StoriesAdapter" />
+            type="com.don.storyApp.presentation.QuoteListAdapter" />
     </data>
 
     <LinearLayout
@@ -31,9 +35,9 @@
             android:visibility="@{vm.stateType == StateType.CONTENT ? View.VISIBLE : View.GONE}">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:adapter="@{adapter}"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"

@@ -1,5 +1,6 @@
 package com.don.storyApp.domain.repository.stories
 
+import androidx.paging.PagingData
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
@@ -15,5 +16,6 @@ import java.io.File
 interface IStoriesRepository {
     suspend fun getStories(): Flow<Resource<List<Story>>>
     suspend fun addStory(description: String, file: File): Flow<Resource<SimpleNetworkModel>>
+    suspend fun getPagingStories(): Flow<PagingData<Story>>
     fun saveStory(listStory: List<Story>)
 }

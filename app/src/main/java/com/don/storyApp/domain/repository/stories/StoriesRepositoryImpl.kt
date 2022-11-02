@@ -1,9 +1,13 @@
 package com.don.storyApp.domain.repository.stories
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
+import com.don.storyApp.presentation.QuotePagingSource
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
@@ -91,5 +95,17 @@ class StoriesRepositoryImpl @Inject constructor(
     override fun saveStory(listStory: List<Story>) {
         val stringListStory = gson.toJson(listStory).toString()
         preferences.listStory = stringListStory
+    }
+
+    override suspend fun getPagingStories(): Flow<PagingData<Story>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                maxSize = 100
+            ),
+            pagingSourceFactory = {
+                QuotePagingSource(apiService, preferences.accessToken.orEmpty())
+            }
+        ).flow
     }
 }

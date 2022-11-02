@@ -11,13 +11,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentStoriesBinding
+import com.don.storyApp.presentation.QuoteListAdapter
 import com.don.storyApp.util.Extras
-import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 /**
@@ -32,15 +34,15 @@ class StoriesFragment : Fragment() {
 
     private val viewModel by viewModels<StoriesViewModel>()
 
-    private val storiesAdapter: StoriesAdapter by lazy {
-        StoriesAdapter(
-            onClick = { story, iv ->
+    private val storiesAdapter: QuoteListAdapter by lazy {
+        QuoteListAdapter(
+            onClick = { story, view ->
                 findNavController().navigate(
                     resId = R.id.action_stories_fragment_to_detail_fragment,
                     args = bundleOf(Extras.KEY_STORY to story),
                     navOptions = null,
                     navigatorExtras = FragmentNavigatorExtras(
-                        iv to "transName"
+                        view to "transition_name"
                     )
                 )
             }
@@ -61,7 +63,6 @@ class StoriesFragment : Fragment() {
         binding?.apply {
             lifecycleOwner = this@StoriesFragment
             vm = viewModel
-            adapter = storiesAdapter
         }
         return binding?.root
     }
@@ -74,6 +75,8 @@ class StoriesFragment : Fragment() {
         } else {
             findNavController().navigate(R.id.action_general_to_nav_graph)
         }
+
+        binding?.rv?.adapter = storiesAdapter
 
         binding?.viewError?.errorRetry?.setOnClickListener {
             getStories()
@@ -117,6 +120,25 @@ class StoriesFragment : Fragment() {
         binding = null
     }
 
+    /*   private fun getStories() {
+           viewModel.getStories(
+               errorMessage = {
+                   binding?.let { vBinding ->
+                       vBinding.viewError.errorTitle.text = it
+                   }
+               },
+               onSuccess = {
+                   storiesAdapter.submitList(it)
+                   viewModel.saveStories(it)
+                   if (it.isEmpty()) {
+                       binding?.root?.let { container ->
+                           showSnackBar(container, getString(R.string.empty_list))
+                       }
+                   }
+               }
+           )
+       }*/
+
     private fun getStories() {
         viewModel.getStories(
             errorMessage = {
@@ -125,12 +147,8 @@ class StoriesFragment : Fragment() {
                 }
             },
             onSuccess = {
-                storiesAdapter.submitList(it)
-                viewModel.saveStories(it)
-                if (it.isEmpty()) {
-                    binding?.root?.let { container ->
-                        showSnackBar(container, getString(R.string.empty_list))
-                    }
+                lifecycleScope.launch {
+                    storiesAdapter.submitData(it)
                 }
             }
         )
