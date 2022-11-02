@@ -70,7 +70,6 @@ class CustomTextInputLayout : TextInputLayout {
             this@CustomTextInputLayout.error = null
             this@CustomTextInputLayout.isValidField.value = true
         }
-        isFormValid()
     }
 
     private fun isValidPassword(editable: Editable) {
@@ -86,7 +85,6 @@ class CustomTextInputLayout : TextInputLayout {
             this@CustomTextInputLayout.error = null
             this@CustomTextInputLayout.isValidField.value = true
         }
-        isFormValid()
     }
 
     private fun isValidName(editable: Editable) {
@@ -102,7 +100,6 @@ class CustomTextInputLayout : TextInputLayout {
             this@CustomTextInputLayout.error = null
             this@CustomTextInputLayout.isValidField.value = true
         }
-        isFormValid()
     }
 
     fun isFormValid() = this@CustomTextInputLayout.isValidField.value ?: false
