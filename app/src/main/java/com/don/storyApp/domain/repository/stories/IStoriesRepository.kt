@@ -14,7 +14,6 @@ import java.io.File
  * https://www.cicil.co.id/
  */
 interface IStoriesRepository {
-    suspend fun getStories(): Flow<Resource<List<Story>>>
     suspend fun addStory(description: String, file: File): Flow<Resource<SimpleNetworkModel>>
     suspend fun getPagingStories(): Flow<PagingData<Story>>
     fun saveStory(listStory: List<Story>)

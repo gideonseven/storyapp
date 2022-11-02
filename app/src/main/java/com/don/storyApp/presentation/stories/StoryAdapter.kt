@@ -1,4 +1,4 @@
-package com.don.storyApp.presentation
+package com.don.storyApp.presentation.stories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,10 +17,10 @@ import com.don.storyApp.util.DateHelper
  * https://www.cicil.co.id/
  */
 
-class QuoteListAdapter constructor(
+class StoryAdapter constructor(
     val onClick: (Story, AppCompatImageView) -> Unit
 ) :
-    PagingDataAdapter<Story, QuoteListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<Story, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -16,7 +16,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentStoriesBinding
-import com.don.storyApp.presentation.QuoteListAdapter
 import com.don.storyApp.util.Extras
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,8 +33,8 @@ class StoriesFragment : Fragment() {
 
     private val viewModel by viewModels<StoriesViewModel>()
 
-    private val storiesAdapter: QuoteListAdapter by lazy {
-        QuoteListAdapter(
+    private val storiesAdapter: StoryAdapter by lazy {
+        StoryAdapter(
             onClick = { story, view ->
                 findNavController().navigate(
                     resId = R.id.action_stories_fragment_to_detail_fragment,
@@ -119,25 +118,6 @@ class StoriesFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
-
-    /*   private fun getStories() {
-           viewModel.getStories(
-               errorMessage = {
-                   binding?.let { vBinding ->
-                       vBinding.viewError.errorTitle.text = it
-                   }
-               },
-               onSuccess = {
-                   storiesAdapter.submitList(it)
-                   viewModel.saveStories(it)
-                   if (it.isEmpty()) {
-                       binding?.root?.let { container ->
-                           showSnackBar(container, getString(R.string.empty_list))
-                       }
-                   }
-               }
-           )
-       }*/
 
     private fun getStories() {
         viewModel.getStories(

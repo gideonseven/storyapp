@@ -26,29 +26,6 @@ class StoriesViewModel @Inject constructor(
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
-    /*   fun getStories(
-           errorMessage: (String) -> Unit,
-           onSuccess: (List<Story>) -> Unit
-       ) {
-           viewModelScope.launch {
-               repository.getStories().collect {
-                   when (it) {
-                       is Resource.Success -> {
-                           stateType.value = StateType.CONTENT
-                           it.data?.let(onSuccess)
-                       }
-                       is Resource.Loading -> {
-                           stateType.value = StateType.LOADING
-                       }
-                       is Resource.Error -> {
-                           stateType.value = StateType.ERROR
-                           errorMessage(it.message.orEmpty())
-                       }
-                   }
-               }
-           }
-       }*/
-
     fun getStories(
         errorMessage: (String) -> Unit,
         onSuccess: (PagingData<Story>) -> Unit

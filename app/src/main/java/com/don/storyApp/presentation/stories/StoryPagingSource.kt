@@ -1,4 +1,4 @@
-package com.don.storyApp.presentation
+package com.don.storyApp.presentation.stories
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -12,7 +12,7 @@ import com.skydoves.sandwich.onSuccess
  * https://www.cicil.co.id/
  */
 
-class QuotePagingSource(private val apiService: StoryApi, private val token: String) :
+class StoryPagingSource(private val apiService: StoryApi, private val token: String) :
     PagingSource<Int, Story>() {
 
     private companion object {
@@ -26,7 +26,7 @@ class QuotePagingSource(private val apiService: StoryApi, private val token: Str
             val response = apiService.getStories(
                 authorization = "Bearer $token",
                 currentPage = page,
-                perPage = 3,
+                perPage = 7,
                 location = 1
             )
 

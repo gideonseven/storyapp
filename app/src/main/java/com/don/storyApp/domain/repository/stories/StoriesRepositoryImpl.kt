@@ -7,7 +7,7 @@ import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
-import com.don.storyApp.presentation.QuotePagingSource
+import com.don.storyApp.presentation.stories.StoryPagingSource
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
@@ -36,28 +36,6 @@ class StoriesRepositoryImpl @Inject constructor(
     private val gson: Gson,
     private val preferences: AppPreferences
 ) : IStoriesRepository {
-
-    override suspend fun getStories(): Flow<Resource<List<Story>>> {
-        return flow {
-            var resource: Resource<List<Story>> = Resource.Loading()
-            emit(resource)
-            val response = apiService.getStories(
-                authorization = "Bearer ${preferences.accessToken.orEmpty()}",
-                currentPage = 1,
-                perPage = 5,
-            )
-            response.onSuccess {
-                resource = Resource.Success(data = this.data.listStory.orEmpty())
-            }.onError {
-                val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
-                resource = Resource.Error(message = errorResp.message.orEmpty())
-            }.onException {
-                resource = Resource.Error(message = this.exception.message.orEmpty())
-            }
-            emit(resource)
-        }
-    }
 
     override suspend fun addStory(
         description: String,
@@ -104,7 +82,7 @@ class StoriesRepositoryImpl @Inject constructor(
                 maxSize = 100
             ),
             pagingSourceFactory = {
-                QuotePagingSource(apiService, preferences.accessToken.orEmpty())
+                StoryPagingSource(apiService, preferences.accessToken.orEmpty())
             }
         ).flow
     }

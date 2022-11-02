@@ -20,7 +20,7 @@
 
         <variable
             name="adapter"
-            type="com.don.storyApp.presentation.QuoteListAdapter" />
+            type="com.don.storyApp.presentation.stories.StoryAdapter" />
     </data>
 
     <LinearLayout

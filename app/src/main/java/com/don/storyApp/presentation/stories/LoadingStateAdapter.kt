@@ -1,4 +1,4 @@
-package com.don.storyApp.presentation
+package com.don.storyApp.presentation.stories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
