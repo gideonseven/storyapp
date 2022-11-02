@@ -1,8 +1,10 @@
 package com.don.storyApp.presentation.add_story
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import com.don.storyApp.databinding.FragmentAddStoryBinding
 import com.don.storyApp.presentation.CameraActivity
 import com.don.storyApp.util.rotateBitmap
 import com.don.storyApp.util.showSnackBar
+import com.don.storyApp.util.uriToFile
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -70,6 +73,10 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 cameraTask()
             }
 
+            tvOpenGallery.setOnClickListener {
+                startGallery()
+            }
+
             tilDescription.editText?.doAfterTextChanged {
                 viewModel.isValidText.value = tilDescription.isFormValid()
             }
@@ -92,6 +99,11 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     @AfterPermissionGranted(REQUEST_CODE_PERMISSIONS)
@@ -129,13 +141,27 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            viewModel.myFile = uriToFile(selectedImg, requireContext())
+            viewModel.isValidImage.value = viewModel.myFile?.exists() == true
+            binding?.iv?.setImageURI(selectedImg)
+        }
+    }
+
     private fun startCameraX() {
         val intent = Intent(this@AddStoryFragment.context, CameraActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        launcherGallery.launch(chooser)
     }
 }
