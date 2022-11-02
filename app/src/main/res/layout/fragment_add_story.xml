@@ -68,16 +68,33 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_take_image"
-                style="@style/TextContent.BL.Bold"
+                style="@style/TextContent.BM"
+                android:layout_width="@dimen/_200dp"
+                android:layout_height="@dimen/_56dp"
                 android:background="@color/md_grey_900"
-                android:padding="@dimen/_56dp"
+                android:gravity="center"
                 android:text="@string/take_image"
+                android:textColor="@color/md_teal_500"
+                android:visibility="@{vm.isValidImage()  ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_open_gallery"
+                app:layout_constraintEnd_toEndOf="@+id/iv"
+                app:layout_constraintStart_toStartOf="@+id/iv"
+                app:layout_constraintTop_toTopOf="@+id/iv" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_open_gallery"
+                style="@style/TextContent.BM"
+                android:layout_width="@dimen/_200dp"
+                android:layout_height="@dimen/_56dp"
+                android:background="@color/md_grey_900"
+                android:gravity="center"
+                android:text="@string/open_gallery"
                 android:textColor="@color/md_teal_500"
                 android:visibility="@{vm.isValidImage()  ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/iv"
                 app:layout_constraintEnd_toEndOf="@+id/iv"
                 app:layout_constraintStart_toStartOf="@+id/iv"
-                app:layout_constraintTop_toTopOf="@+id/iv" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_take_image" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_add"
