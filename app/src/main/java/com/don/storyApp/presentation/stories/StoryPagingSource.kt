@@ -2,8 +2,10 @@ package com.don.storyApp.presentation.stories
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.model.Story
+import com.google.gson.Gson
 import com.skydoves.sandwich.onSuccess
 
 /**
@@ -12,7 +14,11 @@ import com.skydoves.sandwich.onSuccess
  * https://www.cicil.co.id/
  */
 
-class StoryPagingSource(private val apiService: StoryApi, private val token: String) :
+class StoryPagingSource(
+    private val apiService: StoryApi,
+    private val preferences: AppPreferences,
+    private val gson: Gson
+) :
     PagingSource<Int, Story>() {
 
     private companion object {
@@ -24,7 +30,7 @@ class StoryPagingSource(private val apiService: StoryApi, private val token: Str
             val page = params.key ?: INITIAL_PAGE_INDEX
             var listStory = listOf<Story>()
             val response = apiService.getStories(
-                authorization = "Bearer $token",
+                authorization = "Bearer ${preferences.accessToken.orEmpty()}",
                 currentPage = page,
                 perPage = 7,
                 location = 1
@@ -33,6 +39,7 @@ class StoryPagingSource(private val apiService: StoryApi, private val token: Str
             response.onSuccess {
                 this.data.listStory?.let {
                     listStory = it
+                    saveStory(it)
                 }
             }
 
@@ -51,5 +58,10 @@ class StoryPagingSource(private val apiService: StoryApi, private val token: Str
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
+    }
+
+    private fun saveStory(listStory: List<Story>) {
+        val stringListStory = gson.toJson(listStory).toString()
+        preferences.listStory = stringListStory
     }
 }

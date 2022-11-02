@@ -70,11 +70,6 @@ class StoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun saveStory(listStory: List<Story>) {
-        val stringListStory = gson.toJson(listStory).toString()
-        preferences.listStory = stringListStory
-    }
-
     override suspend fun getPagingStories(): Flow<PagingData<Story>> {
         return Pager(
             config = PagingConfig(
@@ -82,7 +77,11 @@ class StoriesRepositoryImpl @Inject constructor(
                 maxSize = 100
             ),
             pagingSourceFactory = {
-                StoryPagingSource(apiService, preferences.accessToken.orEmpty())
+                StoryPagingSource(
+                    apiService,
+                    preferences,
+                    gson
+                )
             }
         ).flow
     }
