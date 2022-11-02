@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentAddStoryBinding
 import com.don.storyApp.presentation.CameraActivity
-import com.don.storyApp.util.Validation
 import com.don.storyApp.util.rotateBitmap
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,8 +70,8 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 cameraTask()
             }
 
-            edAddDescription.doAfterTextChanged {
-                viewModel.mIsValidDescription.value = Validation.isValidName(tilDescription)
+            tilDescription.editText?.doAfterTextChanged {
+                viewModel.isValidText.value = tilDescription.isFormValid()
             }
         }
     }
@@ -123,7 +122,7 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 isBackCamera
             )
 
-            viewModel.mIsValidImage.value = myFile.exists()
+            viewModel.isValidImage.value = myFile.exists()
 
             viewModel.myFile = myFile
             binding?.iv?.setImageBitmap(result)

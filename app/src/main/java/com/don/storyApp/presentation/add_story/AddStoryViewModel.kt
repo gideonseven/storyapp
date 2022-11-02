@@ -1,6 +1,5 @@
 package com.don.storyApp.presentation.add_story
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,13 +21,8 @@ class AddStoryViewModel @Inject constructor(
     private val repository: IStoriesRepository
 ) : ViewModel() {
     var description: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
-
-    val mIsValidDescription: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidDescription = mIsValidDescription as LiveData<Boolean>
-
-    val mIsValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isValidImage = mIsValidImage as LiveData<Boolean>
-
+    val isValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isValidText: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
     var myFile: File? = null

@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentRegisterBinding
-import com.don.storyApp.util.Validation
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,29 +44,23 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let { registerBinding ->
-            registerBinding.edRegisterName.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidName.value = Validation.isValidName(registerBinding.tilName)
-                }
+        binding?.apply {
+            tilName.editText?.doAfterTextChanged {
+                doCheckValidation()
             }
-            registerBinding.edRegisterPassword.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidPassword.value = Validation.isValidPassword(registerBinding.tilPassword)
-                }
+            tilPassword.editText?.doAfterTextChanged {
+                doCheckValidation()
             }
-            registerBinding.edRegisterEmail.doAfterTextChanged {
-                with(viewModel) {
-                    mIsValidEmail.value = Validation.isValidEmail(registerBinding.tilEmail)
-                }
+            tilEmail.editText?.doAfterTextChanged {
+                doCheckValidation()
             }
-            registerBinding.btnRegister.setOnClickListener {
+            btnRegister.setOnClickListener {
                 viewModel.submitRegister(
                     errorMessage = {
-                        showSnackBar(registerBinding.root, it)
+                        showSnackBar(root, it)
                     },
                     onSuccess = {
-                        showSnackBar(registerBinding.root, it.message.orEmpty())
+                        showSnackBar(root, it.message.orEmpty())
                         findNavController().popBackStack()
                     }
                 )
@@ -92,5 +85,12 @@ class RegisterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun doCheckValidation() {
+        viewModel.isButtonEnabled.value =
+            binding?.tilEmail?.isFormValid() == true
+                    && binding?.tilPassword?.isFormValid() == true
+                    && binding?.tilName?.isFormValid() == true
     }
 }

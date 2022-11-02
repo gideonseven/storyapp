@@ -8,6 +8,9 @@
 
         <import type="com.don.storyApp.util.StateType" />
 
+        <import type="com.don.storyApp.util.ValidationType" />
+
+
         <import type="android.view.View" />
 
         <variable
@@ -27,7 +30,7 @@
             android:layout_height="match_parent"
             android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.don.storyApp.util.CustomTextInputLayout
                 android:id="@+id/til_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +39,8 @@
                 android:hint="@string/input_name"
                 app:layout_constraintBottom_toTopOf="@+id/til_email"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:validationType="@{ValidationType.DEFAULT}">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_register_name"
@@ -44,9 +48,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="@={vm.name}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.don.storyApp.util.CustomTextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.don.storyApp.util.CustomTextInputLayout
                 android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +59,8 @@
                 android:hint="@string/input_email"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:validationType="@{ValidationType.EMAIL}">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_register_email"
@@ -63,10 +68,10 @@
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
                     android:text="@={vm.email}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.don.storyApp.util.CustomTextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.don.storyApp.util.CustomTextInputLayout
                 android:id="@+id/til_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +80,8 @@
                 android:hint="@string/input_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline">
+                app:layout_constraintTop_toBottomOf="@+id/guideline"
+                app:validationType="@{ValidationType.PASSWORD}">
 
                 <com.don.storyApp.util.CustomTextInputEditText
                     android:id="@+id/ed_register_password"
@@ -83,7 +89,7 @@
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:text="@={vm.password}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.don.storyApp.util.CustomTextInputLayout>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -97,7 +103,7 @@
                 style="@style/Button.Primary"
                 android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_32dp"
-                android:enabled="@{vm.isValidName == true &amp;&amp; vm.isValidEmail == true &amp;&amp; vm.isValidPassword == true}"
+                android:enabled="@{vm.isButtonEnabled()}"
                 android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
