@@ -34,7 +34,7 @@ class QuoteListAdapter constructor(
         }
     }
 
-  inner class MyViewHolder(private val binding: ItemStoryBinding) :
+    inner class MyViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Story) {
             with(binding) {

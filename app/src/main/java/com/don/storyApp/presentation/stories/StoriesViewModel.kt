@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
-import com.don.storyApp.util.Resource
 import com.don.storyApp.util.StateType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,30 +26,30 @@ class StoriesViewModel @Inject constructor(
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
- /*   fun getStories(
-        errorMessage: (String) -> Unit,
-        onSuccess: (List<Story>) -> Unit
-    ) {
-        viewModelScope.launch {
-            repository.getStories().collect {
-                when (it) {
-                    is Resource.Success -> {
-                        stateType.value = StateType.CONTENT
-                        it.data?.let(onSuccess)
-                    }
-                    is Resource.Loading -> {
-                        stateType.value = StateType.LOADING
-                    }
-                    is Resource.Error -> {
-                        stateType.value = StateType.ERROR
-                        errorMessage(it.message.orEmpty())
-                    }
-                }
-            }
-        }
-    }*/
+    /*   fun getStories(
+           errorMessage: (String) -> Unit,
+           onSuccess: (List<Story>) -> Unit
+       ) {
+           viewModelScope.launch {
+               repository.getStories().collect {
+                   when (it) {
+                       is Resource.Success -> {
+                           stateType.value = StateType.CONTENT
+                           it.data?.let(onSuccess)
+                       }
+                       is Resource.Loading -> {
+                           stateType.value = StateType.LOADING
+                       }
+                       is Resource.Error -> {
+                           stateType.value = StateType.ERROR
+                           errorMessage(it.message.orEmpty())
+                       }
+                   }
+               }
+           }
+       }*/
 
-   fun getStories(
+    fun getStories(
         errorMessage: (String) -> Unit,
         onSuccess: (PagingData<Story>) -> Unit
     ) {
@@ -67,7 +66,7 @@ class StoriesViewModel @Inject constructor(
 
     fun hasAuthCode() = authRepository.hasAccessToken()
 
-    fun saveStories(list: List<Story>){
+    fun saveStories(list: List<Story>) {
         repository.saveStory(list)
     }
 }

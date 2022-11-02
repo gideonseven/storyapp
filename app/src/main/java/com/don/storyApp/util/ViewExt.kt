@@ -35,15 +35,16 @@ fun showSnackBar(view: View, message: String) {
 }
 
 fun getBitmap(context: Context, imageUrl: String): Bitmap {
-    var bitmapImage : Bitmap? = null
-    val defaultBitmap : Bitmap
+    var bitmapImage: Bitmap? = null
+    val defaultBitmap: Bitmap
     Glide.with(context)
         .asBitmap()
         .load(imageUrl)
-        .into(object : CustomTarget<Bitmap>(){
+        .into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                bitmapImage =  resource
+                bitmapImage = resource
             }
+
             override fun onLoadCleared(placeholder: Drawable?) {
                 // this is called when imageView is cleared on lifecycle call or for
                 // some other reason.
@@ -56,7 +57,7 @@ fun getBitmap(context: Context, imageUrl: String): Bitmap {
     return bitmapImage ?: defaultBitmap
 }
 
-fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap{
+fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap {
     var image: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.sample)
     try {
         val url = URL(imageUrl)
@@ -64,7 +65,7 @@ fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap{
         Timber.e("==== try getBitmapFromUrl $imageUrl ")
 
     } catch (e: IOException) {
-       Timber.e("==== ERROR getBitmapFromUrl $e ")
+        Timber.e("==== ERROR getBitmapFromUrl $e ")
     }
     return image
 }

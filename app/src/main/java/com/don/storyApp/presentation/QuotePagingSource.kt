@@ -31,9 +31,9 @@ class QuotePagingSource(private val apiService: StoryApi, private val token: Str
             )
 
             response.onSuccess {
-               this.data.listStory?.let {
-                   listStory = it
-               }
+                this.data.listStory?.let {
+                    listStory = it
+                }
             }
 
             LoadResult.Page(

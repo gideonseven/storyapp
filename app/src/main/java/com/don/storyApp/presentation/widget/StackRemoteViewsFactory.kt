@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import com.don.storyApp.R
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.domain.model.Story
-import com.don.storyApp.util.getBitmap
 import com.don.storyApp.util.getBitmapFromUrl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,18 +20,24 @@ import timber.log.Timber
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-internal class StackRemoteViewsFactory(private val mContext: Context) : RemoteViewsService.RemoteViewsFactory {
+internal class StackRemoteViewsFactory(private val mContext: Context) :
+    RemoteViewsService.RemoteViewsFactory {
 
     private val mWidgetItems = ArrayList<Bitmap>()
-    private val pref = AppPreferences(sharedPreferences = mContext.getSharedPreferences("story_app_pref_file",  Context.MODE_PRIVATE))
+    private val pref = AppPreferences(
+        sharedPreferences = mContext.getSharedPreferences(
+            "story_app_pref_file",
+            Context.MODE_PRIVATE
+        )
+    )
     private var list = arrayListOf<Story>()
     override fun onCreate() {
-        list= Gson().fromJson(pref.listStory, object : TypeToken<ArrayList<Story>>() {}.type)
+        list = Gson().fromJson(pref.listStory, object : TypeToken<ArrayList<Story>>() {}.type)
     }
 
     override fun onDataSetChanged() {
         //Ini berfungsi untuk melakukan refresh saat terjadi perubahan.
-        for (story in list){
+        for (story in list) {
             mWidgetItems.add(getBitmapFromUrl(mContext, story.photoUrl.orEmpty()))
             Timber.e("=== URL PHOTO ${story.photoUrl}")
         }
