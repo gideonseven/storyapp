@@ -11,7 +11,6 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.don.storyApp.R
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 import java.io.IOException
 import java.net.URL
 
@@ -62,10 +61,8 @@ fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap {
     try {
         val url = URL(imageUrl)
         image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        Timber.e("==== try getBitmapFromUrl $imageUrl ")
 
     } catch (e: IOException) {
-        Timber.e("==== ERROR getBitmapFromUrl $e ")
     }
     return image
 }

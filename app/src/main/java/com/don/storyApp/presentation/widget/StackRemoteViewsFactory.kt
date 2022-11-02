@@ -12,7 +12,6 @@ import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.getBitmapFromUrl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import timber.log.Timber
 
 
 /**
@@ -41,7 +40,6 @@ internal class StackRemoteViewsFactory(private val mContext: Context) :
         //Ini berfungsi untuk melakukan refresh saat terjadi perubahan.
         for (story in list) {
             mWidgetItems.add(getBitmapFromUrl(mContext, story.photoUrl.orEmpty()))
-            Timber.e("=== URL PHOTO ${story.photoUrl}")
         }
     }
 
