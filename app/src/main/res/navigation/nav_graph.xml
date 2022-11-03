@@ -59,19 +59,27 @@
         android:id="@+id/add_story_fragment"
         android:name="com.don.storyApp.presentation.add_story.AddStoryFragment"
         android:label="@string/add_story_fragment_label"
-        tools:layout="@layout/fragment_add_story">
+        tools:layout="@layout/fragment_add_story"/>
 
-    </fragment>
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.don.storyApp.presentation.map.MapFragment"
+        android:label="@string/add_story_fragment_label"
+        tools:layout="@layout/fragment_map"/>
 
     <action
         android:id="@+id/action_general_to_add_story_fragment"
         app:destination="@id/add_story_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left" />
-
     <action
         android:id="@+id/action_general_to_nav_graph"
         app:destination="@id/nav_graph"
         app:popUpTo="@id/login_fragment"
         app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_general_to_map_fragment"
+        app:destination="@id/map_fragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left" />
 </navigation>

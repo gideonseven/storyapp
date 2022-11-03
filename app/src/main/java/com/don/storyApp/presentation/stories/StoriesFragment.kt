@@ -114,6 +114,10 @@ class StoriesFragment : Fragment() {
                 findNavController().navigate(R.id.action_general_to_add_story_fragment)
                 true
             }
+            R.id.action_map -> {
+                findNavController().navigate(R.id.action_general_to_map_fragment)
+                true
+            }
             R.id.action_log_out -> {
                 viewModel.logout()
                 findNavController().navigate(R.id.action_general_to_nav_graph)

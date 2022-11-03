@@ -42,15 +42,18 @@ class MainActivity : AppCompatActivity() {
         findNavController(R.id.nav_host_fragment).currentDestination?.let {
             val logOut = menu.findItem(R.id.action_log_out)
             val addStory = menu.findItem(R.id.action_add_story)
+            val map = menu.findItem(R.id.action_map)
 
             when (it.id) {
-                R.id.login_fragment -> {
-                    logOut.isVisible = false
-                    addStory.isVisible = false
-                }
+                R.id.login_fragment,
                 R.id.register_fragment -> {
                     logOut.isVisible = false
                     addStory.isVisible = false
+                    map.isVisible = false
+                }
+                R.id.detail_fragment,
+                R.id.add_story_fragment -> {
+                    menu.clear()
                 }
                 R.id.stories_fragment -> {
                     supportActionBar?.let { actionBar ->
@@ -58,11 +61,7 @@ class MainActivity : AppCompatActivity() {
                         actionBar.setHomeButtonEnabled(false)
                     }
                 }
-                R.id.detail_fragment -> {
-                    menu.clear()
-                }
-                R.id.add_story_fragment -> {
-                    menu.clear()
+                R.id.map_fragment -> {
                 }
                 else -> {
                     // do nothing
