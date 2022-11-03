@@ -1,8 +1,11 @@
 package com.don.storyApp.presentation.add_story
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,9 +24,16 @@ import com.don.storyApp.presentation.CameraActivity
 import com.don.storyApp.util.rotateBitmap
 import com.don.storyApp.util.showSnackBar
 import com.don.storyApp.util.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
 import java.io.File
 
 
@@ -32,11 +43,51 @@ import java.io.File
  * https://www.cicil.co.id/
  */
 @AndroidEntryPoint
-class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapReadyCallback {
 
     private var binding: FragmentAddStoryBinding? = null
-
     private val viewModel by viewModels<AddStoryViewModel>()
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                checkPermissionLocation()
+            }
+        }
+
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = it.data?.getSerializableExtra("picture") as File
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(myFile.path),
+                isBackCamera
+            )
+
+            viewModel.isValidImage.value = myFile.exists()
+
+            viewModel.myFile = myFile
+            binding?.iv?.setImageBitmap(result)
+        }
+    }
+
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            viewModel.myFile = uriToFile(selectedImg, requireContext())
+            viewModel.isValidImage.value = viewModel.myFile?.exists() == true
+            binding?.iv?.setImageURI(selectedImg)
+        }
+    }
+    private lateinit var nonNullContext: Context
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var mMap: GoogleMap
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
@@ -55,6 +106,12 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
         return binding?.root
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        nonNullContext = context
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +137,8 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             tilDescription.editText?.doAfterTextChanged {
                 viewModel.isValidText.value = tilDescription.isFormValid()
             }
+            fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(nonNullContext)
         }
     }
 
@@ -122,36 +181,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    private val launcherIntentCameraX = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == CAMERA_X_RESULT) {
-            val myFile = it.data?.getSerializableExtra("picture") as File
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
-
-            val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path),
-                isBackCamera
-            )
-
-            viewModel.isValidImage.value = myFile.exists()
-
-            viewModel.myFile = myFile
-            binding?.iv?.setImageBitmap(result)
-        }
-    }
-
-    private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImg: Uri = result.data?.data as Uri
-            viewModel.myFile = uriToFile(selectedImg, requireContext())
-            viewModel.isValidImage.value = viewModel.myFile?.exists() == true
-            binding?.iv?.setImageURI(selectedImg)
-        }
-    }
-
     private fun startCameraX() {
         val intent = Intent(this@AddStoryFragment.context, CameraActivity::class.java)
         launcherIntentCameraX.launch(intent)
@@ -163,5 +192,50 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherGallery.launch(chooser)
+    }
+
+    private fun checkPermissionLocation() {
+        if (ContextCompat.checkSelfPermission(
+                nonNullContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mMap.isMyLocationEnabled = true
+            getMyCurrentLocation()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getMyCurrentLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+        binding?.apply {
+            try {
+                val locationResult = fusedLocationProviderClient.lastLocation
+                activity?.let {
+                    locationResult.addOnCompleteListener(it) { task ->
+                        if (task.isSuccessful) {
+                            showSnackBar(root, "NOT SUCCESSFULL")
+                            val lastKnownLocation = task.result
+                            viewModel.lat.value = lastKnownLocation.latitude
+                            viewModel.lon.value = lastKnownLocation.longitude
+                        } else {
+                            showSnackBar(root, "NOT SUCCESSFULL")
+                        }
+                    }
+                }
+            } catch (e: SecurityException) {
+                showSnackBar(root, "Exception:  ${e.message}")
+            }
+        }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        checkPermissionLocation()
     }
 }

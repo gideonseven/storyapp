@@ -7,6 +7,7 @@ import com.don.storyApp.domain.repository.stories.IStoriesRepository
 import com.don.storyApp.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -24,6 +25,8 @@ class AddStoryViewModel @Inject constructor(
     val isValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
     val isValidText: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    var lat: MutableLiveData<Double> = MutableLiveData(0.0)
+    var lon: MutableLiveData<Double> = MutableLiveData(0.0)
 
     var myFile: File? = null
 
@@ -33,8 +36,17 @@ class AddStoryViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             myFile?.let {
-                repository.addStory(description.value.orEmpty(), reduceFileImage(it))
+                Timber.e("== LAT ${lat.value}")
+                Timber.e("== LON ${lon.value}")
+        /*        repository.addStory(
+                    description.value.orEmpty(),
+                    reduceFileImage(it),
+                    lat.value ?: 0.0,
+                    lon.value ?: 0.0
+                )
                     .collect { resource ->
+                        Timber.e("== LAT ${lat}")
+                        Timber.e("== LON ${lon}")
                         when (resource) {
                             is Resource.Success -> {
                                 stateType.value = StateType.CONTENT
@@ -48,7 +60,7 @@ class AddStoryViewModel @Inject constructor(
                                 errorMessage(resource.message.orEmpty())
                             }
                         }
-                    }
+                    }*/
             }
         }
     }

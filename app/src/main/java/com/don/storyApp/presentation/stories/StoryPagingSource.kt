@@ -32,7 +32,6 @@ class StoryPagingSource(
             val response = apiService.getStories(
                 authorization = "Bearer ${preferences.accessToken.orEmpty()}",
                 currentPage = page,
-                location = 1
             )
 
             response.onSuccess {

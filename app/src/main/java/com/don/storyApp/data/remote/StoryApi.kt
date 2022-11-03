@@ -42,6 +42,8 @@ interface StoryApi {
         @Header("Authorization") authorization: String,
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
+        @Part("lat") latitude: Double,
+        @Part("lon") longitude: Double
     ): ApiResponse<SimpleNetworkModel>
 
     companion object {
