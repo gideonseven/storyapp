@@ -24,6 +24,7 @@ import com.don.storyApp.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 
 
@@ -94,6 +95,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+
     }
 
     override fun onAttach(context: Context) {
@@ -107,6 +110,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMapBinding.inflate(inflater, container, false)
+
+      val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         binding?.apply {
             lifecycleOwner = this@MapFragment
@@ -140,7 +146,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun setMapStyle() {
         try {
             val success =
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(nonNullContext, R.raw.map_style))
+                mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                        nonNullContext,
+                        R.raw.map_style
+                    )
+                )
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }

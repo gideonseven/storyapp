@@ -23,8 +23,8 @@
         android:orientation="vertical"
         tools:context=".presentation.login.LoginFragment">
 
-        <fragment
-            android:id="@+id/map"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
