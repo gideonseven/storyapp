@@ -11,6 +11,7 @@ import com.don.storyApp.presentation.stories.StoryPagingSource
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
@@ -83,5 +84,18 @@ class StoriesRepositoryImpl @Inject constructor(
                 )
             }
         ).flow
+    }
+
+    override suspend fun getListLocation(): Flow<List<Story>> {
+        return flow {
+            if (preferences.listStory != null && preferences.listStory != "") {
+                emit(
+                    Gson().fromJson(
+                        preferences.listStory,
+                        object : TypeToken<List<Story>>() {}.type
+                    )
+                )
+            }
+        }
     }
 }

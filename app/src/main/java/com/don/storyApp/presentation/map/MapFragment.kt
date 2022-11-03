@@ -2,7 +2,6 @@ package com.don.storyApp.presentation.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,7 +12,6 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -25,9 +23,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentMapBinding
-import com.don.storyApp.domain.model.Place
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -35,6 +33,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
@@ -45,11 +44,13 @@ import java.util.*
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
+@AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var binding: FragmentMapBinding? = null
     private lateinit var nonNullContext: Context
     private lateinit var mMap: GoogleMap
+
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val requestPermissionLauncher =
@@ -61,6 +62,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
     private val boundsBuilder = LatLngBounds.Builder()
+    private val viewModel by viewModels<MapViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,7 +153,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         checkPermissionLocation()
         setMapStyle()
-        addManyMarker()
+        getStoriesLocation()
     }
 
     private fun setMapStyle() {
@@ -164,7 +166,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
                 )
             if (!success) {
-                 Timber.e("Style parsing failed.")
+                Timber.e("Style parsing failed.")
             }
         } catch (exception: Resources.NotFoundException) {
             Timber.e("Can't find style. Error: $exception")
@@ -232,32 +234,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun addManyMarker() {
-        val tourismPlace = listOf(
-            Place("Floating Market Lembang", -6.8168954,107.6151046),
-            Place("The Great Asia Africa", -6.8331128,107.6048483),
-            Place("Rabbit Town", -6.8668408,107.608081),
-            Place("Alun-Alun Kota Bandung", -6.9218518,107.6025294),
-            Place("Orchid Forest Cikole", -6.780725, 107.637409),
-        )
-        tourismPlace.forEach { tourism ->
-            val latLng = LatLng(tourism.latitude, tourism.longitude)
-            val addressName = getAddressName(tourism.latitude, tourism.longitude)
-            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name).snippet(addressName))
-            boundsBuilder.include(latLng)
-        }
-
-        val bounds: LatLngBounds = boundsBuilder.build()
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                resources.displayMetrics.widthPixels,
-                resources.displayMetrics.heightPixels,
-                300
-            )
-        )
-    }
-
     private fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
         val geocoder = Geocoder(nonNullContext, Locale.getDefault())
@@ -265,11 +241,35 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val list = geocoder.getFromLocation(lat, lon, 1)
             if (list != null && list.size != 0) {
                 addressName = list[0].getAddressLine(0)
-                Log.d(TAG, "getAddressName: $addressName")
+                Timber.e("getAddressName: $addressName")
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
         return addressName
+    }
+
+    private fun getStoriesLocation() {
+        viewModel.getListLocation { listStory ->
+
+            listStory.forEach { story ->
+                val latLng = LatLng(story.lat, story.lon)
+                val addressName = getAddressName(story.lat, story.lon)
+                mMap.addMarker(
+                    MarkerOptions().position(latLng).title(story.name).snippet(addressName)
+                )
+                boundsBuilder.include(latLng)
+            }
+
+            val bounds: LatLngBounds = boundsBuilder.build()
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    bounds,
+                    resources.displayMetrics.widthPixels,
+                    resources.displayMetrics.heightPixels,
+                    300
+                )
+            )
+        }
     }
 }

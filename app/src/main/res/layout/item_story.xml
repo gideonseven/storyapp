@@ -105,7 +105,7 @@
                 android:gravity="center_vertical"
                 android:text="@{story.lat + ` - ` + story.lon}"
                 android:textColor="@color/md_grey_700"
-                android:visibility="@{story.lat == null || story.lon == null ? View.GONE : View.VISIBLE}"
+                android:visibility="@{story.lat == 0.0 || story.lon == 0.0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_amount_current"
