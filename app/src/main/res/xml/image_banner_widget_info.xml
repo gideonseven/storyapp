@@ -4,6 +4,6 @@
     android:initialLayout="@layout/image_banner_widget"
     android:minWidth="250dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/starwars"
+    android:previewImage="@drawable/ic_location"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen" />
