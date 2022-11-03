@@ -1,8 +1,11 @@
 package com.don.storyApp.presentation.map
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -14,13 +17,17 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentMapBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -40,6 +47,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
+    // The entry point to the Fused Location Provider.
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                checkPermissionLocation()
+            }
+        }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -53,14 +72,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
-        val dicodingSpace = LatLng(-6.8957643, 107.6338462)
-        mMap.addMarker(
-            MarkerOptions()
-                .position(dicodingSpace)
-                .title("Dicoding Space")
-                .snippet("Batik Kumeli No.50")
-        )
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dicodingSpace, 15f))
+
 
         mMap.setOnMapLongClickListener { latLng ->
             mMap.addMarker(
@@ -70,7 +82,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
                     .icon(
                         vectorToBitmap(
-                            R.drawable.ic_placeholder_square,
+                            R.drawable.ic_location,
                             Color.parseColor("#3DDC84")
                         )
                     )
@@ -87,7 +99,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             poiMarker?.showInfoWindow()
         }
 
-//        getMyLocation()
+        checkPermissionLocation()
         setMapStyle()
 //        addManyMarker()
     }
@@ -96,6 +108,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(nonNullContext)
 
     }
 
@@ -111,9 +126,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         binding = FragmentMapBinding.inflate(inflater, container, false)
 
-      val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
         binding?.apply {
             lifecycleOwner = this@MapFragment
         }
@@ -122,6 +134,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     @Deprecated("Deprecated in Java")
@@ -176,5 +191,52 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         DrawableCompat.setTint(vectorDrawable, color)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+
+    private fun checkPermissionLocation() {
+        if (ContextCompat.checkSelfPermission(
+                nonNullContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mMap.isMyLocationEnabled = true
+            getMyCurrentLocation()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getMyCurrentLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+        try {
+            if (mMap.isMyLocationEnabled) {
+                val locationResult = fusedLocationProviderClient.lastLocation
+                this.activity?.let {
+                    locationResult.addOnCompleteListener(it) { task ->
+                        if (task.isSuccessful) {
+                            // Set the map's camera position to the current location of the device.
+                            val lastKnownLocation = task.result
+                            if (lastKnownLocation != null) {
+                                mMap.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            lastKnownLocation.latitude,
+                                            lastKnownLocation.longitude
+                                        ), 15f
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message, e)
+        }
     }
 }
