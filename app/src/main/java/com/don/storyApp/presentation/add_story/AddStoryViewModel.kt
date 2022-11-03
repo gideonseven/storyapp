@@ -7,7 +7,6 @@ import com.don.storyApp.domain.repository.stories.IStoriesRepository
 import com.don.storyApp.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -43,8 +42,6 @@ class AddStoryViewModel @Inject constructor(
                     lon
                 )
                     .collect { resource ->
-                        Timber.e("== LAT ${lat}")
-                        Timber.e("== LON ${lon}")
                         when (resource) {
                             is Resource.Success -> {
                                 stateType.value = StateType.CONTENT
