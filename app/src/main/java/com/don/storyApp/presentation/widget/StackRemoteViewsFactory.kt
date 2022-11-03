@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import com.don.storyApp.R
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.domain.model.Story
+import com.don.storyApp.util.Constant.Companion.TEXT_BLANK
 import com.don.storyApp.util.getBitmapFromUrl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -31,7 +32,7 @@ internal class StackRemoteViewsFactory(private val mContext: Context) :
     )
     private var list = arrayListOf<Story>()
     override fun onCreate() {
-        if (pref.listStory != null && pref.listStory != "") {
+        if (pref.listStory != null && pref.listStory != TEXT_BLANK) {
             list = Gson().fromJson(pref.listStory, object : TypeToken<ArrayList<Story>>() {}.type)
         }
     }

@@ -240,22 +240,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
-        val geocoder = Geocoder(nonNullContext, Locale.getDefault())
-        try {
-            val list = geocoder.getFromLocation(lat, lon, 1)
-            if (list != null && list.size != 0) {
-                addressName = list[0].getAddressLine(0)
+
+        /**
+         *  @param lat
+         *   validate should be in between these range
+         *   -90 to +90
+         */
+        if (lat >= -90 && lat <= 90.0) {
+            val geocoder = Geocoder(nonNullContext, Locale.getDefault())
+            try {
+                val list = geocoder.getFromLocation(lat, lon, 1)
+                if (list != null && list.size != 0) {
+                    addressName = list[0].getAddressLine(0)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
         return addressName
     }
 
     private fun getStoriesLocation() {
-        viewModel.getListLocation { listStory ->
-
-            listStory.forEach { story ->
+        viewModel.getListLocation(onSuccess = {
+            it.forEach { story ->
                 val latLng = LatLng(story.lat, story.lon)
                 val addressName = getAddressName(story.lat, story.lon)
                 mMap.addMarker(
@@ -263,16 +270,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 )
                 boundsBuilder.include(latLng)
             }
-
-            val bounds: LatLngBounds = boundsBuilder.build()
-            mMap.animateCamera(
-                CameraUpdateFactory.newLatLngBounds(
-                    bounds,
-                    resources.displayMetrics.widthPixels,
-                    resources.displayMetrics.heightPixels,
-                    300
-                )
-            )
-        }
+        })
     }
 }
