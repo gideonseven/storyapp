@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentMapBinding
+import com.don.storyApp.util.showSnackBar
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,7 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -67,11 +67,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-        // Construct a FusedLocationProviderClient.
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(nonNullContext)
-
     }
 
     override fun onAttach(context: Context) {
@@ -94,6 +89,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(nonNullContext)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -166,10 +164,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
                 )
             if (!success) {
-                Timber.e("Style parsing failed.")
+                binding?.apply {
+                    showSnackBar(this.root,  "Style parsing failed.")
+                }
             }
         } catch (exception: Resources.NotFoundException) {
-            Timber.e("Can't find style. Error: $exception")
+            binding?.apply {
+                showSnackBar(this.root,  "Can't find style. Error: $exception")
+            }
         }
     }
 
@@ -230,7 +232,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         } catch (e: SecurityException) {
-            Timber.e("Exception:  ${e.message}")
+            binding?.apply {
+                showSnackBar(this.root,  "Exception:  ${e.message}")
+            }
         }
     }
 
@@ -241,7 +245,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val list = geocoder.getFromLocation(lat, lon, 1)
             if (list != null && list.size != 0) {
                 addressName = list[0].getAddressLine(0)
-                Timber.e("getAddressName: $addressName")
             }
         } catch (e: IOException) {
             e.printStackTrace()
