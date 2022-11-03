@@ -165,12 +165,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 )
             if (!success) {
                 binding?.apply {
-                    showSnackBar(this.root,  "Style parsing failed.")
+                    showSnackBar(this.root, "Style parsing failed.")
                 }
             }
         } catch (exception: Resources.NotFoundException) {
             binding?.apply {
-                showSnackBar(this.root,  "Can't find style. Error: $exception")
+                showSnackBar(this.root, "Can't find style. Error: $exception")
             }
         }
     }
@@ -233,7 +233,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         } catch (e: SecurityException) {
             binding?.apply {
-                showSnackBar(this.root,  "Exception:  ${e.message}")
+                showSnackBar(this.root, "Exception:  ${e.message}")
             }
         }
     }

@@ -59,13 +59,13 @@
         android:id="@+id/add_story_fragment"
         android:name="com.don.storyApp.presentation.add_story.AddStoryFragment"
         android:label="@string/add_story_fragment_label"
-        tools:layout="@layout/fragment_add_story"/>
+        tools:layout="@layout/fragment_add_story" />
 
     <fragment
         android:id="@+id/map_fragment"
         android:name="com.don.storyApp.presentation.map.MapFragment"
-        android:label="@string/add_story_fragment_label"
-        tools:layout="@layout/fragment_map"/>
+        android:label="@string/map_fragment_label"
+        tools:layout="@layout/fragment_map" />
 
     <action
         android:id="@+id/action_general_to_add_story_fragment"
