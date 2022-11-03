@@ -10,6 +10,7 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.location.Geocoder
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -26,6 +27,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentMapBinding
+import com.don.storyApp.domain.model.Place
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,6 +35,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import timber.log.Timber
+import java.io.IOException
+import java.util.*
 
 
 /**
@@ -44,12 +49,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var binding: FragmentMapBinding? = null
     private lateinit var nonNullContext: Context
-
     private lateinit var mMap: GoogleMap
-
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -58,51 +60,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 checkPermissionLocation()
             }
         }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isIndoorLevelPickerEnabled = true
-        mMap.uiSettings.isCompassEnabled = true
-        mMap.uiSettings.isMapToolbarEnabled = true
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
-
-
-        mMap.setOnMapLongClickListener { latLng ->
-            mMap.addMarker(
-                MarkerOptions()
-                    .position(latLng)
-                    .title("New Marker")
-                    .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
-                    .icon(
-                        vectorToBitmap(
-                            R.drawable.ic_location,
-                            Color.parseColor("#3DDC84")
-                        )
-                    )
-            )
-        }
-
-        mMap.setOnPoiClickListener { pointOfInterest ->
-            val poiMarker = mMap.addMarker(
-                MarkerOptions()
-                    .position(pointOfInterest.latLng)
-                    .title(pointOfInterest.name)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-            )
-            poiMarker?.showInfoWindow()
-        }
-
-        checkPermissionLocation()
-        setMapStyle()
-//        addManyMarker()
-    }
+    private val boundsBuilder = LatLngBounds.Builder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,6 +116,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding = null
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isIndoorLevelPickerEnabled = true
+        mMap.uiSettings.isCompassEnabled = true
+        mMap.uiSettings.isMapToolbarEnabled = true
+
+        mMap.setOnMapLongClickListener { latLng ->
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .title("New Marker")
+                    .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
+                    .icon(
+                        vectorToBitmap(
+                            R.drawable.ic_location,
+                            Color.parseColor("#3DDC84")
+                        )
+                    )
+            )
+        }
+
+        mMap.setOnPoiClickListener { pointOfInterest ->
+            val poiMarker = mMap.addMarker(
+                MarkerOptions()
+                    .position(pointOfInterest.latLng)
+                    .title(pointOfInterest.name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+            )
+            poiMarker?.showInfoWindow()
+        }
+
+        checkPermissionLocation()
+        setMapStyle()
+        addManyMarker()
+    }
+
     private fun setMapStyle() {
         try {
             val success =
@@ -168,19 +164,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
                 )
             if (!success) {
-                Log.e(TAG, "Style parsing failed.")
+                 Timber.e("Style parsing failed.")
             }
         } catch (exception: Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", exception)
+            Timber.e("Can't find style. Error: $exception")
         }
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int): BitmapDescriptor {
         val vectorDrawable = ResourcesCompat.getDrawable(resources, id, null)
-        if (vectorDrawable == null) {
-            Log.e("BitmapHelper", "Resource not found")
-            return BitmapDescriptorFactory.defaultMarker()
-        }
+            ?: return BitmapDescriptorFactory.defaultMarker()
         val bitmap = Bitmap.createBitmap(
             vectorDrawable.intrinsicWidth,
             vectorDrawable.intrinsicHeight,
@@ -192,7 +185,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
-
 
     private fun checkPermissionLocation() {
         if (ContextCompat.checkSelfPermission(
@@ -236,7 +228,48 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
+            Timber.e("Exception:  ${e.message}")
         }
+    }
+
+    private fun addManyMarker() {
+        val tourismPlace = listOf(
+            Place("Floating Market Lembang", -6.8168954,107.6151046),
+            Place("The Great Asia Africa", -6.8331128,107.6048483),
+            Place("Rabbit Town", -6.8668408,107.608081),
+            Place("Alun-Alun Kota Bandung", -6.9218518,107.6025294),
+            Place("Orchid Forest Cikole", -6.780725, 107.637409),
+        )
+        tourismPlace.forEach { tourism ->
+            val latLng = LatLng(tourism.latitude, tourism.longitude)
+            val addressName = getAddressName(tourism.latitude, tourism.longitude)
+            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name).snippet(addressName))
+            boundsBuilder.include(latLng)
+        }
+
+        val bounds: LatLngBounds = boundsBuilder.build()
+        mMap.animateCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                resources.displayMetrics.widthPixels,
+                resources.displayMetrics.heightPixels,
+                300
+            )
+        )
+    }
+
+    private fun getAddressName(lat: Double, lon: Double): String? {
+        var addressName: String? = null
+        val geocoder = Geocoder(nonNullContext, Locale.getDefault())
+        try {
+            val list = geocoder.getFromLocation(lat, lon, 1)
+            if (list != null && list.size != 0) {
+                addressName = list[0].getAddressLine(0)
+                Log.d(TAG, "getAddressName: $addressName")
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return addressName
     }
 }
