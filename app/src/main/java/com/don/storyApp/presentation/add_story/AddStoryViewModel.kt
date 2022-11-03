@@ -25,8 +25,8 @@ class AddStoryViewModel @Inject constructor(
     val isValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
     val isValidText: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
-    var lat: MutableLiveData<Double> = MutableLiveData(0.0)
-    var lon: MutableLiveData<Double> = MutableLiveData(0.0)
+    var lat: Double = 0.0
+    var lon: Double = 0.0
 
     var myFile: File? = null
 
@@ -36,13 +36,11 @@ class AddStoryViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             myFile?.let {
-                Timber.e("== LAT ${lat.value}")
-                Timber.e("== LON ${lon.value}")
-        /*        repository.addStory(
+                repository.addStory(
                     description.value.orEmpty(),
                     reduceFileImage(it),
-                    lat.value ?: 0.0,
-                    lon.value ?: 0.0
+                    lat,
+                    lon
                 )
                     .collect { resource ->
                         Timber.e("== LAT ${lat}")
@@ -60,7 +58,7 @@ class AddStoryViewModel @Inject constructor(
                                 errorMessage(resource.message.orEmpty())
                             }
                         }
-                    }*/
+                    }
             }
         }
     }

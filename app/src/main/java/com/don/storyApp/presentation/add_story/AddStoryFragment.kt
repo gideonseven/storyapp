@@ -26,14 +26,9 @@ import com.don.storyApp.util.showSnackBar
 import com.don.storyApp.util.uriToFile
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import timber.log.Timber
 import java.io.File
 
 
@@ -43,7 +38,7 @@ import java.io.File
  * https://www.cicil.co.id/
  */
 @AndroidEntryPoint
-class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapReadyCallback {
+class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var binding: FragmentAddStoryBinding? = null
     private val viewModel by viewModels<AddStoryViewModel>()
@@ -87,7 +82,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapR
     }
     private lateinit var nonNullContext: Context
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var mMap: GoogleMap
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
@@ -129,17 +123,14 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapR
             tvTakeImage.setOnClickListener {
                 cameraTask()
             }
-
             tvOpenGallery.setOnClickListener {
                 startGallery()
             }
-
             tilDescription.editText?.doAfterTextChanged {
                 viewModel.isValidText.value = tilDescription.isFormValid()
             }
-            fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(nonNullContext)
         }
+        checkPermissionLocation()
     }
 
     @Deprecated("Deprecated in Java")
@@ -200,7 +191,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapR
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            mMap.isMyLocationEnabled = true
             getMyCurrentLocation()
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -213,29 +203,22 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks, OnMapR
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
          */
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(nonNullContext)
         binding?.apply {
             try {
                 val locationResult = fusedLocationProviderClient.lastLocation
-                activity?.let {
-                    locationResult.addOnCompleteListener(it) { task ->
-                        if (task.isSuccessful) {
-                            showSnackBar(root, "NOT SUCCESSFULL")
-                            val lastKnownLocation = task.result
-                            viewModel.lat.value = lastKnownLocation.latitude
-                            viewModel.lon.value = lastKnownLocation.longitude
-                        } else {
-                            showSnackBar(root, "NOT SUCCESSFULL")
-                        }
+                locationResult.addOnSuccessListener {
+                    if (it != null) {
+                        viewModel.lat = it.latitude
+                        viewModel.lon = it.longitude
+                    } else {
+                        showSnackBar(root, "NOT SUCCESSFULL")
                     }
                 }
             } catch (e: SecurityException) {
                 showSnackBar(root, "Exception:  ${e.message}")
             }
         }
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        checkPermissionLocation()
     }
 }
