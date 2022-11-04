@@ -1,6 +1,8 @@
 package com.don.storyApp.domain.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -11,7 +13,11 @@ import kotlinx.parcelize.Parcelize
  * https://www.cicil.co.id/
  */
 @Parcelize
+@Entity(tableName = "story")
 data class Story(
+    @PrimaryKey
+    @field:SerializedName("id")
+    val id: String = "-1",
 
     @field:SerializedName("photoUrl")
     val photoUrl: String? = null,
@@ -25,8 +31,6 @@ data class Story(
     @field:SerializedName("description")
     val description: String? = null,
 
-    @field:SerializedName("id")
-    val id: String? = null,
 
     @field:SerializedName("lon")
     val lon: Double = 0.0,

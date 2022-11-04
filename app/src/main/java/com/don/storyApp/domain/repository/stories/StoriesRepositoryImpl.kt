@@ -1,9 +1,12 @@
 package com.don.storyApp.domain.repository.stories
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.don.storyApp.data.StoryRemoteMediator
 import com.don.storyApp.data.local.AppPreferences
+import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
@@ -35,7 +38,8 @@ import javax.inject.Inject
 class StoriesRepositoryImpl @Inject constructor(
     private val apiService: StoryApi,
     private val gson: Gson,
-    private val preferences: AppPreferences
+    private val preferences: AppPreferences,
+    private val storyDatabase: StoryDatabase
 ) : IStoriesRepository {
 
     override suspend fun addStory(
@@ -76,16 +80,19 @@ class StoriesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPagingStories(): Flow<PagingData<Story>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
-                pageSize = 3
+                pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService, preferences),
             pagingSourceFactory = {
-                StoryPagingSource(
-                    apiService,
-                    preferences,
-                    gson
-                )
+//                StoryPagingSource(
+//                    apiService,
+//                    preferences,
+//                    gson
+//                )
+                storyDatabase.storyDao().getStories()
             }
         ).flow
     }
