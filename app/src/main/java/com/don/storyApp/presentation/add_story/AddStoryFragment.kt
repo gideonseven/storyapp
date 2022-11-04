@@ -117,7 +117,7 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     },
                     onSuccess = {
                         showSnackBar(this.root, it.message.orEmpty())
-                        findNavController().popBackStack()
+                        findNavController().navigateUp()
                     })
             }
             tvTakeImage.setOnClickListener {

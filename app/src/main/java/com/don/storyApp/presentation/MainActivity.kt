@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.map_fragment -> {
                     map.isVisible = false
+                    addStory.isVisible = false
                 }
                 else -> {
                     // do nothing

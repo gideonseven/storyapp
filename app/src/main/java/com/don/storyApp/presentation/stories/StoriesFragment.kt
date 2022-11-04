@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentStoriesBinding
 import com.don.storyApp.util.Extras
+import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -75,13 +76,12 @@ class StoriesFragment : Fragment() {
             findNavController().navigate(R.id.action_general_to_nav_graph)
         }
 
-        val concatAdapter = storiesAdapter.withLoadStateHeaderAndFooter(
-            header = LoadingStateAdapter {
-
-            },
-            footer = LoadingStateAdapter {
-
-            }
+        val concatAdapter = storiesAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter(retry = {
+                binding?.let {
+                    getStories()
+                }
+            })
         )
 
         binding?.rv?.adapter = concatAdapter

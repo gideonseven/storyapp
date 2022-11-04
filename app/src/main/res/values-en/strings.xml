@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">storyApp</string>
     <string name="action_log_out">Log Out</string>
-    <string name="login_fragment_label">Login Fragment</string>
-    <string name="register_fragment_label">Register Fragment</string>
-    <string name="stories_fragment_label">Stories Fragment</string>
-    <string name="detail_fragment_label">Detail Fragment</string>
+    <string name="login_fragment_label">Login</string>
+    <string name="register_fragment_label">"Register "</string>
+    <string name="stories_fragment_label">"Stories "</string>
+    <string name="detail_fragment_label">Detail</string>
     <string name="input_email">Input Email</string>
     <string name="input_password">Input Password</string>
     <string name="input_name">Input Name</string>
