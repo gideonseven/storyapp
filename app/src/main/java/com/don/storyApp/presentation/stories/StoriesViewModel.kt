@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
@@ -31,7 +32,7 @@ class StoriesViewModel @Inject constructor(
         onSuccess: (PagingData<Story>) -> Unit
     ) {
         viewModelScope.launch {
-            repository.getPagingStories().collect {
+            repository.getPagingStories().cachedIn(this).collect {
                 onSuccess(it)
             }
         }

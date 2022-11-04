@@ -10,8 +10,7 @@ import com.don.storyApp.data.local.database.RemoteKeys
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
-import com.skydoves.sandwich.messageOrNull
-import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.*
 import timber.log.Timber
 
 
@@ -69,9 +68,6 @@ class StoryRemoteMediator(
                 page,
                 state.config.pageSize
             )
-
-            Timber.e("=== STATUS  ${response.messageOrNull}")
-
             response.onSuccess {
                 this.data.listStory?.let {
                     responseData.addAll(it)
@@ -79,7 +75,15 @@ class StoryRemoteMediator(
                 }
             }
 
+            Timber.e("=== STATUS  ${response.messageOrNull}")
+
+
+
             val endOfPaginationReached= responseData.isEmpty()
+
+            if(response.isError || response.isException || response.isFailure){
+                return MediatorResult.Error(Exception())
+            }
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {

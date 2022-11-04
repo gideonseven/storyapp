@@ -33,6 +33,7 @@ interface StoryApi {
     suspend fun getStories(
         @Header("Authorization") authorization: String,
         @Query("page") currentPage: Int,
+        @Query("size") pageSize: Int,
         @Query("location") location: Int = 1
     ): ApiResponse<StoryResponse>
 
