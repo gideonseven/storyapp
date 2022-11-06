@@ -38,11 +38,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val viewModel by viewModels<AddStoryViewModel>()
 
-    companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        const val CAMERA_X_RESULT = 200
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -163,5 +158,10 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherGallery.launch(chooser)
+    }
+
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        const val CAMERA_X_RESULT = 200
     }
 }

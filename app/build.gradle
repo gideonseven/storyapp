@@ -66,11 +66,10 @@ dependencies {
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
-    // retrofit
+    // retrofit & okhttp
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.3"
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
 
     // dagger-hilt
     implementation 'com.google.dagger:hilt-android:2.43.2'
@@ -98,6 +97,8 @@ dependencies {
     // easy permission
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    // niddler
+    implementation 'com.chimerapps.niddler:niddler:1.7.0'
 }
 repositories {
     mavenCentral()

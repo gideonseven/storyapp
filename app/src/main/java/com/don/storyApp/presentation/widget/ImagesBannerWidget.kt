@@ -18,6 +18,32 @@ import com.don.storyApp.R
  * https://www.cicil.co.id/
  */
 class ImagesBannerWidget : AppWidgetProvider() {
+    /*
+    Update widget
+     */
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        // There may be multiple widgets active, so update all of them
+        for (appWidgetId in appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+    }
+
+    /*
+    Gunakan onReceive untuk menerima broadcast
+     */
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action != null) {
+            if (intent.action == TOAST_ACTION) {
+                val viewIndex = intent.getIntExtra(EXTRA_ITEM, 0)
+                Toast.makeText(context, "Touched view $viewIndex", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     companion object {
 
@@ -55,34 +81,6 @@ class ImagesBannerWidget : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, views)
 //            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.stack_view);
 
-        }
-    }
-
-
-    /*
-    Update widget
-     */
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        // There may be multiple widgets active, so update all of them
-        for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
-        }
-    }
-
-    /*
-    Gunakan onReceive untuk menerima broadcast
-     */
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        if (intent.action != null) {
-            if (intent.action == TOAST_ACTION) {
-                val viewIndex = intent.getIntExtra(EXTRA_ITEM, 0)
-                Toast.makeText(context, "Touched view $viewIndex", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 }

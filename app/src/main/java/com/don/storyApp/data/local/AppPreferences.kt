@@ -43,11 +43,6 @@ class AppPreferences(val sharedPreferences: SharedPreferences) {
             else -> throw UnsupportedOperationException("Not yet implemented")
         }
 
-    companion object {
-        private const val AUTH_KEY = "auth_key"
-        private const val LIST_STORY = "list_story"
-    }
-
     fun setValue(key: String, value: Any?) {
         sharedPreferences[key] = value
     }
@@ -65,4 +60,8 @@ class AppPreferences(val sharedPreferences: SharedPreferences) {
         get() = getValue(LIST_STORY, Constant.TEXT_BLANK)
         set(value) = setValue(LIST_STORY, value)
 
+    companion object {
+        private const val AUTH_KEY = "auth_key"
+        private const val LIST_STORY = "list_story"
+    }
 }
