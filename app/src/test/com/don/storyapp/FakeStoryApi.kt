@@ -1,0 +1,1 @@
+interface FakeStoryApi : Story
