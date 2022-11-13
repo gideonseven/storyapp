@@ -9,7 +9,7 @@ import com.don.storyApp.domain.model.Story
  * https://www.cicil.co.id/
  */
 object DataDummy {
-    fun generateDummyNewsEntity(): List<Story> {
+    fun generateDummyStories(): List<Story> {
         val storyList = ArrayList<Story>()
         for (i in 0..10) {
             val news = Story(
