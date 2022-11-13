@@ -1,4 +1,4 @@
-package com.don.storyApp.presentation
+package com.don.storyApp
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

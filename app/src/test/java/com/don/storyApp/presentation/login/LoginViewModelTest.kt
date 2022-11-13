@@ -1,19 +1,24 @@
 package com.don.storyApp.presentation.login
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.repository.auth.IAuthRepository
-import com.don.storyApp.presentation.MainDispatcherRule
-import com.don.storyApp.presentation.runBlockingTest
+import com.don.storyApp.runBlockingTest
+import com.don.storyApp.util.DataDummy
 import com.don.storyApp.util.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.mock
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by gideon on 13 November 2022
@@ -21,26 +26,48 @@ import org.mockito.Mockito.mock
  * https://www.cicil.co.id/
  */
 
-@ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class LoginViewModelTest {
 
     @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: LoginViewModel
+    @Mock
+    private lateinit var repository: IAuthRepository
+    private lateinit var loginViewModel: LoginViewModel
+    private val dummyStories = DataDummy.generateDummyStories()
 
-    private val repository = mock(IAuthRepository::class.java)
 
     @Before
-    fun setUp() {
-        viewModel = LoginViewModel(repository)
+    fun setup(){
+        loginViewModel = LoginViewModel(repository)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun When_login_credential_true_state_type_equals() {
+    fun `when Login With Wrong Credential Should Return Error Message`(){
+
+        mainDispatcherRule.runBlockingTest {
+            val expectedErrorMessage = "error"
+            var actualErrorMessage = ""
+
+            loginViewModel.submitLogin(errorMessage = {
+                actualErrorMessage = it
+            }, onSuccess = {})
+
+            Mockito.verify(repository.doLogin("", ""))
+            Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `When login credential true state type equals`() {
         mainDispatcherRule.runBlockingTest {
             //given
             var resourceError = false
@@ -51,7 +78,7 @@ class LoginViewModelTest {
                 resourceError = Resource.Success(data = StoryResponse()).data?.error == true
                 emit(Resource.Success(data = StoryResponse()))
             })
-            viewModel.submitLogin(errorMessage = {}, onSuccess = {
+            loginViewModel.submitLogin(errorMessage = {}, onSuccess = {
                 rsType = it.error == true
             })
 
@@ -60,8 +87,9 @@ class LoginViewModelTest {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun When_login_credential_false_state_type_not_equals() {
+    fun `When login credential false state type not equals`() {
         mainDispatcherRule.runBlockingTest {
             //given
             var resourceError = false
@@ -72,7 +100,7 @@ class LoginViewModelTest {
                 resourceError = Resource.Success(data = StoryResponse()).data?.error == false
                 emit(Resource.Success(data = StoryResponse()))
             })
-            viewModel.submitLogin(errorMessage = {}, onSuccess = {
+            loginViewModel.submitLogin(errorMessage = {}, onSuccess = {
                 rsType = it.error == true
             })
 
