@@ -86,11 +86,6 @@ class StoriesRepositoryImpl @Inject constructor(
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService, preferences),
             pagingSourceFactory = {
-//                StoryPagingSource(
-//                    apiService,
-//                    preferences,
-//                    gson
-//                )
                 storyDatabase.storyDao().getStories()
             }
         ).flow

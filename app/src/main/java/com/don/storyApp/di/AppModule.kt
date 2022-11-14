@@ -42,7 +42,7 @@ object AppModule {
     @Singleton
     fun provideNiddler(
         storyApplication: StoryApplication
-    ): AndroidNiddler{
+    ): AndroidNiddler {
         val niddler = AndroidNiddler.Builder()
             .setPort(0) //Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
             .setNiddlerInformation(AndroidNiddler.fromApplication(storyApplication)) //Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
@@ -57,7 +57,7 @@ object AppModule {
     @Singleton
     fun provideNiddlerInterceptor(
         niddler: AndroidNiddler
-    ): NiddlerOkHttpInterceptor{
+    ): NiddlerOkHttpInterceptor {
         return NiddlerOkHttpInterceptor(niddler, "NIDDLER_STORY_APP")
     }
 

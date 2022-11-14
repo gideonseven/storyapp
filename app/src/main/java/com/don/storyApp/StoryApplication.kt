@@ -17,6 +17,7 @@ class StoryApplication : Application() {
 
     @Inject
     lateinit var appBuildConfig: AppBuildConfig
+
     @Inject
     lateinit var niddler: AndroidNiddler
 

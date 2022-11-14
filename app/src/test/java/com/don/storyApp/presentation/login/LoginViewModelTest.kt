@@ -1,6 +1,5 @@
 package com.don.storyApp.presentation.login
 
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.data.remote.dto.StoryResponse
@@ -10,7 +9,6 @@ import com.don.storyApp.util.DataDummy
 import com.don.storyApp.util.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -39,7 +37,7 @@ class LoginViewModelTest {
 
 
     @Before
-    fun setup(){
+    fun setup() {
         loginViewModel = LoginViewModel(repository)
     }
 
@@ -50,7 +48,7 @@ class LoginViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when Login With Wrong Credential Should Return Error Message`(){
+    fun `when Login With Wrong Credential Should Return Error Message`() {
 
         mainDispatcherRule.runBlockingTest {
             val expectedErrorMessage = "error"

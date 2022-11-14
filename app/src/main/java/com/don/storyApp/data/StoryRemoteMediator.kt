@@ -7,9 +7,9 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.local.database.RemoteKeys
-import com.don.storyApp.domain.model.Story
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
+import com.don.storyApp.domain.model.Story
 import com.skydoves.sandwich.*
 import timber.log.Timber
 
@@ -64,7 +64,7 @@ class StoryRemoteMediator(
 
             val responseData: ArrayList<Story> = arrayListOf()
             val response = apiService.getStories(
-               "Bearer ${appPreferences.accessToken.orEmpty()}",
+                "Bearer ${appPreferences.accessToken.orEmpty()}",
                 page,
                 state.config.pageSize
             )
@@ -78,10 +78,9 @@ class StoryRemoteMediator(
             Timber.e("=== STATUS  ${response.messageOrNull}")
 
 
+            val endOfPaginationReached = responseData.isEmpty()
 
-            val endOfPaginationReached= responseData.isEmpty()
-
-            if(response.isError || response.isException || response.isFailure){
+            if (response.isError || response.isException || response.isFailure) {
                 return MediatorResult.Error(Exception())
             }
 
