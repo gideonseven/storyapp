@@ -48,6 +48,6 @@ interface StoryApi {
     ): ApiResponse<SimpleNetworkModel>
 
     companion object {
-        const val BASE_URL = "https://story-api.dicoding.dev/v1/"
+        var BASE_URL = "https://story-api.dicoding.dev/v1/"
     }
 }

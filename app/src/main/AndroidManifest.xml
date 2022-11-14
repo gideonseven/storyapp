@@ -39,6 +39,9 @@
             android:name=".presentation.CameraActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".presentation.HiltTestActivity"
+            android:exported="true" />
 
         <receiver
             android:name=".presentation.widget.ImagesBannerWidget"

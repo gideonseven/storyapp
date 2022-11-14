@@ -12,6 +12,7 @@ import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
+import com.don.storyApp.util.wrapEspressoIdlingResource
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.skydoves.sandwich.messageOrNull
@@ -50,7 +51,6 @@ class StoriesRepositoryImpl @Inject constructor(
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
-
             val desc = description.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
@@ -86,7 +86,9 @@ class StoriesRepositoryImpl @Inject constructor(
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService, preferences),
             pagingSourceFactory = {
-                storyDatabase.storyDao().getStories()
+                wrapEspressoIdlingResource {
+                    storyDatabase.storyDao().getStories()
+                }
             }
         ).flow
     }
