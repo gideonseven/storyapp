@@ -1,0 +1,96 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-dMEqo1G_tuA7TyWZ",
+      "name": "Aaaaa",
+      "description": "Langit-langit",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668421516791_Jkfpj5s0.jpg",
+      "createdAt": "2022-11-14T10:25:16.792Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-vEs20hLaPw_DZhAf",
+      "name": "Aaaaa",
+      "description": "Cing",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668421421365_t3Yhb478.jpg",
+      "createdAt": "2022-11-14T10:23:41.367Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-Qdh3jg9JIbD9D6Lh",
+      "name": "Arif",
+      "description": "ds",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668421256230_hzZxiq6a.jpg",
+      "createdAt": "2022-11-14T10:20:56.231Z",
+      "lat": 37.4219983,
+      "lon": -122.084
+    },
+    {
+      "id": "story-zeX7S1fOmCD-4_Zu",
+      "name": "akhmad",
+      "description": "aaa",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668420973648_e3RHWrZj.jpg",
+      "createdAt": "2022-11-14T10:16:13.653Z",
+      "lat": -6.145705,
+      "lon": 106.7697933
+    },
+    {
+      "id": "story-Em7-5MmF7ISH5CZy",
+      "name": "Aaaaa",
+      "description": "Fujii",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668420860435_aGe7Y0OD.jpg",
+      "createdAt": "2022-11-14T10:14:20.439Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-NcCHWzR8rFd_Sw4B",
+      "name": "Edwin",
+      "description": "test",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668419870331_JMSGB1Tk.jpg",
+      "createdAt": "2022-11-14T09:57:50.334Z",
+      "lat": -7.8231194,
+      "lon": 110.4277437
+    },
+    {
+      "id": "story-sAyqBZbK0rdLVX8X",
+      "name": "Aaaaa",
+      "description": "Sofa",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668419854907_dRa9DaDK.jpg",
+      "createdAt": "2022-11-14T09:57:34.908Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-Z-cU0_4KExXta8Q5",
+      "name": "Aaaaa",
+      "description": "Guguk",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668418568998_kVcm4vy2.jpg",
+      "createdAt": "2022-11-14T09:36:08.999Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-Bgbr7aWwV6NnRcog",
+      "name": "Aaaaa",
+      "description": "Gunung Fuji",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668418268489_XnzEsoTh.jpg",
+      "createdAt": "2022-11-14T09:31:08.492Z",
+      "lat": -7.948275,
+      "lon": 112.61386
+    },
+    {
+      "id": "story-5cY3v_vw_qLpupaK",
+      "name": "juni",
+      "description": "the psychology of money",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1668418016319_IDxSl4bG.jpg",
+      "createdAt": "2022-11-14T09:26:56.321Z",
+      "lat": -0.5420107,
+      "lon": 117.2766636
+    }
+  ]
+}
