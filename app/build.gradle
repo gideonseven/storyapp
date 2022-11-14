@@ -53,10 +53,6 @@ android {
 dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.0"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -129,24 +125,27 @@ dependencies {
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit:1.1.4"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
-    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
 
     //mockito
     testImplementation 'org.mockito:mockito-core:4.4.0'
-    // https://mvnrepository.com/artifact/org.mockito/mockito-android
-
-//    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
-
-    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
-    implementation("net.bytebuddy:byte-buddy:1.12.8")
-
-// https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
-    testImplementation("net.bytebuddy:byte-buddy-agent:1.12.8")
+    implementation("net.bytebuddy:byte-buddy:1.12.8")     // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
+    testImplementation("net.bytebuddy:byte-buddy-agent:1.12.8")    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
 
     //special testing
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")  //TestDispatcher
+
+    //special instrumentation testing
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4" //TestDispatcher
 
     //coroutine support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1" //viewModelScope
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")  //TestDispatcher
+
+    //TestCoroutineDispatcher
+    debugImplementation "androidx.fragment:fragment-testing:1.5.4" //launchFragmentInContainer
+
+    //mock web server
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+    androidTestImplementation "com.squareup.okhttp3:okhttp-tls:4.9.3"
 }
