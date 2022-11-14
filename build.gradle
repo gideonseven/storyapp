@@ -14,10 +14,12 @@ buildscript {
 
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.43.2'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0-alpha03"
+        classpath "org.jacoco:org.jacoco.core:0.8.6"
     }
 }
 
 allprojects {
+    apply plugin: 'jacoco'
     repositories {
         google()
         mavenCentral()
