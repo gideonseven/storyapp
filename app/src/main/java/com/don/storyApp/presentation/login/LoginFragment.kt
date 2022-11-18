@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
 import com.don.storyApp.databinding.FragmentLoginBinding
+import com.don.storyApp.util.hideKeyboard
 import com.don.storyApp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,6 +57,7 @@ class LoginFragment : Fragment() {
                 doCheckValidation()
             }
             btnLogin.setOnClickListener {
+                hideKeyboard()
                 viewModel.submitLogin(
                     errorMessage = {
                         showSnackBar(root, it)

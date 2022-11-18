@@ -212,8 +212,6 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     if (it != null) {
                         viewModel.lat = it.latitude
                         viewModel.lon = it.longitude
-                    } else {
-                        showSnackBar(root, "NOT SUCCESSFULL")
                     }
                 }
             } catch (e: SecurityException) {

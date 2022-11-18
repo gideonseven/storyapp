@@ -1,5 +1,6 @@
 package com.don.storyApp.di
 
+import android.app.Application
 import com.chimerapps.niddler.core.AndroidNiddler
 import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
 import com.don.storyApp.StoryApplication
@@ -26,51 +27,43 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
     @Singleton
+    @Provides
     fun provideStoryApplication(): StoryApplication = StoryApplication()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideAppBuildConfig(): AppBuildConfig = AppBuildConfig()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideGson(): Gson = Gson()
 
-    @Provides
     @Singleton
-    fun provideNiddler(
-        storyApplication: StoryApplication
-    ): AndroidNiddler {
+    @Provides
+    fun provideNiddlerOkHttp(application: Application, appBuildConfig: AppBuildConfig): NiddlerOkHttpInterceptor {
         val niddler = AndroidNiddler.Builder()
-            .setPort(0) //Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
-            .setNiddlerInformation(AndroidNiddler.fromApplication(storyApplication)) //Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
+            // Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
+            .setPort(0)
+            // Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
+            .setNiddlerInformation(AndroidNiddler.fromApplication(application))
             .setMaxStackTraceSize(10)
-            .build()
-        niddler.attachToApplication(storyApplication) //Make the niddler service start whenever an activity starts
-        return niddler
+            .build().apply {
+                if(appBuildConfig.appDebug) attachToApplication(application)
+            }
+        return NiddlerOkHttpInterceptor(niddler, "StoryApp")
     }
 
-
-    @Provides
     @Singleton
-    fun provideNiddlerInterceptor(
-        niddler: AndroidNiddler
-    ): NiddlerOkHttpInterceptor {
-        return NiddlerOkHttpInterceptor(niddler, "NIDDLER_STORY_APP")
-    }
-
     @Provides
-    @Singleton
     fun provideOkHttpClient(niddlerOkHttpInterceptor: NiddlerOkHttpInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(niddlerOkHttpInterceptor)
             .build()
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -78,7 +71,7 @@ object AppModule {
             .client(client)
             .build()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideStoryApi(retrofit: Retrofit): StoryApi = retrofit.create(StoryApi::class.java)
 }

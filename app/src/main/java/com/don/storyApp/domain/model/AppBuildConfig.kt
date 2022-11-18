@@ -9,5 +9,6 @@ import com.don.storyApp.util.Constant
  * https://www.cicil.co.id/
  */
 data class AppBuildConfig(
-    var prefName: String = Constant.TEXT_BLANK
+    var prefName: String = Constant.TEXT_BLANK,
+    var appDebug: Boolean = false
 )

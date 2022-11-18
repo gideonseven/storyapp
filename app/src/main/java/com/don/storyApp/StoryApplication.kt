@@ -18,17 +18,13 @@ class StoryApplication : Application() {
     @Inject
     lateinit var appBuildConfig: AppBuildConfig
 
-    @Inject
-    lateinit var niddler: AndroidNiddler
-
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
 
         appBuildConfig.apply {
             prefName = BuildConfig.PREFERENCES_NAME
+            appDebug = BuildConfig.DEBUG
         }
-
-        niddler.attachToApplication(this) //Make the niddler service start whenever an activity starts
     }
 }
