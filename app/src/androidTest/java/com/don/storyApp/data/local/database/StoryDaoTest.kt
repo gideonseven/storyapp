@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.don.storyApp.util.DataDummy
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 
 
 /**
@@ -14,7 +14,7 @@ import org.junit.*
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-class StoryDaoTest{
+class StoryDaoTest {
 
     @get:Rule
     val instantExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()

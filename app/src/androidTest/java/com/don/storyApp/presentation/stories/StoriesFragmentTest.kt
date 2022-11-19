@@ -1,28 +1,25 @@
 package com.don.storyApp.presentation.stories
 
 import android.os.Bundle
-import android.support.test.espresso.contrib.RecyclerViewActions
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.don.storyApp.R
+import com.don.storyApp.data.remote.StoryApi
+import com.don.storyApp.util.EspressoIdlingResource
+import com.don.storyApp.util.JsonConverter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.don.storyApp.R
-import com.don.storyApp.data.remote.StoryApi
-import com.don.storyApp.util.EspressoIdlingResource
-import com.don.storyApp.util.JsonConverter
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 /**
@@ -33,6 +30,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @MediumTest
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class StoriesFragmentTest {
 
     private val mockWebServer = MockWebServer()

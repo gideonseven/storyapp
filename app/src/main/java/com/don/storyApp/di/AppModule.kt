@@ -3,7 +3,6 @@ package com.don.storyApp.di
 import android.app.Application
 import com.chimerapps.niddler.core.AndroidNiddler
 import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
-import com.don.storyApp.StoryApplication
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.StoryApi.Companion.BASE_URL
 import com.don.storyApp.domain.model.AppBuildConfig
@@ -29,10 +28,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideStoryApplication(): StoryApplication = StoryApplication()
-
-    @Singleton
-    @Provides
     fun provideAppBuildConfig(): AppBuildConfig = AppBuildConfig()
 
     @Singleton
@@ -41,7 +36,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNiddlerOkHttp(application: Application, appBuildConfig: AppBuildConfig): NiddlerOkHttpInterceptor {
+    fun provideNiddlerOkHttp(
+        application: Application,
+        appBuildConfig: AppBuildConfig
+    ): NiddlerOkHttpInterceptor {
         val niddler = AndroidNiddler.Builder()
             // Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
             .setPort(0)
@@ -49,7 +47,7 @@ object AppModule {
             .setNiddlerInformation(AndroidNiddler.fromApplication(application))
             .setMaxStackTraceSize(10)
             .build().apply {
-                if(appBuildConfig.appDebug) attachToApplication(application)
+                if (appBuildConfig.appDebug) attachToApplication(application)
             }
         return NiddlerOkHttpInterceptor(niddler, "StoryApp")
     }

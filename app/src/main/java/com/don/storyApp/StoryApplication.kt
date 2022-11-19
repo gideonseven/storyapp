@@ -1,7 +1,6 @@
 package com.don.storyApp
 
 import android.app.Application
-import com.chimerapps.niddler.core.AndroidNiddler
 import com.don.storyApp.domain.model.AppBuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -20,7 +19,9 @@ class StoryApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        if(BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+        }
 
         appBuildConfig.apply {
             prefName = BuildConfig.PREFERENCES_NAME
