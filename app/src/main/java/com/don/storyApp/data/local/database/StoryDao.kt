@@ -21,6 +21,9 @@ interface StoryDao {
     @Query("SELECT * FROM story")
     fun getStories(): PagingSource<Int, Story>
 
+    @Query("SELECT * FROM story")
+    suspend fun getMarkers(): List<Story>
+
     @Query("DELETE FROM story")
     suspend fun deleteAll()
 }

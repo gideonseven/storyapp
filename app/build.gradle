@@ -133,18 +133,23 @@ dependencies {
     //mockito
     testImplementation 'org.mockito:mockito-core:3.12.4'
     testImplementation 'org.mockito:mockito-inline:3.12.4'
-    implementation("net.bytebuddy:byte-buddy:1.12.8")     // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
-    testImplementation("net.bytebuddy:byte-buddy-agent:1.12.8")    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
+    implementation("net.bytebuddy:byte-buddy:1.12.8")
+    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
+    testImplementation("net.bytebuddy:byte-buddy-agent:1.12.8")
+    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
 
     //special testing
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2" //TestCoroutineDispatcher
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    //TestCoroutineDispatcher
 
     //special instrumentation testing
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2" //TestCoroutineDispatcher
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    //TestCoroutineDispatcher
     debugImplementation "androidx.fragment:fragment-testing:1.4.1" //launchFragmentInContainer
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2' //RecyclerViewActions
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+    //RecyclerViewActions
 
     //coroutine support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1" //viewModelScope

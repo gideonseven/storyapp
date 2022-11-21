@@ -14,7 +14,6 @@ import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.don.storyApp.util.wrapEspressoIdlingResource
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
@@ -95,14 +94,7 @@ class StoriesRepositoryImpl @Inject constructor(
 
     override suspend fun getListLocation(): Flow<List<Story>> {
         return flow {
-            if (preferences.listStory != null && preferences.listStory != "") {
-                emit(
-                    Gson().fromJson(
-                        preferences.listStory,
-                        object : TypeToken<List<Story>>() {}.type
-                    )
-                )
-            }
+            emit(storyDatabase.storyDao().getMarkers().distinct())
         }
     }
 }

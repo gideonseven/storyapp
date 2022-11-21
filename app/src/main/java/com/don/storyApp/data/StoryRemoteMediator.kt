@@ -10,9 +10,10 @@ import com.don.storyApp.data.local.database.RemoteKeys
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.model.Story
-import com.skydoves.sandwich.*
-import timber.log.Timber
-
+import com.skydoves.sandwich.isError
+import com.skydoves.sandwich.isException
+import com.skydoves.sandwich.isFailure
+import com.skydoves.sandwich.onSuccess
 
 /**
  * Created by gideon on 05 November 2022
@@ -38,8 +39,6 @@ class StoryRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, Story>
     ): MediatorResult {
-        Timber.e("=== load StoryRemoteMediator ")
-
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -60,8 +59,6 @@ class StoryRemoteMediator(
         }
 
         try {
-            Timber.e("=== TRY")
-
             val responseData: ArrayList<Story> = arrayListOf()
             val response = apiService.getStories(
                 "Bearer ${appPreferences.accessToken.orEmpty()}",
@@ -70,13 +67,10 @@ class StoryRemoteMediator(
             )
             response.onSuccess {
                 this.data.listStory?.let {
-                    responseData.addAll(it)
-                    Timber.e("=== MASUK GA?  ${it.size}")
+                    // check valid lat lon only
+                    responseData.addAll(validLatLonStories(it))
                 }
             }
-
-            Timber.e("=== STATUS  ${response.messageOrNull}")
-
 
             val endOfPaginationReached = responseData.isEmpty()
 
@@ -99,8 +93,6 @@ class StoryRemoteMediator(
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: Exception) {
-            Timber.e("=== catch")
-
             return MediatorResult.Error(exception)
         }
     }
@@ -123,5 +115,15 @@ class StoryRemoteMediator(
                 database.remoteKeysDao().getRemoteKeysId(id)
             }
         }
+    }
+
+    /**
+     *   add to list when valid lat lon only
+     *
+     *   valid latitude values in the range of [-90, 90]
+     *   valid longitude values in the range of [-180, 180]
+     */
+    private fun validLatLonStories(stories: List<Story>): List<Story> {
+        return stories.filter { story -> story.lat >= -90 && story.lat <= 90.0 && story.lon >= -180 && story.lon <= 180 }
     }
 }

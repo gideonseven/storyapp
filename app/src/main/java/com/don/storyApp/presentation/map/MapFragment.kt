@@ -35,7 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.IOException
 import java.util.*
 
 
@@ -240,22 +239,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
-
-        /**
-         *  @param lat
-         *   validate should be in between these range
-         *   -90 to +90
-         */
-        if (lat >= -90 && lat <= 90.0) {
-            val geocoder = Geocoder(nonNullContext, Locale.getDefault())
-            try {
-                val list = geocoder.getFromLocation(lat, lon, 1)
-                if (list != null && list.size != 0) {
-                    addressName = list[0].getAddressLine(0)
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+        val geocoder = Geocoder(nonNullContext, Locale.getDefault())
+        val list = geocoder.getFromLocation(lat, lon, 1)
+        if (list != null && list.size != 0) {
+            addressName = list[0].getAddressLine(0)
         }
         return addressName
     }
