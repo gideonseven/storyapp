@@ -1,12 +1,11 @@
 plugins {
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'com.android.application'
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
-    id 'kotlin-kapt'
 }
-apply from: "$project.rootDir/jacoco.gradle"
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keyProp = new Properties()
@@ -38,19 +37,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
     }
+
     testOptions {
         animationsDisabled = true
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -81,10 +85,13 @@ dependencies {
 
     // dagger-hilt
     implementation 'com.google.dagger:hilt-android:2.43.2'
-    kapt 'com.google.dagger:hilt-android-compiler:2.43.2'
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.37")
+    kapt "com.google.dagger:hilt-compiler:2.43.2"
+    //hilt - test - with kotlin
     kaptTest("com.google.dagger:hilt-android-compiler:2.43.2")
-    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.43.2")
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.43.2")
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.43.2'
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

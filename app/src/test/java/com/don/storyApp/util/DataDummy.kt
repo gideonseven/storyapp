@@ -13,10 +13,12 @@ object DataDummy {
         val storyList = ArrayList<Story>()
         for (i in 0..10) {
             val news = Story(
-                "$i",
-                "",
-                "",
-                "STORY $i",
+                id = "$i",
+                photoUrl = "",
+                createdAt = "",
+                name = "STORY $i",
+                lat = (60.0 + i),
+                lon = (150.0 + i)
             )
             storyList.add(news)
         }

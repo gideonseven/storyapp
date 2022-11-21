@@ -15,6 +15,10 @@ class FakeDao {
         listStory.addAll(story)
     }
 
+    fun addStory(story: Story) {
+        listStory.add(story)
+    }
+
     fun getStories() = listStory
 
     fun deleteAll() {
