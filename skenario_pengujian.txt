@@ -1,0 +1,56 @@
+Added Fake Class
+com.don.storyApp
+	.data.local
+			FakeAppPreferences
+			.database
+				FakeDao
+	.domain.repository
+		.auth
+			FakeAuthRepository
+		.stories
+			FakeStoryRepository
+	
+Unit Test Class
+com.don.storyApp
+	.presentation
+		.add_story
+			AddStoryViewModelTest
+		.login
+			LoginViewModelTest
+		.map
+			MapViewModelTest
+		.register
+			RegisterViewModelTest
+		.stories
+			StoriesViewModelTest
+	.util
+		DataDummy
+		DateHelperTest
+		
+		
+Skenario
+1. AddStoryViewModelTest
+	a. when add story without description will return error message
+	ketika menambahkan story tanpa deskripsi akan menampilkan error
+	
+2. LoginViewModelTest
+	a. when Login With Wrong Credential Should Return Error Message
+	Login dengan data yang salah akan error
+	
+	b. When login credential true state type equals
+	State Type akan sama jika data di input benar
+	
+	c. When login credential false state type not equals
+	Data di input salah, akan menampilkan state type error
+	
+3. MapViewModelTest
+	a. when get list location from dummies should return list
+	mengambil data dari dummies maka akan mendapat kembalian list
+	
+4. RegisterViewModelTest
+	a. when Register With Wrong Value Should Return Error Message
+	Jika mendaftar dengan data yang salah, menampilkan error
+
+5. StoriesViewModelTest
+	a. When Log Out, hasAccessToken Should be False
+	Jika Berhasil keluar, maka accessToken akan kosong / boolean false
