@@ -16,6 +16,8 @@ import org.junit.Before
 class FakeAuthRepository : IAuthRepository {
 
     private lateinit var mockPreferences: FakeAppPreferences
+    var responseError = ""
+    var responseSuccess = ""
 
     @Before
     fun setup() {
@@ -28,6 +30,8 @@ class FakeAuthRepository : IAuthRepository {
             emit(resource)
             resource = Resource.Success(data = StoryResponse())
             emit(resource)
+            responseError = ""
+            responseSuccess = "success"
         }
     }
 
