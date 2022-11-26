@@ -1,11 +1,8 @@
 package com.don.storyApp.presentation.map
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.don.storyApp.MainDispatcherRule
-import com.don.storyApp.domain.model.Story
-import com.don.storyApp.domain.repository.stories.IStoriesRepository
+import com.don.storyApp.domain.repository.stories.FakeStoryRepository
 import com.don.storyApp.runBlockingTest
-import com.don.storyApp.util.DataDummy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
 import org.junit.Before
@@ -24,33 +21,27 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MapViewModelTest {
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
-    private lateinit var repository: IStoriesRepository
+    private lateinit var repository: FakeStoryRepository
     private lateinit var mapViewModel: MapViewModel
-    private val dummyStories = DataDummy.generateDummyStories()
-    private var listLocation = listOf<Story>()
 
     @Before
     fun setup() {
+        repository = FakeStoryRepository()
         mapViewModel = MapViewModel(repository)
-        listLocation = dummyStories
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when get list location from dummies should return list`() {
+    fun `when get list from repository, should be equal list in viewModel`() {
         mainDispatcherRule.runBlockingTest {
-            val expectedData = dummyStories
             val actualData = repository.getListLocation()
             mapViewModel.getListLocation {
-                Assert.assertEquals(expectedData, actualData)
+                Assert.assertEquals(it, actualData)
             }
         }
     }

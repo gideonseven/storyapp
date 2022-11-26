@@ -44,7 +44,7 @@ Skenario
 	Data di input salah, akan menampilkan state type error
 	
 3. MapViewModelTest
-	a. when get list location from dummies should return list
+	a. when get list from repository, should be equal list in viewModel
 	mengambil data dari dummies maka akan mendapat kembalian list
 	
 4. RegisterViewModelTest
