@@ -4,9 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.repository.auth.FakeAuthRepository
-import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.runBlockingTest
-import com.don.storyApp.util.DataDummy
 import com.don.storyApp.util.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -15,7 +13,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
