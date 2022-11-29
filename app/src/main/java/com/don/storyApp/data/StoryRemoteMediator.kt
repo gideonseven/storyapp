@@ -10,10 +10,6 @@ import com.don.storyApp.data.local.database.RemoteKeys
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.model.Story
-import com.skydoves.sandwich.isError
-import com.skydoves.sandwich.isException
-import com.skydoves.sandwich.isFailure
-import com.skydoves.sandwich.onSuccess
 
 /**
  * Created by gideon on 05 November 2022
@@ -65,19 +61,15 @@ class StoryRemoteMediator(
                 page,
                 state.config.pageSize
             )
-            response.onSuccess {
-                this.data.listStory?.let {
-                    // check valid lat lon only
+            if (response.error == false) {
+                response.listStory?.let {
                     responseData.addAll(validLatLonStories(it))
                 }
             }
-
             val endOfPaginationReached = responseData.isEmpty()
-
-            if (response.isError || response.isException || response.isFailure) {
+            if (response.error == true) {
                 return MediatorResult.Error(Exception())
             }
-
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     database.remoteKeysDao().deleteRemoteKeys()

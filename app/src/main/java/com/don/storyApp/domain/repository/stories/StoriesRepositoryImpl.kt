@@ -8,16 +8,11 @@ import com.don.storyApp.data.StoryRemoteMediator
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
-import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.don.storyApp.util.wrapEspressoIdlingResource
 import com.google.gson.Gson
-import com.skydoves.sandwich.messageOrNull
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -64,14 +59,11 @@ class StoriesRepositoryImpl @Inject constructor(
                 latitude = lat,
                 longitude = lon
             )
-            response.onSuccess {
-                resource = Resource.Success(data = this.data)
-            }.onError {
-                val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
-                resource = Resource.Error(message = errorResp.message.orEmpty())
-            }.onException {
-                resource = Resource.Error(message = this.exception.message.orEmpty())
+
+            resource = if (response.error == false) {
+                Resource.Success(data = response)
+            } else {
+                Resource.Error(message = response.message.orEmpty())
             }
             emit(resource)
         }

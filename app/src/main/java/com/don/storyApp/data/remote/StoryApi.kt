@@ -2,7 +2,6 @@ package com.don.storyApp.data.remote
 
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.util.SimpleNetworkModel
-import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -19,7 +18,7 @@ interface StoryApi {
     suspend fun doLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ): ApiResponse<StoryResponse>
+    ): StoryResponse
 
     @FormUrlEncoded
     @POST("register")
@@ -27,7 +26,7 @@ interface StoryApi {
         @Field("email") email: String,
         @Field("name") name: String,
         @Field("password") password: String,
-    ): ApiResponse<SimpleNetworkModel>
+    ): SimpleNetworkModel
 
     @GET("stories")
     suspend fun getStories(
@@ -35,7 +34,7 @@ interface StoryApi {
         @Query("page") currentPage: Int,
         @Query("size") pageSize: Int,
         @Query("location") location: Int = 1
-    ): ApiResponse<StoryResponse>
+    ): StoryResponse
 
     @Multipart
     @POST("stories")
@@ -45,7 +44,7 @@ interface StoryApi {
         @Part("description") description: RequestBody,
         @Part("lat") latitude: Double,
         @Part("lon") longitude: Double
-    ): ApiResponse<SimpleNetworkModel>
+    ): SimpleNetworkModel
 
     companion object {
         var BASE_URL = "https://story-api.dicoding.dev/v1/"

@@ -6,10 +6,6 @@ import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import com.google.gson.Gson
-import com.skydoves.sandwich.messageOrNull
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -30,15 +26,12 @@ class AuthRepositoryImpl @Inject constructor(
             var resource: Resource<StoryResponse> = Resource.Loading()
             emit(resource)
             val response = apiService.doLogin(email, password)
-            response.onSuccess {
-                resource = Resource.Success(data = this.data)
-                saveToken(this.data.loginResult?.token.orEmpty())
-            }.onError {
-                val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
-                resource = Resource.Error(message = errorResp.message.orEmpty())
-            }.onException {
-                resource = Resource.Error(message = this.exception.message.orEmpty())
+
+            if (response.error == false) {
+                resource = Resource.Success(data = response)
+                saveToken(response.loginResult?.token.orEmpty())
+            } else {
+                resource = Resource.Error(message = response.message ?: "")
             }
             emit(resource)
         }
@@ -57,14 +50,11 @@ class AuthRepositoryImpl @Inject constructor(
                 name = username,
                 password = password
             )
-            response.onSuccess {
-                resource = Resource.Success(data = this.data)
-            }.onError {
-                val errorResp =
-                    gson.fromJson(this.messageOrNull.orEmpty(), StoryResponse::class.java)
-                resource = Resource.Error(message = errorResp.message.orEmpty())
-            }.onException {
-                resource = Resource.Error(message = this.exception.message.orEmpty())
+
+            resource = if (response.error == false) {
+                Resource.Success(data = SimpleNetworkModel())
+            } else {
+                Resource.Error(message = response.message.orEmpty())
             }
             emit(resource)
         }

@@ -7,7 +7,6 @@ import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.StoryApi.Companion.BASE_URL
 import com.don.storyApp.domain.model.AppBuildConfig
 import com.google.gson.Gson
-import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,10 +61,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit =
+    fun provideRetrofit(client: OkHttpClient): Retrofit =
         Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
 
