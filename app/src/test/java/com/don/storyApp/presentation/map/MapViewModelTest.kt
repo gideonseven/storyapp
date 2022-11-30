@@ -1,6 +1,7 @@
 package com.don.storyApp.presentation.map
 
 import com.don.storyApp.MainDispatcherRule
+import com.don.storyApp.data.local.database.FakeDao
 import com.don.storyApp.domain.repository.stories.FakeStoryRepository
 import com.don.storyApp.runBlockingTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class MapViewModelTest {
+    private lateinit var storyDao: FakeDao
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
@@ -31,6 +33,7 @@ class MapViewModelTest {
 
     @Before
     fun setup() {
+        storyDao = FakeDao()
         repository = FakeStoryRepository()
         mapViewModel = MapViewModel(repository)
     }
@@ -39,9 +42,8 @@ class MapViewModelTest {
     @Test
     fun `when get list from repository, should be equal list in viewModel`() {
         mainDispatcherRule.runBlockingTest {
-            val actualData = repository.getListLocation()
             mapViewModel.getListLocation {
-                Assert.assertEquals(it, actualData)
+                Assert.assertEquals(it, storyDao.getStories())
             }
         }
     }
