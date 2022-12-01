@@ -41,7 +41,6 @@ class MapViewModelTest {
     @Test
     fun `when get list from repository, should be equal list in viewModel`() = runTest {
         mapViewModel.getListLocation {
-            println("=== HALO HALO ===")
             Assert.assertEquals(it, storyDao.getStories())
         }
     }

@@ -76,9 +76,16 @@ class FakeStoryRepository : IStoriesRepository {
     ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
             storyDao = FakeDao()
-            storyDao.addStory(DataDummy.generateDummyStories()[0])
-            val resource: Resource<SimpleNetworkModel> = Resource.Success(SimpleNetworkModel())
-            emit(resource)
+
+            emit(
+                if (description == "")
+                    Resource.Error(
+                        data = SimpleNetworkModel(error = true, message = "error"),
+                        message = "error"
+                    )
+                else
+                    Resource.Success(data = SimpleNetworkModel())
+            )
         }
     }
 

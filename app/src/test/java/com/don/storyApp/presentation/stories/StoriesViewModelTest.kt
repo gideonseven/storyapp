@@ -46,8 +46,6 @@ class StoriesViewModelTest {
 
     @Test
     fun `When Log Out, hasAccessToken Should be False`() = runTest {
-        println("=== HALO HALO ===")
-
         mockPreference.setupMockAccessToken("here is my access token")
 
         // set expected boolean to variable

@@ -43,8 +43,6 @@ class LoginViewModelTest {
     fun `when Login With Wrong Credential Should Return Error Message`() = runTest {
         val expectedErrorMessage = "error"
         loginViewModel.submitLogin(errorMessage = {
-            println("=== EXPECTED  $expectedErrorMessage")
-            println("=== REALITY  $it")
             Assert.assertEquals(expectedErrorMessage, it)
         }, onSuccess = {})
     }
