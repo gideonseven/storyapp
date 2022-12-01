@@ -40,9 +40,6 @@ Skenario
 	b. When login credential true state type equals
 	State Type akan sama jika data di input benar
 	
-	c. When login credential false state type not equals
-	Data di input salah, akan menampilkan state type error
-	
 3. MapViewModelTest
 	a. when get list from repository, should be equal list in viewModel
 	mengambil data dari dummies maka akan mendapat kembalian list

@@ -43,11 +43,8 @@ class RegisterViewModelTest {
     @Test
     fun `when Register With Wrong Value Should Return Error Message`() = runTest {
         val expectedErrorMessage = "error"
-        var actualErrorMessage = ""
         registerViewModel.submitRegister(errorMessage = {
-            println("=== HALO HALO ===")
-            actualErrorMessage = it
-            Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
+            Assert.assertEquals(expectedErrorMessage, it)
         }, onSuccess = {})
     }
 }

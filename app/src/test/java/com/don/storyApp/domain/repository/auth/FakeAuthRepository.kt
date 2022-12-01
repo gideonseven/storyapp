@@ -15,8 +15,6 @@ import org.mockito.Mock
  * https://www.cicil.co.id/
  */
 class FakeAuthRepository : IAuthRepository {
-    var responseError = ""
-    var responseSuccess = ""
 
     @Mock
     private lateinit var mockPreferences: FakeAppPreferences
@@ -28,12 +26,12 @@ class FakeAuthRepository : IAuthRepository {
 
     override suspend fun doLogin(email: String, password: String): Flow<Resource<StoryResponse>> {
         return flow {
-            var resource: Resource<StoryResponse> = Resource.Loading()
+            val resource = if (email == "test.com" && password == "test") {
+                Resource.Success(data = StoryResponse(error = false, message = "success"))
+            } else {
+                Resource.Error(message = "error")
+            }
             emit(resource)
-            resource = Resource.Success(data = StoryResponse())
-            emit(resource)
-            responseError = ""
-            responseSuccess = "success"
         }
     }
 

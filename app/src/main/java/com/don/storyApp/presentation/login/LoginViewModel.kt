@@ -23,11 +23,13 @@ class LoginViewModel @Inject constructor(
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
     fun submitLogin(
+        mail: String = email.value.orEmpty(),
+        pass: String = password.value.orEmpty(),
         errorMessage: (String) -> Unit,
         onSuccess: (StoryResponse) -> Unit
     ) {
         viewModelScope.launch {
-            repository.doLogin(email.value.orEmpty(), password.value.orEmpty()).collect {
+            repository.doLogin(mail, pass).collect {
                 when (it) {
                     is Resource.Success -> {
                         stateType.value = StateType.CONTENT

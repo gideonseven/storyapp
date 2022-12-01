@@ -3,8 +3,8 @@ package com.don.storyApp.presentation.add_story
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
-import com.don.storyApp.runBlockingTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -22,6 +22,7 @@ import java.io.File
  * https://www.cicil.co.id/
  */
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class AddStoryViewModelTest {
 
     @get:Rule
@@ -38,28 +39,23 @@ class AddStoryViewModelTest {
         addStoryViewModel = AddStoryViewModel(repository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when add story without description will return error message`() {
+    fun `when add story without description will return error message`() = runTest {
+        val file = File("")
+        val expectedErrorMessage = "error"
+        var actualErrorMessage = ""
+        val lat = 0.1
+        val lon = 0.2
 
-        mainDispatcherRule.runBlockingTest {
-            val file = File("")
-            val expectedErrorMessage = "error"
-            var actualErrorMessage = ""
-            val lat = 0.1
-            val lon = 0.2
+        addStoryViewModel.addStory(errorMessage = {
+            actualErrorMessage = it
+        }, onSuccess = {})
 
-            addStoryViewModel.addStory(errorMessage = {
-                actualErrorMessage = it
-            }, onSuccess = {})
-
-            Mockito.verify(repository.addStory("", file, lat, lon))
-            Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
-        }
+        Mockito.verify(repository.addStory("", file, lat, lon))
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
     }
 }
