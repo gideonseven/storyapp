@@ -7,6 +7,7 @@ import com.don.storyApp.util.SimpleNetworkModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.Before
+import org.mockito.Mock
 
 /**
  * Created by gideon on 21 November 2022
@@ -14,10 +15,11 @@ import org.junit.Before
  * https://www.cicil.co.id/
  */
 class FakeAuthRepository : IAuthRepository {
-
-    private lateinit var mockPreferences: FakeAppPreferences
     var responseError = ""
     var responseSuccess = ""
+
+    @Mock
+    private lateinit var mockPreferences: FakeAppPreferences
 
     @Before
     fun setup() {
@@ -46,14 +48,17 @@ class FakeAuthRepository : IAuthRepository {
     }
 
     override fun doLogOut() {
+        mockPreferences = FakeAppPreferences()
         mockPreferences.mockAccessToken = ""
     }
 
     override fun saveToken(token: String) {
+        mockPreferences = FakeAppPreferences()
         mockPreferences.mockAccessToken = token
     }
 
     override fun hasAccessToken(): Boolean {
+        mockPreferences = FakeAppPreferences()
         return mockPreferences.mockAccessToken.isNotEmpty()
     }
 }
