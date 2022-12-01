@@ -41,10 +41,7 @@ class FakeAuthRepository : IAuthRepository {
         password: String
     ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
-            var resource: Resource<SimpleNetworkModel> = Resource.Loading()
-            emit(resource)
-            resource = Resource.Success(data = SimpleNetworkModel())
-            emit(resource)
+            emit(Resource.Error(data = SimpleNetworkModel(message = "error"), message = "error"))
         }
     }
 
