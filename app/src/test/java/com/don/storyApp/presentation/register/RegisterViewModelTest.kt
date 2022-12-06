@@ -1,18 +1,17 @@
 package com.don.storyApp.presentation.register
 
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.don.storyApp.MainDispatcherRule
+import com.don.storyApp.domain.repository.auth.FakeAuthRepository
 import com.don.storyApp.domain.repository.auth.IAuthRepository
-import com.don.storyApp.runBlockingTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -22,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * https://www.cicil.co.id/
  */
 @RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class RegisterViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -32,29 +32,19 @@ class RegisterViewModelTest {
 
     @Before
     fun setup() {
+        repository = FakeAuthRepository()
         registerViewModel = RegisterViewModel(repository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `when Register With Wrong Value Should Return Error Message`() {
-
-        mainDispatcherRule.runBlockingTest {
-            val expectedErrorMessage = "error"
-            var actualErrorMessage = ""
-
-            registerViewModel.submitRegister(errorMessage = {
-                actualErrorMessage = it
-            }, onSuccess = {})
-
-            Mockito.verify(repository.doRegister("", "", ""))
-            Log.e("TAGGGGG", "== $expectedErrorMessage == $actualErrorMessage ==")
-            Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
-        }
+    fun `when Register With Wrong Value Should Return Error Message`() = runTest {
+        val expectedErrorMessage = "error"
+        registerViewModel.submitRegister(errorMessage = {
+            Assert.assertEquals(expectedErrorMessage, it)
+        }, onSuccess = {})
     }
 }

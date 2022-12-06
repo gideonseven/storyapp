@@ -16,6 +16,9 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 import java.io.File
 
 /**
@@ -23,22 +26,24 @@ import java.io.File
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
+@RunWith(MockitoJUnitRunner::class)
+@ExperimentalCoroutinesApi
 class FakeStoryRepository : IStoriesRepository {
-    private lateinit var storyDao: FakeDao
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
+
+    @Mock
+    private lateinit var storyDao: FakeDao
 
     @Before
     fun setUp() {
         storyDao = FakeDao()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `when data not saved, list size should be empty`() = runTest {
         val sampleList = DataDummy.generateDummyStories()
@@ -46,8 +51,6 @@ class FakeStoryRepository : IStoriesRepository {
         Assert.assertNotEquals(sampleList.size, actualList.size)
     }
 
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `when saveStories, listStory should not empty`() = runTest {
         val sampleList = DataDummy.generateDummyStories()
@@ -56,8 +59,6 @@ class FakeStoryRepository : IStoriesRepository {
         Assert.assertEquals(sampleList, expectedList)
     }
 
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `when delete stories, list should be empty`() = runTest {
         val sampleList = DataDummy.generateDummyStories()
@@ -74,14 +75,23 @@ class FakeStoryRepository : IStoriesRepository {
         lon: Double
     ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
-            storyDao.addStory(DataDummy.generateDummyStories()[0])
-            val resource: Resource<SimpleNetworkModel> = Resource.Success(SimpleNetworkModel())
-            emit(resource)
+            storyDao = FakeDao()
+
+            emit(
+                if (description == "")
+                    Resource.Error(
+                        data = SimpleNetworkModel(error = true, message = "error"),
+                        message = "error"
+                    )
+                else
+                    Resource.Success(data = SimpleNetworkModel())
+            )
         }
     }
 
     override suspend fun getPagingStories(): Flow<PagingData<Story>> {
         return flow {
+            storyDao = FakeDao()
             storyDao.insertStory(DataDummy.generateDummyStories())
             emit(PagingData.from(DataDummy.generateDummyStories()))
         }
@@ -89,6 +99,7 @@ class FakeStoryRepository : IStoriesRepository {
 
     override suspend fun getListLocation(): Flow<List<Story>> {
         return flow {
+            storyDao = FakeDao()
             emit(storyDao.getStories())
         }
     }

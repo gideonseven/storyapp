@@ -6,7 +6,7 @@ package com.don.storyApp.data.local
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-class FakeAppPreferences() {
+class FakeAppPreferences {
     var mockAccessToken = ""
 
     fun setupMockAccessToken(accessToken: String) {

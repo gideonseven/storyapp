@@ -59,4 +59,34 @@ class AddStoryViewModel @Inject constructor(
             }
         }
     }
+
+    fun addStoryDummy(
+        errorMessage: (String) -> Unit,
+        onSuccess: (SimpleNetworkModel) -> Unit
+    ) {
+        viewModelScope.launch {
+            val file = File("")
+            repository.addStory(
+                description.value.orEmpty(),
+                file,
+                lat,
+                lon
+            )
+                .collect { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            stateType.value = StateType.CONTENT
+                            resource.data?.let(onSuccess)
+                        }
+                        is Resource.Loading -> {
+                            stateType.value = StateType.LOADING
+                        }
+                        is Resource.Error -> {
+                            stateType.value = StateType.ERROR
+                            errorMessage(resource.message.orEmpty())
+                        }
+                    }
+                }
+        }
+    }
 }
