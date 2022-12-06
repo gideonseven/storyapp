@@ -6,6 +6,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
 }
+apply from: "$project.rootDir/jacoco.gradle"
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keyProp = new Properties()
@@ -108,12 +109,6 @@ dependencies {
     implementation "androidx.core:core-ktx:${core_version}"
     implementation "androidx.appcompat:appcompat:${appcompat_version}"
     implementation "com.google.android.material:material:${material_version}"
-
-    def compose_ui_version = "1.3.1"
-    def compose_activity_version = "1.6.1"
-    implementation "androidx.activity:activity-compose:${compose_activity_version}"
-    implementation "androidx.compose.ui:ui:${compose_ui_version}"
-    implementation "androidx.compose.ui:ui-tooling-preview:${compose_ui_version}"
 
     // RecyclerView
     def recyclerview_version = "1.2.1"
