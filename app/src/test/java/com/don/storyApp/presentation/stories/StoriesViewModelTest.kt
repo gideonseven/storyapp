@@ -54,6 +54,9 @@ class StoriesViewModelTest {
         // get actual boolean from repository
         val actualHasToken = mockAuthRepository.hasAccessToken()
 
+        println("ACTUAL $actualHasToken")
+        println("EXPECTED $expectedHasToken")
+
         storiesViewModel.logout()
 
         // assertion

@@ -2,6 +2,7 @@ package com.don.storyApp.presentation.map
 
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.data.local.database.FakeDao
+import com.don.storyApp.domain.model.Story
 import com.don.storyApp.domain.repository.stories.FakeStoryRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -40,8 +41,14 @@ class MapViewModelTest {
 
     @Test
     fun `when get list from repository, should be equal list in viewModel`() = runTest {
+        storyDao.addStory(Story())
+        val expectedListStory = storyDao.getStories()
+        var actualListStory = listOf<Story>()
         mapViewModel.getListLocation {
-            Assert.assertEquals(it, storyDao.getStories())
+            actualListStory = it
+            println("ACTUAL $actualListStory")
+            println("EXPECTED $expectedListStory")
         }
+        Assert.assertEquals(actualListStory, expectedListStory)
     }
 }

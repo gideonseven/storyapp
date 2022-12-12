@@ -19,8 +19,8 @@ import org.mockito.junit.MockitoJUnitRunner
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
-@RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class AddStoryViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -43,8 +43,16 @@ class AddStoryViewModelTest {
     @Test
     fun `when add story without description will return error message`() = runTest {
         val expectedErrorMessage = "error"
+        var actualErrorMessage = ""
+
         addStoryViewModel.addStoryDummy(errorMessage = {
-            Assert.assertEquals(it, expectedErrorMessage)
-        }, onSuccess = {})
+            actualErrorMessage = it
+
+            println("ACTUAL $actualErrorMessage")
+            println("EXPECTED $expectedErrorMessage")
+        }, onSuccess = {
+            println(" COBA onSuccess INI LO")
+        })
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage)
     }
 }

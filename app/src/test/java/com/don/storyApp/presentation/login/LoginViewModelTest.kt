@@ -42,15 +42,20 @@ class LoginViewModelTest {
     @Test
     fun `when Login With Wrong Credential Should Return Error Message`() = runTest {
         val expectedErrorMessage = "error"
+        var actualErrorMessage = ""
         loginViewModel.submitLogin(errorMessage = {
-            Assert.assertEquals(expectedErrorMessage, it)
+            actualErrorMessage = it
+            println("ACTUAL $actualErrorMessage")
+            println("EXPECTED $expectedErrorMessage")
         }, onSuccess = {})
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
     }
 
     @Test
     fun `When login credential true state type equals`() = runTest {
         //given
-        val resourceError = false
+        val expectedIsError = false
+        var actualIsError = false
 
         //when
         loginViewModel.submitLogin(
@@ -58,8 +63,12 @@ class LoginViewModelTest {
             pass = "test",
             errorMessage = {},
             onSuccess = {
-                //then
-                Assert.assertEquals(resourceError, it.error)
+                actualIsError = it.error == true
+                println("ACTUAL $actualIsError")
+                println("EXPECTED $expectedIsError")
             })
+
+        //then
+        Assert.assertEquals(expectedIsError, actualIsError)
     }
 }

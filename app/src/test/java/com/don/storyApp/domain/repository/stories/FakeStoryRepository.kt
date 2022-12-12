@@ -100,6 +100,7 @@ class FakeStoryRepository : IStoriesRepository {
     override suspend fun getListLocation(): Flow<List<Story>> {
         return flow {
             storyDao = FakeDao()
+            storyDao.addStory(Story())
             emit(storyDao.getStories())
         }
     }
