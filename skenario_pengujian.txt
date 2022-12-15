@@ -30,23 +30,23 @@ com.don.storyApp
 		
 Skenario
 1. AddStoryViewModelTest
-	a. when add story without description will return error message
-	ketika menambahkan story tanpa deskripsi akan menampilkan error
+	a. when add story without description will return StateTypeError
+	ketika menambahkan story tanpa deskripsi akan menampilkan StateTypeError
 	
 2. LoginViewModelTest
-	a. when Login With Wrong Credential Should Return Error Message
-	Login dengan data yang salah akan error
+	a. When Login With Wrong Credential Should Return StateTypeError
+	Login dengan data yang salah akan mengembalikan StateType.Error
 	
-	b. When login credential true state type equals
-	State Type akan sama jika data di input benar
+	b. When Login With Correct Credential Should Return StateTypeContent
+	Login dengan data yang benar akan mengembalikan StateType.Content
 	
 3. MapViewModelTest
-	a. when get list from repository, should be equal list in viewModel
-	mengambil data dari dummies maka akan mendapat kembalian list
+	a. when List Map from Database is not empty Should Return StateTypeContent
+	Jika memiliki List lebih dari 0 akan mengembalikan StateType.Content
 	
 4. RegisterViewModelTest
-	a. when Register With Wrong Value Should Return Error Message
-	Jika mendaftar dengan data yang salah, menampilkan error
+	a. when Register With Wrong Value Should Return StateTypeError
+	Jika mendaftar dengan data yang salah, menampilkan StateTypeError
 
 5. StoriesViewModelTest
 	a. When Log Out, hasAccessToken Should be False

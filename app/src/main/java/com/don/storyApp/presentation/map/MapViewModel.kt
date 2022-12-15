@@ -21,14 +21,18 @@ class MapViewModel @Inject constructor(
     private val repository: IStoriesRepository
 ) : ViewModel() {
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val listStory: MutableLiveData<List<Story>> = MutableLiveData<List<Story>>()
 
-
-    fun getListLocation(
-        onSuccess: (List<Story>) -> Unit
-    ) {
+    fun getListLocation() {
         viewModelScope.launch {
             repository.getListLocation().collect {
-                onSuccess(it)
+                if (it.isNotEmpty()) {
+                    stateType.value = StateType.CONTENT
+                    listStory.value = it
+                } else {
+                    stateType.value = StateType.ERROR
+                    listStory.value = listOf()
+                }
             }
         }
     }

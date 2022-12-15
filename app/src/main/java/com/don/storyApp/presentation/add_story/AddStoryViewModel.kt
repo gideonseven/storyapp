@@ -24,15 +24,16 @@ class AddStoryViewModel @Inject constructor(
     val isValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
     val isValidText: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val errorMessage: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    val simpleNetworkModel: MutableLiveData<SimpleNetworkModel> =
+        MutableLiveData(SimpleNetworkModel())
+
     var lat: Double = 0.0
     var lon: Double = 0.0
 
     var myFile: File? = null
 
-    fun addStory(
-        errorMessage: (String) -> Unit,
-        onSuccess: (SimpleNetworkModel) -> Unit
-    ) {
+    fun addStory() {
         viewModelScope.launch {
             myFile?.let {
                 repository.addStory(
@@ -45,14 +46,17 @@ class AddStoryViewModel @Inject constructor(
                         when (resource) {
                             is Resource.Success -> {
                                 stateType.value = StateType.CONTENT
-                                resource.data?.let(onSuccess)
+                                resource.data?.let { model ->
+                                    simpleNetworkModel.value = model
+                                    errorMessage.value = model.message.orEmpty()
+                                }
                             }
                             is Resource.Loading -> {
                                 stateType.value = StateType.LOADING
                             }
                             is Resource.Error -> {
                                 stateType.value = StateType.ERROR
-                                errorMessage(resource.message.orEmpty())
+                                errorMessage.value = resource.message.orEmpty()
                             }
                         }
                     }
@@ -60,10 +64,7 @@ class AddStoryViewModel @Inject constructor(
         }
     }
 
-    fun addStoryDummy(
-        errorMessage: (String) -> Unit,
-        onSuccess: (SimpleNetworkModel) -> Unit
-    ) {
+    fun addStoryDummy() {
         viewModelScope.launch {
             val file = File("")
             repository.addStory(
@@ -76,14 +77,17 @@ class AddStoryViewModel @Inject constructor(
                     when (resource) {
                         is Resource.Success -> {
                             stateType.value = StateType.CONTENT
-                            resource.data?.let(onSuccess)
+                            resource.data?.let { model ->
+                                simpleNetworkModel.value = model
+                                errorMessage.value = model.message.orEmpty()
+                            }
                         }
                         is Resource.Loading -> {
                             stateType.value = StateType.LOADING
                         }
                         is Resource.Error -> {
                             stateType.value = StateType.ERROR
-                            errorMessage(resource.message.orEmpty())
+                            errorMessage.value = resource.message.orEmpty()
                         }
                     }
                 }

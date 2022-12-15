@@ -41,7 +41,8 @@ class FakeAuthRepository : IAuthRepository {
         password: String
     ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
-            emit(Resource.Error(data = SimpleNetworkModel(message = "error"), message = "error"))
+            val resource = Resource.Error(data = SimpleNetworkModel(), message = "error")
+            emit(resource)
         }
     }
 

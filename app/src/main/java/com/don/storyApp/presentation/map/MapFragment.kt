@@ -94,6 +94,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.fcv_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        viewModel.listStory.observe(this@MapFragment.viewLifecycleOwner) { listStory ->
+            binding?.let {
+                if (listStory.isNotEmpty()) {
+                    listStory.forEach { story ->
+                        val latLng = LatLng(story.lat, story.lon)
+                        val addressName = getAddressName(story.lat, story.lon)
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng).title(story.name).snippet(addressName)
+                        )
+                        boundsBuilder.include(latLng)
+                    }
+                } else {
+                    showSnackBar(it.root, getString(R.string.map_is_empty))
+                }
+            }
+        }
     }
 
     @Deprecated("Deprecated in Java")
@@ -150,7 +167,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         checkPermissionLocation()
         setMapStyle()
-        getStoriesLocation()
+        viewModel.getListLocation()
     }
 
     private fun setMapStyle() {
@@ -245,18 +262,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             addressName = list[0].getAddressLine(0)
         }
         return addressName
-    }
-
-    private fun getStoriesLocation() {
-        viewModel.getListLocation(onSuccess = {
-            it.forEach { story ->
-                val latLng = LatLng(story.lat, story.lon)
-                val addressName = getAddressName(story.lat, story.lon)
-                mMap.addMarker(
-                    MarkerOptions().position(latLng).title(story.name).snippet(addressName)
-                )
-                boundsBuilder.include(latLng)
-            }
-        })
     }
 }

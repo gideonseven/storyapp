@@ -1,9 +1,11 @@
 package com.don.storyApp.presentation.map
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.data.local.database.FakeDao
-import com.don.storyApp.domain.model.Story
 import com.don.storyApp.domain.repository.stories.FakeStoryRepository
+import com.don.storyApp.util.StateType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -23,6 +25,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class MapViewModelTest {
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -40,15 +44,19 @@ class MapViewModelTest {
     }
 
     @Test
-    fun `when get list from repository, should be equal list in viewModel`() = runTest {
-        storyDao.addStory(Story())
-        val expectedListStory = storyDao.getStories()
-        var actualListStory = listOf<Story>()
-        mapViewModel.getListLocation {
-            actualListStory = it
-            println("ACTUAL $actualListStory")
-            println("EXPECTED $expectedListStory")
-        }
-        Assert.assertEquals(actualListStory, expectedListStory)
+    fun `when List Map from Database is not empty Should Return StateTypeContent`() = runTest {
+        //given
+        val expectedState = StateType.CONTENT
+        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+
+        //when
+        mapViewModel.getListLocation()
+        actualState.value = mapViewModel.stateType.value
+
+        //then
+        println("ACTUAL ${actualState.value}")
+        println("EXPECTED $expectedState")
+        println("LIST STORY SIZE ${mapViewModel.listStory.value?.size}")
+        Assert.assertEquals(expectedState, actualState.value)
     }
 }

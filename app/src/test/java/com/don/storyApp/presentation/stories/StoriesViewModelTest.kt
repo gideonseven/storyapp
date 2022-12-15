@@ -46,20 +46,18 @@ class StoriesViewModelTest {
 
     @Test
     fun `When Log Out, hasAccessToken Should be False`() = runTest {
+
+        //given
         mockPreference.setupMockAccessToken("here is my access token")
-
-        // set expected boolean to variable
         val expectedHasToken = false
-
-        // get actual boolean from repository
         val actualHasToken = mockAuthRepository.hasAccessToken()
 
-        println("ACTUAL $actualHasToken")
-        println("EXPECTED $expectedHasToken")
-
+        //when
         storiesViewModel.logout()
 
-        // assertion
+        // then
+        println("ACTUAL $actualHasToken")
+        println("EXPECTED $expectedHasToken")
         Assert.assertEquals(actualHasToken, expectedHasToken)
     }
 }

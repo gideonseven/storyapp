@@ -21,31 +21,36 @@ class LoginViewModel @Inject constructor(
     var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
     var isButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val errorMessage: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    val storyResponse: MutableLiveData<StoryResponse> = MutableLiveData(StoryResponse())
 
     fun submitLogin(
         mail: String = email.value.orEmpty(),
-        pass: String = password.value.orEmpty(),
-        errorMessage: (String) -> Unit,
-        onSuccess: (StoryResponse) -> Unit
+        pass: String = password.value.orEmpty()
     ) {
         viewModelScope.launch {
             repository.doLogin(mail, pass).collect {
                 when (it) {
                     is Resource.Success -> {
                         stateType.value = StateType.CONTENT
-                        it.data?.let(onSuccess)
+                        it.data?.let { response ->
+                            storyResponse.value = response
+                            errorMessage.value = response.message.orEmpty()
+                        }
                     }
                     is Resource.Loading -> {
                         stateType.value = StateType.LOADING
                     }
                     is Resource.Error -> {
                         stateType.value = StateType.ERROR
-                        errorMessage(it.message.orEmpty())
+                        errorMessage.value = it.message.orEmpty()
                     }
                 }
             }
         }
+
     }
+
 
     fun hasAccessToken() = repository.hasAccessToken()
 }

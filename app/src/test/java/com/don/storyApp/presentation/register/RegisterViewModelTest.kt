@@ -1,9 +1,11 @@
 package com.don.storyApp.presentation.register
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.domain.repository.auth.FakeAuthRepository
 import com.don.storyApp.domain.repository.auth.IAuthRepository
+import com.don.storyApp.util.StateType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -39,18 +41,19 @@ class RegisterViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-
     @Test
-    fun `when Register With Wrong Value Should Return Error Message`() = runTest {
-        val expectedErrorMessage = "error"
-        var actualErrorMessage = ""
-        registerViewModel.submitRegister(errorMessage = {
-            actualErrorMessage = it
-            println("ACTUAL $actualErrorMessage")
-            println("EXPECTED $expectedErrorMessage")
-        }, onSuccess = {})
+    fun `when Register With Wrong Value Should Return StateTypeError`() = runTest {
+        //given
+        val expectedState = StateType.ERROR
+        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
-        Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
+        //when
+        registerViewModel.submitRegister()
+        actualState.value = registerViewModel.stateType.value
 
+        //then
+        println("ACTUAL ${actualState.value}")
+        println("EXPECTED $expectedState")
+        Assert.assertEquals(expectedState, actualState.value)
     }
 }

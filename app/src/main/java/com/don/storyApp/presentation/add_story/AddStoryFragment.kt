@@ -111,14 +111,7 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
             buttonAdd.setOnClickListener {
-                viewModel.addStory(
-                    errorMessage = {
-                        showSnackBar(this.root, it)
-                    },
-                    onSuccess = {
-                        showSnackBar(this.root, it.message.orEmpty())
-                        findNavController().navigateUp()
-                    })
+                viewModel.addStory()
             }
             tvTakeImage.setOnClickListener {
                 cameraTask()
@@ -128,6 +121,19 @@ class AddStoryFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
             tilDescription.editText?.doAfterTextChanged {
                 viewModel.isValidText.value = tilDescription.isFormValid()
+            }
+
+            viewModel.errorMessage.observe(this@AddStoryFragment.viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    showSnackBar(this.root, it)
+                    findNavController().navigateUp()
+                }
+            }
+
+            viewModel.simpleNetworkModel.observe(this@AddStoryFragment.viewLifecycleOwner) {
+                if (it.error == true) {
+                    showSnackBar(this.root, it.message.orEmpty())
+                }
             }
         }
         checkPermissionLocation()

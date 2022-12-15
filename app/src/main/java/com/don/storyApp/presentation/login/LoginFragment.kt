@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.don.storyApp.R
+import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.databinding.FragmentLoginBinding
 import com.don.storyApp.util.hideKeyboard
 import com.don.storyApp.util.showSnackBar
@@ -58,18 +59,23 @@ class LoginFragment : Fragment() {
             }
             btnLogin.setOnClickListener {
                 hideKeyboard()
-                viewModel.submitLogin(
-                    errorMessage = {
-                        showSnackBar(root, it)
-                    },
-                    onSuccess = {
-                        findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
-                    }
-                )
+                viewModel.submitLogin()
             }
 
             tvRegister.setOnClickListener {
                 findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+            }
+
+            viewModel.storyResponse.observe(this@LoginFragment.viewLifecycleOwner) {
+                if (it != StoryResponse() && it != null) {
+                    findNavController().navigate(R.id.action_login_fragment_to_stories_fragment)
+                }
+            }
+
+            viewModel.errorMessage.observe(this@LoginFragment.viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    showSnackBar(root, it)
+                }
             }
         }
     }

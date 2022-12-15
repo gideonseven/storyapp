@@ -35,4 +35,5 @@
     <string name="action_map">Map</string>
     <string name="map_fragment_label">Map</string>
     <string name="retry">Try Again</string>
+    <string name="map_is_empty">No Location Found</string>
 </resources>

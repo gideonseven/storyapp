@@ -1,8 +1,10 @@
 package com.don.storyApp.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.domain.repository.auth.FakeAuthRepository
+import com.don.storyApp.util.StateType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -40,35 +42,37 @@ class LoginViewModelTest {
 
 
     @Test
-    fun `when Login With Wrong Credential Should Return Error Message`() = runTest {
-        val expectedErrorMessage = "error"
-        var actualErrorMessage = ""
-        loginViewModel.submitLogin(errorMessage = {
-            actualErrorMessage = it
-            println("ACTUAL $actualErrorMessage")
-            println("EXPECTED $expectedErrorMessage")
-        }, onSuccess = {})
-        Assert.assertEquals(expectedErrorMessage, actualErrorMessage)
+    fun `When Login With Wrong Credential Should Return StateTypeError`() = runTest {
+        //given
+        val expectedState = StateType.ERROR
+        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+
+        //when
+        loginViewModel.submitLogin("", "")
+        actualState.value = loginViewModel.stateType.value
+
+        //then
+        println("ACTUAL ${actualState.value}")
+        println("EXPECTED $expectedState")
+        Assert.assertEquals(expectedState, actualState.value)
     }
 
     @Test
-    fun `When login credential true state type equals`() = runTest {
+    fun `When Login With Correct Credential Should Return StateTypeContent`() = runTest {
         //given
-        val expectedIsError = false
-        var actualIsError = false
+        val expectedState = StateType.CONTENT
+        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
         //when
         loginViewModel.submitLogin(
             mail = "test.com",
             pass = "test",
-            errorMessage = {},
-            onSuccess = {
-                actualIsError = it.error == true
-                println("ACTUAL $actualIsError")
-                println("EXPECTED $expectedIsError")
-            })
+        )
+        actualState.value = loginViewModel.stateType.value
 
         //then
-        Assert.assertEquals(expectedIsError, actualIsError)
+        println("ACTUAL ${actualState.value}")
+        println("EXPECTED $expectedState")
+        Assert.assertEquals(expectedState, actualState.value)
     }
 }

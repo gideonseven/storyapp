@@ -1,8 +1,10 @@
 package com.don.storyApp.presentation.add_story
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.don.storyApp.MainDispatcherRule
 import com.don.storyApp.domain.repository.stories.FakeStoryRepository
+import com.don.storyApp.util.StateType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -41,18 +43,18 @@ class AddStoryViewModelTest {
 
 
     @Test
-    fun `when add story without description will return error message`() = runTest {
-        val expectedErrorMessage = "error"
-        var actualErrorMessage = ""
+    fun `when add story without description will return StateTypeError`() = runTest {
+        //given
+        val expectedState = StateType.ERROR
+        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
-        addStoryViewModel.addStoryDummy(errorMessage = {
-            actualErrorMessage = it
+        //when
+        addStoryViewModel.addStoryDummy()
+        actualState.value = addStoryViewModel.stateType.value
 
-            println("ACTUAL $actualErrorMessage")
-            println("EXPECTED $expectedErrorMessage")
-        }, onSuccess = {
-            println(" COBA onSuccess INI LO")
-        })
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage)
+        //then
+        println("ACTUAL ${actualState.value}")
+        println("EXPECTED $expectedState")
+        Assert.assertEquals(actualState.value, expectedState)
     }
 }
