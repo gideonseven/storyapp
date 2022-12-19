@@ -56,8 +56,8 @@ class StoriesViewModelTest {
         storiesViewModel.logout()
 
         // then
-        println("ACTUAL $actualHasToken")
         println("EXPECTED $expectedHasToken")
-        Assert.assertEquals(actualHasToken, expectedHasToken)
+        println("ACTUAL $actualHasToken")
+        Assert.assertEquals(expectedHasToken, actualHasToken)
     }
 }

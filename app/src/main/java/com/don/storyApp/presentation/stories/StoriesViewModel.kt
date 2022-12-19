@@ -26,14 +26,12 @@ class StoriesViewModel @Inject constructor(
 ) : ViewModel() {
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val pagingData: MutableLiveData<PagingData<Story>> = MutableLiveData()
 
-    fun getStories(
-        errorMessage: (String) -> Unit,
-        onSuccess: (PagingData<Story>) -> Unit
-    ) {
+    fun getStories() {
         viewModelScope.launch {
             repository.getPagingStories().cachedIn(this).collect {
-                onSuccess(it)
+                pagingData.value = it
             }
         }
     }
@@ -42,5 +40,5 @@ class StoriesViewModel @Inject constructor(
         authRepository.doLogOut()
     }
 
-    fun hasAuthCode() = authRepository.hasAccessToken()
+    fun hasAccessToken() = authRepository.hasAccessToken()
 }

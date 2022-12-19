@@ -52,8 +52,8 @@ class RegisterViewModelTest {
         actualState.value = registerViewModel.stateType.value
 
         //then
-        println("ACTUAL ${actualState.value}")
         println("EXPECTED $expectedState")
+        println("ACTUAL ${actualState.value}")
         Assert.assertEquals(expectedState, actualState.value)
     }
 }

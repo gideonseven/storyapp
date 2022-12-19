@@ -49,12 +49,12 @@ class AddStoryViewModelTest {
         val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
         //when
-        addStoryViewModel.addStoryDummy()
+        addStoryViewModel.addStory()
         actualState.value = addStoryViewModel.stateType.value
 
         //then
-        println("ACTUAL ${actualState.value}")
         println("EXPECTED $expectedState")
-        Assert.assertEquals(actualState.value, expectedState)
+        println("ACTUAL ${actualState.value}")
+        Assert.assertEquals(expectedState, actualState.value)
     }
 }

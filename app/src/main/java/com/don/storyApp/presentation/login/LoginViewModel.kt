@@ -48,9 +48,7 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
-
     }
-
 
     fun hasAccessToken() = repository.hasAccessToken()
 }

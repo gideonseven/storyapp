@@ -31,23 +31,38 @@ com.don.storyApp
 Skenario
 1. AddStoryViewModelTest
 	a. when add story without description will return StateTypeError
-	ketika menambahkan story tanpa deskripsi akan menampilkan StateTypeError
-	
+	yang perlu di perhatikan di sini adalah StateType yang dikembalikan setelah request.
+	Karena Deskripsi kosong, akan mengakibatkan Error pada request.
+	Error  -> true pada request akan mengembalikan StateTypeError.
+
 2. LoginViewModelTest
 	a. When Login With Wrong Credential Should Return StateTypeError
-	Login dengan data yang salah akan mengembalikan StateType.Error
+	yang perlu di perhatikan di sini adalah StateType yang dikembalikan setelah request.
+	Jika user melakukan login dengan data yang salah akan mengembalikan Error -> true pada request.
+	Error -> true pada request akan mengembalikan StateTypeError.
 	
 	b. When Login With Correct Credential Should Return StateTypeContent
-	Login dengan data yang benar akan mengembalikan StateType.Content
+	yang perlu di perhatikan di sini adalah StateType yang dikembalikan setelah request
+	Jika user melakukan login dengan data yang benar akan mengembalikan Errror -> false pada request.
+	Error -> false pada request akan mengembalikan StateType.Content
+
+	c. When Login With Correct Credential Should make HasAccessToken True
+	yang perlu di perhatikan di sini adalah HasAccessToken.
+	Jika login dengan credential yang benar maka HasAccesstoken akan true.
 	
 3. MapViewModelTest
 	a. when List Map from Database is not empty Should Return StateTypeContent
-	Jika memiliki List lebih dari 0 akan mengembalikan StateType.Content
+	yang perlu di perhatikan di sini adalah StateType yang dikembalikan setelah request
+	Jika list data dalam database  lebih dari 0 bernilai true, maka akan mengembalikan StateTypeContent
 	
 4. RegisterViewModelTest
 	a. when Register With Wrong Value Should Return StateTypeError
-	Jika mendaftar dengan data yang salah, menampilkan StateTypeError
+	yang perlu di perhatikan di sini adalah StateType yang dikembalikan setelah request
+	Jika mendaftar dengan data yang salah, mengembalikan Error -> true pada request.
+	Error -> true berikut akan mengembalikan StateTypeError
 
 5. StoriesViewModelTest
 	a. When Log Out, hasAccessToken Should be False
-	Jika Berhasil keluar, maka accessToken akan kosong / boolean false
+	yang perlu di perhatikan di sini adalah HasAccessToken.
+	Ketika Proses logout di lakukan, maka accessToken akan di kosongkan / bersihkan.
+	Proses tersebut mengakibatkan False untuk boolean hasAccessToken.

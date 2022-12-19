@@ -69,7 +69,7 @@ class StoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (viewModel.hasAuthCode()) {
+        if (viewModel.hasAccessToken()) {
             getStories()
         } else {
             findNavController().navigate(R.id.action_general_to_nav_graph)
@@ -87,6 +87,14 @@ class StoriesFragment : Fragment() {
 
         binding?.viewError?.errorRetry?.setOnClickListener {
             getStories()
+        }
+
+        viewModel.pagingData.observe(this@StoriesFragment.viewLifecycleOwner) {
+            if (it != null) {
+                lifecycleScope.launch {
+                    storiesAdapter.submitData(it)
+                }
+            }
         }
 
         activity?.onBackPressedDispatcher?.addCallback(
@@ -132,17 +140,6 @@ class StoriesFragment : Fragment() {
     }
 
     private fun getStories() {
-        viewModel.getStories(
-            errorMessage = {
-                binding?.let { vBinding ->
-                    vBinding.viewError.errorTitle.text = it
-                }
-            },
-            onSuccess = {
-                lifecycleScope.launch {
-                    storiesAdapter.submitData(it)
-                }
-            }
-        )
+        viewModel.getStories()
     }
 }

@@ -54,8 +54,8 @@ class MapViewModelTest {
         actualState.value = mapViewModel.stateType.value
 
         //then
-        println("ACTUAL ${actualState.value}")
         println("EXPECTED $expectedState")
+        println("ACTUAL ${actualState.value}")
         println("LIST STORY SIZE ${mapViewModel.listStory.value?.size}")
         Assert.assertEquals(expectedState, actualState.value)
     }

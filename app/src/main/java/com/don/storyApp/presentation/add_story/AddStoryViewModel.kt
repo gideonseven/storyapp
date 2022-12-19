@@ -31,45 +31,13 @@ class AddStoryViewModel @Inject constructor(
     var lat: Double = 0.0
     var lon: Double = 0.0
 
-    var myFile: File? = null
+    var myFile: File = File(Constant.TEXT_BLANK)
 
     fun addStory() {
         viewModelScope.launch {
-            myFile?.let {
-                repository.addStory(
-                    description.value.orEmpty(),
-                    reduceFileImage(it),
-                    lat,
-                    lon
-                )
-                    .collect { resource ->
-                        when (resource) {
-                            is Resource.Success -> {
-                                stateType.value = StateType.CONTENT
-                                resource.data?.let { model ->
-                                    simpleNetworkModel.value = model
-                                    errorMessage.value = model.message.orEmpty()
-                                }
-                            }
-                            is Resource.Loading -> {
-                                stateType.value = StateType.LOADING
-                            }
-                            is Resource.Error -> {
-                                stateType.value = StateType.ERROR
-                                errorMessage.value = resource.message.orEmpty()
-                            }
-                        }
-                    }
-            }
-        }
-    }
-
-    fun addStoryDummy() {
-        viewModelScope.launch {
-            val file = File("")
             repository.addStory(
                 description.value.orEmpty(),
-                file,
+                if (myFile.exists()) reduceFileImage(myFile) else myFile,
                 lat,
                 lon
             )

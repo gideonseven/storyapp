@@ -6,8 +6,6 @@ import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.Before
-import org.mockito.Mock
 
 /**
  * Created by gideon on 21 November 2022
@@ -16,20 +14,23 @@ import org.mockito.Mock
  */
 class FakeAuthRepository : IAuthRepository {
 
-    @Mock
-    private lateinit var mockPreferences: FakeAppPreferences
-
-    @Before
-    fun setup() {
-        mockPreferences = FakeAppPreferences()
-    }
+    private var mockPreferences = FakeAppPreferences()
 
     override suspend fun doLogin(email: String, password: String): Flow<Resource<StoryResponse>> {
         return flow {
-            val resource = if (email == "test.com" && password == "test") {
-                Resource.Success(data = StoryResponse(error = false, message = "success"))
+            val resource: Resource<StoryResponse>
+            if (email == "test.com" && password == "test") {
+                resource = Resource.Success(
+                    data = StoryResponse(
+                        error = false,
+                        message = "success"
+                    )
+                )
+                saveToken("i have access token")
             } else {
-                Resource.Error(message = "error")
+                resource = Resource.Error(
+                    message = "error"
+                )
             }
             emit(resource)
         }
@@ -47,17 +48,14 @@ class FakeAuthRepository : IAuthRepository {
     }
 
     override fun doLogOut() {
-        mockPreferences = FakeAppPreferences()
         mockPreferences.mockAccessToken = ""
     }
 
     override fun saveToken(token: String) {
-        mockPreferences = FakeAppPreferences()
         mockPreferences.mockAccessToken = token
     }
 
     override fun hasAccessToken(): Boolean {
-        mockPreferences = FakeAppPreferences()
         return mockPreferences.mockAccessToken.isNotEmpty()
     }
 }

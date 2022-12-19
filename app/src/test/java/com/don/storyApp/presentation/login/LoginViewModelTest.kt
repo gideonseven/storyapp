@@ -24,6 +24,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
+
+    private val correctEmail = "test.com"
+    private val correctPassword = "test"
+    private val wrongEmail = "this is wrong email"
+    private val wrongPassword = "this is wrong password"
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -48,12 +54,12 @@ class LoginViewModelTest {
         val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
 
         //when
-        loginViewModel.submitLogin("", "")
+        loginViewModel.submitLogin(wrongEmail, wrongPassword)
         actualState.value = loginViewModel.stateType.value
 
         //then
-        println("ACTUAL ${actualState.value}")
         println("EXPECTED $expectedState")
+        println("ACTUAL ${actualState.value}")
         Assert.assertEquals(expectedState, actualState.value)
     }
 
@@ -65,14 +71,31 @@ class LoginViewModelTest {
 
         //when
         loginViewModel.submitLogin(
-            mail = "test.com",
-            pass = "test",
+            mail = correctEmail,
+            pass = correctPassword,
         )
         actualState.value = loginViewModel.stateType.value
 
         //then
-        println("ACTUAL ${actualState.value}")
         println("EXPECTED $expectedState")
+        println("ACTUAL ${actualState.value}")
         Assert.assertEquals(expectedState, actualState.value)
+    }
+
+    @Test
+    fun `When Login With Correct Credential Should make HasAccessToken True`() = runTest {
+        //given
+        val expectedHasAccessToken = false
+
+        //when
+        loginViewModel.submitLogin(
+            mail = correctEmail,
+            pass = correctPassword,
+        )
+
+        //then
+        println("EXPECTED $expectedHasAccessToken")
+        println("ACTUAL ${loginViewModel.hasAccessToken()}")
+        Assert.assertEquals(expectedHasAccessToken, loginViewModel.hasAccessToken())
     }
 }
