@@ -34,7 +34,7 @@ interface StoryApi {
         @Header("Authorization") authorization: String,
         @Query("page") currentPage: Int,
         @Query("size") pageSize: Int,
-        @Query("location") location: Int = 1
+        @Query("location") location: Int = 0
     ): ApiResponse<StoryResponse>
 
     @Multipart

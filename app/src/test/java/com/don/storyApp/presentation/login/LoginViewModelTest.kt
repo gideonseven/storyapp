@@ -85,7 +85,7 @@ class LoginViewModelTest {
     @Test
     fun `When Login With Correct Credential Should make HasAccessToken True`() = runTest {
         //given
-        val expectedHasAccessToken = false
+        val expectedHasAccessToken = true
 
         //when
         loginViewModel.submitLogin(

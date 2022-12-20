@@ -47,7 +47,7 @@ class MapViewModelTest {
     fun `when List Map from Database is not empty Should Return StateTypeContent`() = runTest {
         //given
         val expectedState = StateType.CONTENT
-        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+        val actualState: MutableLiveData<StateType> = MutableLiveData()
 
         //when
         mapViewModel.getListLocation()
