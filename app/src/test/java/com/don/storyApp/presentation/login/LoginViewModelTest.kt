@@ -29,12 +29,12 @@ class LoginViewModelTest {
     private val correctPassword = "test"
     private val wrongEmail = "this is wrong email"
     private val wrongPassword = "this is wrong password"
+    private lateinit var loginViewModel: LoginViewModel
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var mockAuthRepository: FakeAuthRepository
 
     @Before
@@ -51,7 +51,7 @@ class LoginViewModelTest {
     fun `When Login With Wrong Credential Should Return StateTypeError`() = runTest {
         //given
         val expectedState = StateType.ERROR
-        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+        val actualState: MutableLiveData<StateType> = MutableLiveData()
 
         //when
         loginViewModel.submitLogin(wrongEmail, wrongPassword)
@@ -67,7 +67,7 @@ class LoginViewModelTest {
     fun `When Login With Correct Credential Should Return StateTypeContent`() = runTest {
         //given
         val expectedState = StateType.CONTENT
-        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+        val actualState: MutableLiveData<StateType> = MutableLiveData()
 
         //when
         loginViewModel.submitLogin(

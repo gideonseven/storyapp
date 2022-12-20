@@ -25,6 +25,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class MapViewModelTest {
+    private lateinit var mapViewModel: MapViewModel
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -33,7 +35,6 @@ class MapViewModelTest {
 
     @Mock
     private lateinit var repository: FakeStoryRepository
-    private lateinit var mapViewModel: MapViewModel
     private lateinit var storyDao: FakeDao
 
     @Before

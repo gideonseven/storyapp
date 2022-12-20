@@ -24,13 +24,13 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class AddStoryViewModelTest {
+    private lateinit var addStoryViewModel: AddStoryViewModel
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var addStoryViewModel: AddStoryViewModel
     private lateinit var repository: FakeStoryRepository
-
 
     @Before
     fun setup() {
@@ -41,12 +41,11 @@ class AddStoryViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-
     @Test
     fun `when add story without description will return StateTypeError`() = runTest {
         //given
         val expectedState = StateType.ERROR
-        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+        val actualState: MutableLiveData<StateType> = MutableLiveData()
 
         //when
         addStoryViewModel.addStory()

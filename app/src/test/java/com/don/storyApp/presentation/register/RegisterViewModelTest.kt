@@ -25,12 +25,13 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class RegisterViewModelTest {
+    private lateinit var registerViewModel: RegisterViewModel
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var repository: IAuthRepository
-    private lateinit var registerViewModel: RegisterViewModel
 
     @Before
     fun setup() {
@@ -45,7 +46,7 @@ class RegisterViewModelTest {
     fun `when Register With Wrong Value Should Return StateTypeError`() = runTest {
         //given
         val expectedState = StateType.ERROR
-        val actualState: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+        val actualState: MutableLiveData<StateType> = MutableLiveData()
 
         //when
         registerViewModel.submitRegister()

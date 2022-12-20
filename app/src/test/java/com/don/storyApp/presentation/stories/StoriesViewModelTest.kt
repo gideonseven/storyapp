@@ -24,6 +24,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class StoriesViewModelTest {
+    private lateinit var storiesViewModel: StoriesViewModel
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -31,7 +33,6 @@ class StoriesViewModelTest {
     private lateinit var mockStoryRepository: FakeStoryRepository
     private lateinit var mockAuthRepository: FakeAuthRepository
     private lateinit var mockPreference: FakeAppPreferences
-    private lateinit var storiesViewModel: StoriesViewModel
 
     @Before
     fun setup() {
