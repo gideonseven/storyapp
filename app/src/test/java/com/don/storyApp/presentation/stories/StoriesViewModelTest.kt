@@ -51,14 +51,13 @@ class StoriesViewModelTest {
         //given
         mockPreference.setupMockAccessToken("here is my access token")
         val expectedHasToken = false
-        val actualHasToken = mockAuthRepository.hasAccessToken()
 
         //when
         storiesViewModel.logout()
 
         // then
         println("EXPECTED $expectedHasToken")
-        println("ACTUAL $actualHasToken")
-        Assert.assertEquals(expectedHasToken, actualHasToken)
+        println("ACTUAL ${mockAuthRepository.hasAccessToken()}")
+        Assert.assertEquals(expectedHasToken, mockAuthRepository.hasAccessToken())
     }
 }
