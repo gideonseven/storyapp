@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.don.core'
+    namespace 'com.don.core_validation'
     compileSdk 32
 
     defaultConfig {

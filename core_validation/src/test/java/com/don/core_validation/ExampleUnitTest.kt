@@ -1,4 +1,4 @@
-package com.don.core
+package com.don.core_validation
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

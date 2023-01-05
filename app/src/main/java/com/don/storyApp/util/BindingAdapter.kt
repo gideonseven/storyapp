@@ -26,6 +26,6 @@ fun ImageView.loadImageFromUrl(
 }
 
 @BindingAdapter("validationType")
-fun com.don.core.CustomTextInputLayout.validationType(valType: com.don.core.ValidationType) {
+fun com.don.core_validation.CustomTextInputLayout.validationType(valType: com.don.core_validation.ValidationType) {
     this.validationType = valType
 }
