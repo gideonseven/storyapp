@@ -1,3 +1,4 @@
 rootProject.name = "storyapp"
 include ':app'
 include ':core_validation'
+include ':core_image_loader'

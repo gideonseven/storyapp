@@ -1,16 +1,16 @@
-package com.don.storyApp.util
+package com.don.core_image_loader
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.don.storyApp.R
 
 
 /**
- * Created by gideon on 29 October 2022
+ * Created by gideon on 05 January 2023
  * gideon@cicil.co.id
  * https://www.cicil.co.id/
  */
+
 @BindingAdapter("imageSrcFromUrl")
 fun ImageView.loadImageFromUrl(
     imageUrl: String?
@@ -23,9 +23,4 @@ fun ImageView.loadImageFromUrl(
             .placeholder(R.drawable.ic_placeholder_square)
             .into(this)
     }
-}
-
-@BindingAdapter("validationType")
-fun com.don.core_validation.CustomTextInputLayout.validationType(valType: com.don.core_validation.ValidationType) {
-    this.validationType = valType
 }

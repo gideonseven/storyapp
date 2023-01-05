@@ -6,11 +6,11 @@ import android.graphics.Bitmap
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
+import com.don.core_image_loader.getBitmapFromUrl
 import com.don.storyApp.R
 import com.don.storyApp.data.local.AppPreferences
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.util.Constant.Companion.TEXT_BLANK
-import com.don.storyApp.util.getBitmapFromUrl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

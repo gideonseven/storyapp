@@ -61,6 +61,7 @@ android {
 dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.0"
     implementation project(':core_validation')
+    implementation project(':core_image_loader')
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -103,10 +104,6 @@ dependencies {
 
     // lottie
     implementation "com.airbnb.android:lottie:4.1.0"
-
-    // glide
-    implementation 'com.github.bumptech.glide:glide:4.14.2'
-    kapt 'com.github.bumptech.glide:compiler:4.14.2'
 
     //camera x
     def camerax_version = "1.1.0"

@@ -1,20 +1,12 @@
 package com.don.storyApp.util
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.don.storyApp.R
 import com.google.android.material.snackbar.Snackbar
-import java.io.IOException
-import java.net.URL
 
 
 /**
@@ -33,40 +25,6 @@ fun showSnackBar(view: View, message: String) {
         )
         show()
     }
-}
-
-fun getBitmap(context: Context, imageUrl: String): Bitmap {
-    var bitmapImage: Bitmap? = null
-    val defaultBitmap: Bitmap
-    Glide.with(context)
-        .asBitmap()
-        .load(imageUrl)
-        .into(object : CustomTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                bitmapImage = resource
-            }
-
-            override fun onLoadCleared(placeholder: Drawable?) {
-                // this is called when imageView is cleared on lifecycle call or for
-                // some other reason.
-                // if you are referencing the bitmap somewhere else too other than this imageView
-                // clear it here as you can no longer have the bitmap
-            }
-        })
-
-    defaultBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.sample)
-    return bitmapImage ?: defaultBitmap
-}
-
-fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap {
-    var image: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.sample)
-    try {
-        val url = URL(imageUrl)
-        image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-
-    } catch (e: IOException) {
-    }
-    return image
 }
 
 fun Fragment.hideKeyboard() {
