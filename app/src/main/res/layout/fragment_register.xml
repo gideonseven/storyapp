@@ -8,7 +8,7 @@
 
         <import type="com.don.storyApp.util.StateType" />
 
-        <import type="com.don.storyApp.util.ValidationType" />
+        <import type="com.don.core.ValidationType" />
 
 
         <import type="android.view.View" />
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
-            <com.don.storyApp.util.CustomTextInputLayout
+            <com.don.core.CustomTextInputLayout
                 android:id="@+id/til_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,15 +42,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:validationType="@{ValidationType.DEFAULT}">
 
-                <com.don.storyApp.util.CustomTextInputEditText
+                <com.don.core.CustomTextInputEditText
                     android:id="@+id/ed_register_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="@={vm.name}" />
-            </com.don.storyApp.util.CustomTextInputLayout>
+            </com.don.core.CustomTextInputLayout>
 
-            <com.don.storyApp.util.CustomTextInputLayout
+            <com.don.core.CustomTextInputLayout
                 android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,16 +62,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:validationType="@{ValidationType.EMAIL}">
 
-                <com.don.storyApp.util.CustomTextInputEditText
+                <com.don.core.CustomTextInputEditText
                     android:id="@+id/ed_register_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
                     android:text="@={vm.email}" />
-            </com.don.storyApp.util.CustomTextInputLayout>
+            </com.don.core.CustomTextInputLayout>
 
 
-            <com.don.storyApp.util.CustomTextInputLayout
+            <com.don.core.CustomTextInputLayout
                 android:id="@+id/til_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,13 +83,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/guideline"
                 app:validationType="@{ValidationType.PASSWORD}">
 
-                <com.don.storyApp.util.CustomTextInputEditText
+                <com.don.core.CustomTextInputEditText
                     android:id="@+id/ed_register_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:text="@={vm.password}" />
-            </com.don.storyApp.util.CustomTextInputLayout>
+            </com.don.core.CustomTextInputLayout>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"

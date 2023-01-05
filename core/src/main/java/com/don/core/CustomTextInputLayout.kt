@@ -1,4 +1,4 @@
-package com.don.storyApp.util
+package com.don.core
 
 import android.content.Context
 import android.text.Editable
@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.util.Patterns
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.MutableLiveData
-import com.don.storyApp.R
 import com.google.android.material.textfield.TextInputLayout
 
 

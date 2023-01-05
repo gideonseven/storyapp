@@ -1,4 +1,4 @@
-package com.don.storyApp.util
+package com.don.core
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,7 +10,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
-import com.don.storyApp.R
 import com.google.android.material.textfield.TextInputEditText
 
 
