@@ -134,12 +134,12 @@ dependencies {
 
     //testing
     testImplementation "junit:junit:4.13.2"
-    androidTestImplementation "androidx.test.ext:junit:1.1.3"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+    androidTestImplementation "androidx.test.ext:junit:1.1.4"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
 
     //mockito
-    testImplementation 'org.mockito:mockito-core:3.12.4'
-    testImplementation 'org.mockito:mockito-inline:3.12.4'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.mockito:mockito-inline:4.0.0'
     implementation("net.bytebuddy:byte-buddy:1.12.8")
     // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
     testImplementation("net.bytebuddy:byte-buddy-agent:1.12.8")
@@ -147,14 +147,14 @@ dependencies {
 
     //special testing
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     //TestCoroutineDispatcher
 
     //special instrumentation testing
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     //TestCoroutineDispatcher
-    debugImplementation "androidx.fragment:fragment-testing:1.4.1" //launchFragmentInContainer
+    debugImplementation "androidx.fragment:fragment-testing:1.5.5" //launchFragmentInContainer
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     //RecyclerViewActions
 
@@ -162,12 +162,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1" //viewModelScope
 
     //TestCoroutineDispatcher
-    debugImplementation "androidx.fragment:fragment-testing:1.5.4" //launchFragmentInContainer
+    debugImplementation "androidx.fragment:fragment-testing:1.5.5" //launchFragmentInContainer
 
     //mock web server
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
     androidTestImplementation "com.squareup.okhttp3:okhttp-tls:4.9.3"
-    implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.5.0'
 
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'//IntentsTestRule
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.0'//IntentsTestRule
 }
