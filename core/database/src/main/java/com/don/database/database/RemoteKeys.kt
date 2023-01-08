@@ -1,4 +1,4 @@
-package com.don.storyApp.data.local.database
+package com.don.database.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
