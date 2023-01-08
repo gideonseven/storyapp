@@ -148,7 +148,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     .snippet("Lat: ${latLng.latitude} Long: ${latLng.longitude}")
                     .icon(
                         vectorToBitmap(
-                            R.drawable.ic_location,
+                            com.don.ui.R.drawable.ic_location,
                             Color.parseColor("#3DDC84")
                         )
                     )
@@ -176,7 +176,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 mMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
                         nonNullContext,
-                        R.raw.map_style
+                        com.don.ui.R.raw.map_style
                     )
                 )
             if (!success) {

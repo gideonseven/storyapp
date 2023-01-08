@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":core:image-loader"))
     implementation(project(":core:validation"))
     implementation(project(":core:database"))
+    implementation(project(":core:ui"))
     implementation(libs.androidx.core.ktx)
     implementation (libs.androidx.appcompat)
     implementation (libs.android.material)
