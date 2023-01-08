@@ -33,7 +33,8 @@ interface StoryApi {
     suspend fun getStories(
         @Header("Authorization") authorization: String,
         @Query("page") currentPage: Int,
-        @Query("location") location: Int = 1
+        @Query("size") pageSize: Int,
+        @Query("location") location: Int = 0
     ): ApiResponse<StoryResponse>
 
     @Multipart
@@ -42,9 +43,11 @@ interface StoryApi {
         @Header("Authorization") authorization: String,
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
+        @Part("lat") latitude: Double,
+        @Part("lon") longitude: Double
     ): ApiResponse<SimpleNetworkModel>
 
     companion object {
-        const val BASE_URL = "https://story-api.dicoding.dev/v1/"
+        var BASE_URL = "https://story-api.dicoding.dev/v1/"
     }
 }

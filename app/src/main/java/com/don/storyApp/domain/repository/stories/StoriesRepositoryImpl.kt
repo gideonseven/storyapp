@@ -1,15 +1,18 @@
 package com.don.storyApp.domain.repository.stories
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.don.storyApp.data.StoryRemoteMediator
 import com.don.storyApp.data.local.AppPreferences
+import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.dto.StoryResponse
 import com.don.storyApp.domain.model.Story
-import com.don.storyApp.presentation.stories.StoryPagingSource
 import com.don.storyApp.util.Resource
 import com.don.storyApp.util.SimpleNetworkModel
+import com.don.storyApp.util.wrapEspressoIdlingResource
 import com.google.gson.Gson
 import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
@@ -34,17 +37,19 @@ import javax.inject.Inject
 class StoriesRepositoryImpl @Inject constructor(
     private val apiService: StoryApi,
     private val gson: Gson,
-    private val preferences: AppPreferences
+    private val preferences: AppPreferences,
+    private val storyDatabase: StoryDatabase
 ) : IStoriesRepository {
 
     override suspend fun addStory(
         description: String,
-        file: File
+        file: File,
+        lat: Double,
+        lon: Double
     ): Flow<Resource<SimpleNetworkModel>> {
         return flow {
             var resource: Resource<SimpleNetworkModel> = Resource.Loading()
             emit(resource)
-
             val desc = description.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
@@ -55,7 +60,9 @@ class StoriesRepositoryImpl @Inject constructor(
             val response = apiService.doAddStory(
                 authorization = "Bearer ${preferences.accessToken.orEmpty()}",
                 description = desc,
-                file = imageMultipart
+                file = imageMultipart,
+                latitude = lat,
+                longitude = lon
             )
             response.onSuccess {
                 resource = Resource.Success(data = this.data)
@@ -71,17 +78,23 @@ class StoriesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPagingStories(): Flow<PagingData<Story>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
-                pageSize = 3
+                pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService, preferences),
             pagingSourceFactory = {
-                StoryPagingSource(
-                    apiService,
-                    preferences,
-                    gson
-                )
+                wrapEspressoIdlingResource {
+                    storyDatabase.storyDao().getStories()
+                }
             }
         ).flow
+    }
+
+    override suspend fun getListLocation(): Flow<List<Story>> {
+        return flow {
+            emit(storyDatabase.storyDao().getMarkers().distinct())
+        }
     }
 }

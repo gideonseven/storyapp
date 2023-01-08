@@ -19,10 +19,13 @@ class StoryApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         appBuildConfig.apply {
             prefName = BuildConfig.PREFERENCES_NAME
+            appDebug = BuildConfig.DEBUG
         }
     }
 }

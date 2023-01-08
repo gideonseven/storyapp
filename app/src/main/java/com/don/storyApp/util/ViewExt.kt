@@ -1,18 +1,12 @@
 package com.don.storyApp.util
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import androidx.fragment.app.Fragment
 import com.don.storyApp.R
 import com.google.android.material.snackbar.Snackbar
-import java.io.IOException
-import java.net.URL
 
 
 /**
@@ -33,36 +27,11 @@ fun showSnackBar(view: View, message: String) {
     }
 }
 
-fun getBitmap(context: Context, imageUrl: String): Bitmap {
-    var bitmapImage: Bitmap? = null
-    val defaultBitmap: Bitmap
-    Glide.with(context)
-        .asBitmap()
-        .load(imageUrl)
-        .into(object : CustomTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                bitmapImage = resource
-            }
-
-            override fun onLoadCleared(placeholder: Drawable?) {
-                // this is called when imageView is cleared on lifecycle call or for
-                // some other reason.
-                // if you are referencing the bitmap somewhere else too other than this imageView
-                // clear it here as you can no longer have the bitmap
-            }
-        })
-
-    defaultBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.sample)
-    return bitmapImage ?: defaultBitmap
+fun Fragment.hideKeyboard() {
+    requireActivity().currentFocus?.let { requireActivity().hideKeyboard(it) }
 }
 
-fun getBitmapFromUrl(context: Context, imageUrl: String): Bitmap {
-    var image: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.sample)
-    try {
-        val url = URL(imageUrl)
-        image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-
-    } catch (e: IOException) {
-    }
-    return image
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }

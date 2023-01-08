@@ -24,32 +24,41 @@ class AddStoryViewModel @Inject constructor(
     val isValidImage: MutableLiveData<Boolean> = MutableLiveData(false)
     val isValidText: MutableLiveData<Boolean> = MutableLiveData(false)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val errorMessage: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    val simpleNetworkModel: MutableLiveData<SimpleNetworkModel> =
+        MutableLiveData(SimpleNetworkModel())
 
-    var myFile: File? = null
+    var lat: Double = 0.0
+    var lon: Double = 0.0
 
-    fun addStory(
-        errorMessage: (String) -> Unit,
-        onSuccess: (SimpleNetworkModel) -> Unit
-    ) {
+    var myFile: File = File(Constant.TEXT_BLANK)
+
+    fun addStory() {
         viewModelScope.launch {
-            myFile?.let {
-                repository.addStory(description.value.orEmpty(), reduceFileImage(it))
-                    .collect { resource ->
-                        when (resource) {
-                            is Resource.Success -> {
-                                stateType.value = StateType.CONTENT
-                                resource.data?.let(onSuccess)
-                            }
-                            is Resource.Loading -> {
-                                stateType.value = StateType.LOADING
-                            }
-                            is Resource.Error -> {
-                                stateType.value = StateType.ERROR
-                                errorMessage(resource.message.orEmpty())
+            repository.addStory(
+                description.value.orEmpty(),
+                if (myFile.exists()) reduceFileImage(myFile) else myFile,
+                lat,
+                lon
+            )
+                .collect { resource ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            stateType.value = StateType.CONTENT
+                            resource.data?.let { model ->
+                                simpleNetworkModel.value = model
+                                errorMessage.value = model.message.orEmpty()
                             }
                         }
+                        is Resource.Loading -> {
+                            stateType.value = StateType.LOADING
+                        }
+                        is Resource.Error -> {
+                            stateType.value = StateType.ERROR
+                            errorMessage.value = resource.message.orEmpty()
+                        }
                     }
-            }
+                }
         }
     }
 }

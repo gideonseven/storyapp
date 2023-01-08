@@ -1,5 +1,8 @@
 package com.don.storyApp.di
 
+import android.app.Application
+import com.chimerapps.niddler.core.AndroidNiddler
+import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.data.remote.StoryApi.Companion.BASE_URL
 import com.don.storyApp.domain.model.AppBuildConfig
@@ -10,7 +13,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -23,28 +25,43 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Provides
+
     @Singleton
+    @Provides
     fun provideAppBuildConfig(): AppBuildConfig = AppBuildConfig()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideGson(): Gson = Gson()
 
-    @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    @Provides
+    fun provideNiddlerOkHttp(
+        application: Application,
+        appBuildConfig: AppBuildConfig
+    ): NiddlerOkHttpInterceptor {
+        val niddler = AndroidNiddler.Builder()
+            // Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
+            .setPort(0)
+            // Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
+            .setNiddlerInformation(AndroidNiddler.fromApplication(application))
+            .setMaxStackTraceSize(10)
+            .build().apply {
+                if (appBuildConfig.appDebug) attachToApplication(application)
+            }
+        return NiddlerOkHttpInterceptor(niddler, "StoryApp")
+    }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(niddlerOkHttpInterceptor: NiddlerOkHttpInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                }
-            )
+            .addInterceptor(niddlerOkHttpInterceptor)
             .build()
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -52,7 +69,7 @@ object AppModule {
             .client(client)
             .build()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideStoryApi(retrofit: Retrofit): StoryApi = retrofit.create(StoryApi::class.java)
 }

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">storyapp</string>
     <string name="action_log_out">Keluar</string>
-    <string name="login_fragment_label">Login Fragment</string>
-    <string name="register_fragment_label">Register Fragment</string>
-    <string name="stories_fragment_label">Stories Fragment</string>
-    <string name="detail_fragment_label">Detil Fragment</string>
+    <string name="login_fragment_label">Login</string>
+    <string name="register_fragment_label">"Register "</string>
+    <string name="stories_fragment_label">"Stories "</string>
+    <string name="detail_fragment_label">Detail</string>
     <string name="input_email">Masukkan Email</string>
     <string name="input_password">Masukkan Password</string>
     <string name="input_name">Masukkan Nama</string>
@@ -23,7 +23,7 @@
     <string name="date_taken">Tanggal Dibuat : %s</string>
     <string name="location">Lokasi : %s</string>
     <string name="input_description">Masukkan Deskripsi</string>
-    <string name="add_story_fragment_label">Tambah Cerita Fragment</string>
+    <string name="add_story_fragment_label">Tambah Cerita</string>
     <string name="action_add_story">Tambah Cerita</string>
     <string name="take_image">Ambil Gambar</string>
     <string name="rationale_camera">Aplikasi ini membutuhkan akses camera.</string>
@@ -32,4 +32,8 @@
     <string name="appwidget_text">STORY BANNER</string>
     <string name="empty_text">NO DATA</string>
     <string name="add_widget">Tambah Widget</string>
+    <string name="action_map">Map</string>
+    <string name="map_fragment_label">Map</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="map_is_empty">Lokasi Tidak Ditemukan</string>
 </resources>

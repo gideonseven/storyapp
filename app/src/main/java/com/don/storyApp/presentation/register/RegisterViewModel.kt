@@ -27,11 +27,11 @@ class RegisterViewModel @Inject constructor(
     var password: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
     var isButtonEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val errorMessage: MutableLiveData<String> = MutableLiveData(Constant.TEXT_BLANK)
+    val simpleNetworkModel: MutableLiveData<SimpleNetworkModel> =
+        MutableLiveData(SimpleNetworkModel())
 
-    fun submitRegister(
-        errorMessage: (String) -> Unit,
-        onSuccess: (SimpleNetworkModel) -> Unit
-    ) {
+    fun submitRegister() {
         viewModelScope.launch {
             repository.doRegister(
                 name.value.orEmpty(),
@@ -41,14 +41,16 @@ class RegisterViewModel @Inject constructor(
                 when (it) {
                     is Resource.Success -> {
                         stateType.value = StateType.CONTENT
-                        it.data?.let(onSuccess)
+                        it.data?.let { model ->
+                            simpleNetworkModel.value = model
+                        }
                     }
                     is Resource.Loading -> {
                         stateType.value = StateType.LOADING
                     }
                     is Resource.Error -> {
                         stateType.value = StateType.ERROR
-                        errorMessage(it.message.orEmpty())
+                        errorMessage.value = it.message.orEmpty()
                     }
                 }
             }

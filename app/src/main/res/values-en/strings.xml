@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">storyApp</string>
     <string name="action_log_out">Log Out</string>
-    <string name="login_fragment_label">Login Fragment</string>
-    <string name="register_fragment_label">Register Fragment</string>
-    <string name="stories_fragment_label">Stories Fragment</string>
-    <string name="detail_fragment_label">Detail Fragment</string>
+    <string name="login_fragment_label">Login</string>
+    <string name="register_fragment_label">"Register "</string>
+    <string name="stories_fragment_label">"Stories "</string>
+    <string name="detail_fragment_label">Detail</string>
     <string name="input_email">Input Email</string>
     <string name="input_password">Input Password</string>
     <string name="input_name">Input Name</string>
@@ -23,7 +23,7 @@
     <string name="location">Location: %s</string>
     <string name="story_description">Description : %s</string>
     <string name="input_description">Input Description</string>
-    <string name="add_story_fragment_label">Add Story Fragment</string>
+    <string name="add_story_fragment_label">Add Story</string>
     <string name="action_add_story">Add Story</string>
     <string name="take_image">Take Image</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
@@ -32,4 +32,8 @@
     <string name="appwidget_text">STORY BANNER</string>
     <string name="empty_text">NO DATA</string>
     <string name="add_widget">Add widget</string>
+    <string name="action_map">Map</string>
+    <string name="map_fragment_label">Map</string>
+    <string name="retry">Try Again</string>
+    <string name="map_is_empty">No Location Found</string>
 </resources>

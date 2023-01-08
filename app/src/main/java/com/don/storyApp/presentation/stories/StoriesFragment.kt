@@ -69,25 +69,32 @@ class StoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (viewModel.hasAuthCode()) {
+        if (viewModel.hasAccessToken()) {
             getStories()
         } else {
             findNavController().navigate(R.id.action_general_to_nav_graph)
         }
 
-        val concatAdapter = storiesAdapter.withLoadStateHeaderAndFooter(
-            header = LoadingStateAdapter {
-
-            },
-            footer = LoadingStateAdapter {
-
-            }
+        val concatAdapter = storiesAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter(retry = {
+                binding?.let {
+                    getStories()
+                }
+            })
         )
 
         binding?.rv?.adapter = concatAdapter
 
         binding?.viewError?.errorRetry?.setOnClickListener {
             getStories()
+        }
+
+        viewModel.pagingData.observe(this@StoriesFragment.viewLifecycleOwner) {
+            if (it != null) {
+                lifecycleScope.launch {
+                    storiesAdapter.submitData(it)
+                }
+            }
         }
 
         activity?.onBackPressedDispatcher?.addCallback(
@@ -114,6 +121,10 @@ class StoriesFragment : Fragment() {
                 findNavController().navigate(R.id.action_general_to_add_story_fragment)
                 true
             }
+            R.id.action_map -> {
+                findNavController().navigate(R.id.action_general_to_map_fragment)
+                true
+            }
             R.id.action_log_out -> {
                 viewModel.logout()
                 findNavController().navigate(R.id.action_general_to_nav_graph)
@@ -129,17 +140,6 @@ class StoriesFragment : Fragment() {
     }
 
     private fun getStories() {
-        viewModel.getStories(
-            errorMessage = {
-                binding?.let { vBinding ->
-                    vBinding.viewError.errorTitle.text = it
-                }
-            },
-            onSuccess = {
-                lifecycleScope.launch {
-                    storiesAdapter.submitData(it)
-                }
-            }
-        )
+        viewModel.getStories()
     }
 }

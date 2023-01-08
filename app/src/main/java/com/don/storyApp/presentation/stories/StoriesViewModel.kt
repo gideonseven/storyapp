@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.don.storyApp.domain.model.Story
 import com.don.storyApp.domain.repository.auth.IAuthRepository
 import com.don.storyApp.domain.repository.stories.IStoriesRepository
@@ -25,14 +26,12 @@ class StoriesViewModel @Inject constructor(
 ) : ViewModel() {
 
     val stateType: MutableLiveData<StateType> = MutableLiveData(StateType.CONTENT)
+    val pagingData: MutableLiveData<PagingData<Story>> = MutableLiveData()
 
-    fun getStories(
-        errorMessage: (String) -> Unit,
-        onSuccess: (PagingData<Story>) -> Unit
-    ) {
+    fun getStories() {
         viewModelScope.launch {
-            repository.getPagingStories().collect {
-                onSuccess(it)
+            repository.getPagingStories().cachedIn(this).collect {
+                pagingData.value = it
             }
         }
     }
@@ -41,5 +40,5 @@ class StoriesViewModel @Inject constructor(
         authRepository.doLogOut()
     }
 
-    fun hasAuthCode() = authRepository.hasAccessToken()
+    fun hasAccessToken() = authRepository.hasAccessToken()
 }

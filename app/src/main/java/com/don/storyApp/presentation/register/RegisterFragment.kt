@@ -55,15 +55,20 @@ class RegisterFragment : Fragment() {
                 doCheckValidation()
             }
             btnRegister.setOnClickListener {
-                viewModel.submitRegister(
-                    errorMessage = {
-                        showSnackBar(root, it)
-                    },
-                    onSuccess = {
-                        showSnackBar(root, it.message.orEmpty())
-                        findNavController().popBackStack()
-                    }
-                )
+                viewModel.submitRegister()
+            }
+
+            viewModel.errorMessage.observe(this@RegisterFragment.viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    showSnackBar(root, it)
+                }
+            }
+
+            viewModel.simpleNetworkModel.observe(this@RegisterFragment.viewLifecycleOwner) {
+                if (it.error == false) {
+                    showSnackBar(root, it.message.orEmpty())
+                    findNavController().popBackStack()
+                }
             }
         }
     }
