@@ -22,7 +22,7 @@ object EspressoHelper {
     @SuppressLint("RestrictedApi")
     inline fun <reified T : Fragment> launchFragmentInHiltContainer(
         fragmentArgs: Bundle? = null,
-        @StyleRes themeResId: Int = R.style.Theme_StoryApp,
+        @StyleRes themeResId: Int = com.don.ui.R.style.Theme_StoryApp,
         crossinline action: Fragment.() -> Unit = {}
     ) {
         val startActivityIntent = Intent.makeMainActivity(

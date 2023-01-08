@@ -22,3 +22,5 @@ rootProject.name = "storyapp"
 include (":app")
 include(":core:image-loader")
 include(":core:validation")
+include(":core:database")
+include(":core:ui")

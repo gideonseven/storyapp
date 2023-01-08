@@ -55,6 +55,8 @@ android {
 dependencies {
     implementation(project(":core:image-loader"))
     implementation(project(":core:validation"))
+    implementation(project(":core:database"))
+    implementation(project(":core:ui"))
     implementation(libs.androidx.core.ktx)
     implementation (libs.androidx.appcompat)
     implementation (libs.android.material)
@@ -117,11 +119,6 @@ dependencies {
 
     // location
     implementation (libs.android.location)
-
-    // room
-    implementation (libs.room.ktx)
-    implementation  (libs.room.paging)
-    kapt (libs.room.compiler)
 
     // niddler
     implementation (libs.niddler.base)

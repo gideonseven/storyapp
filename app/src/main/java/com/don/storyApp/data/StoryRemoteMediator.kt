@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.don.storyApp.data.local.AppPreferences
-import com.don.storyApp.data.local.database.RemoteKeys
 import com.don.storyApp.data.local.database.StoryDatabase
 import com.don.storyApp.data.remote.StoryApi
 import com.don.storyApp.domain.model.Story
@@ -86,7 +85,11 @@ class StoryRemoteMediator(
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = responseData.map {
-                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
+                    com.don.database.database.RemoteKeys(
+                        id = it.id,
+                        prevKey = prevKey,
+                        nextKey = nextKey
+                    )
                 }
                 database.remoteKeysDao().insertAll(keys)
                 database.storyDao().insertStory(responseData)
@@ -97,19 +100,19 @@ class StoryRemoteMediator(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Story>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Story>): com.don.database.database.RemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { data ->
             database.remoteKeysDao().getRemoteKeysId(data.id)
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Story>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Story>): com.don.database.database.RemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { data ->
             database.remoteKeysDao().getRemoteKeysId(data.id)
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Story>): RemoteKeys? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Story>): com.don.database.database.RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
                 database.remoteKeysDao().getRemoteKeysId(id)

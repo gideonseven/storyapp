@@ -20,7 +20,7 @@ fun showSnackBar(view: View, message: String) {
         setTextColor(
             ContextCompat.getColor(
                 this.context,
-                R.color.md_white_1000
+                com.don.ui.R.color.md_white_1000
             )
         )
         show()
