@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:image-loader"))
+    implementation(project(":core_validation"))
     implementation(libs.androidx.core.ktx)
     implementation (libs.androidx.appcompat)
     implementation (libs.android.material)

@@ -20,3 +20,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "storyapp"
 include (":app")
+include (":core_validation")
+include(":core:image-loader")
