@@ -1,4 +1,4 @@
-package com.don.image_loader
+package com.don.validation
 
 import org.junit.Test
 

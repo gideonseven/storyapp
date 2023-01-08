@@ -7,7 +7,7 @@
 
         <import type="com.don.storyApp.util.StateType" />
 
-        <import type="com.don.core_validation.ValidationType" />
+        <import type="com.don.validation.ValidationType" />
 
         <import type="android.view.View" />
 

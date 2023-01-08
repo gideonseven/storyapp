@@ -1,4 +1,4 @@
-package com.don.image_loader
+package com.don.validation
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.don.image_loader.test", appContext.packageName)
+        assertEquals("com.don.validation.test", appContext.packageName)
     }
 }

@@ -7,7 +7,7 @@
 
         <import type="com.don.storyApp.util.StateType" />
 
-        <import type="com.don.core_validation.ValidationType" />
+        <import type="com.don.validation.ValidationType" />
 
         <import type="android.view.View" />
 
@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:visibility="@{vm.stateType == StateType.CONTENT || vm.stateType == StateType.ERROR ? View.VISIBLE : View.GONE}">
 
-            <com.don.core_validation.CustomTextInputLayout
+            <com.don.validation.CustomTextInputLayout
                 android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,15 +41,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:validationType="@{ValidationType.EMAIL}">
 
-                <com.don.core_validation.CustomTextInputEditText
+                <com.don.validation.CustomTextInputEditText
                     android:id="@+id/ed_login_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
                     android:text="@={vm.email}" />
-            </com.don.core_validation.CustomTextInputLayout>
+            </com.don.validation.CustomTextInputLayout>
 
-            <com.don.core_validation.CustomTextInputLayout
+            <com.don.validation.CustomTextInputLayout
                 android:id="@+id/til_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,13 +62,13 @@
                 app:passwordToggleEnabled="true"
                 app:validationType="@{ValidationType.PASSWORD}">
 
-                <com.don.core_validation.CustomTextInputEditText
+                <com.don.validation.CustomTextInputEditText
                     android:id="@+id/ed_login_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:text="@={vm.password}" />
-            </com.don.core_validation.CustomTextInputLayout>
+            </com.don.validation.CustomTextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"

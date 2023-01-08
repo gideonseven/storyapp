@@ -1,4 +1,4 @@
-package com.don.core_validation
+package com.don.validation
 
 import android.content.Context
 import android.graphics.Canvas
